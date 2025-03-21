@@ -1,0 +1,115 @@
+<?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    // Si no hay sesión, redirige al usuario a la página de inicio de sesión
+    header('Location: Index.php');
+    exit; // Detiene la ejecución del script
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="CSS/Fondo.css">
+    <link rel="stylesheet" href="CSS/Navbar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Productos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+ <!-- Barra de navegación -->
+ <nav class="navbar">
+    <ul class="navbar-menu">
+        <li><a href="Dashboard.html"><i class="bi bi-house-door"></i> Inicio</a></li>
+        <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+        <li><a href="#"><i class="bi bi-list"></i> Pedidos</a></li>
+        <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+        <li>
+            <form class="search-form">
+                <input type="text" placeholder="Buscar productos..." class="search-input">
+                <button type="submit" class="search-button">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+        </li>
+        <li><a href="Perfil.html" class="profile-link">
+                <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
+            </a></li>
+        <li><a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+    </ul>
+</nav>
+    <aside class="filtros" id="filtros">
+        <h2>Filtros</h2>
+        <form id="filtrosForm">
+            <label for="precio">Precio:</label>
+            <input type="range" id="precio" min="0" max="1000" step="10" onchange="updatePrecioValue()">
+            <span id="precioValor">0</span>
+
+            <label for="masVendidos">Más Vendidos:</label>
+            <input type="radio" id="masVendidos" name="venta" value="masVendidos">
+
+            <label for="menosVendidos">Menos Vendidos:</label>
+            <input type="radio" id="menosVendidos" name="venta" value="menosVendidos">
+
+            <label for="calificacion">Calificación:</label>
+            <select id="calificacion">
+                <option value="1">1 estrella</option>
+                <option value="2">2 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="5">5 estrellas</option>
+            </select>
+
+            <button type="submit">Aplicar Filtros</button>
+        </form>
+    </aside>
+
+    <main>
+        <!-- Contenedor principal para los productos -->
+        <div class="contenedorProductos" id="contenedorProductos">
+            <div class="contenedor" id="contenedor"></div>
+        </div>
+
+        <!-- Contenedor para la información de la compra -->
+        <div id="contenedorCompra">
+            <div class="informacionCompra" id="informacionCompra">
+                <h2>Carrito</h2>
+                <p class="x" id="x">x</p>
+            </div>
+
+            <div class="productosCompra" id="productosCompra"></div>
+            <div class="total" id="total"></div>
+            <button type="button" class="btn btn-primary" onclick="abrirVentanaPago()">
+                Finalizar Compra
+            </button>
+            
+        </div>
+    </main>
+<script>
+function abrirVentanaPago() {
+    window.open('tarjeta.html', '_blank', 'width=600,height=600');
+}
+</script>
+
+    <script src="JS/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+
+</html>

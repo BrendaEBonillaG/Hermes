@@ -1,0 +1,252 @@
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    margin-top: 70px;
+    color: #ddd;
+}
+
+/* Sección de imágenes */
+.upload-section {
+    background-color: #ffffff33;
+    padding: 15px;
+    border-radius: 10px;
+    width: 30%;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.tab {
+    background-color: #6b8e23;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.tab.active {
+    background-color: #3d4a1e;
+}
+
+.image-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.image-placeholder {
+    background-color: #ccc;
+    height: 200px;
+    width: 200px;
+    border-radius: 5px;
+}
+
+.upload-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.select-button, .upload-button {
+    background-color: #ff9800;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Sección del formulario */
+.form-section {
+    background-color: transparent;
+    padding: 15px;
+    border-radius: 10px;
+    width: 40%;
+    margin-top: 30px;
+}
+
+.input-field {
+    width: 100%;
+    height: 30px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    color: #fff; /* Color del texto en blanco */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-right: 15px;
+    caret-color: white; /* Hace que el cursor también sea blanco */
+}
+
+/* Asegurar que el placeholder también sea visible en blanco */
+.input-field::placeholder {
+    color: #fff/* Blanco con opacidad */
+}
+
+
+.input-field.small {
+    width: 30%;
+   margin-right: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.create-button {
+    background-color: #ff9800;
+    border: none;
+    padding: 10px;
+    width: 15%;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    align-items: center;
+}
+
+/* From Uiverse.io by Shoh2008 */ 
+.checkbox-wrapper-12 {
+    position: relative;
+  }
+  
+  .checkbox-wrapper-12 > svg {
+    position: absolute;
+    top: -130%;
+    left: -170%;
+    width: 110px;
+    pointer-events: none;
+  }
+  
+  .checkbox-wrapper-12 * {
+    box-sizing: border-box;
+  }
+  
+  .checkbox-wrapper-12 input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    margin: 0;
+  }
+  
+  .checkbox-wrapper-12 input[type="checkbox"]:focus {
+    outline: 0;
+  }
+  
+  .checkbox-wrapper-12 .cbx {
+    width: 24px;
+    height: 24px;
+    top: calc(100px - 12px);
+    left: calc(100px - 12px);
+  }
+  
+  .checkbox-wrapper-12 .cbx input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #bfbfc0;
+    border-radius: 50%;
+  }
+  
+  .checkbox-wrapper-12 .cbx label {
+    width: 24px;
+    height: 24px;
+    background: none;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: trasnlate3d(0, 0, 0);
+    pointer-events: none;
+  }
+  
+  .checkbox-wrapper-12 .cbx svg {
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  
+  .checkbox-wrapper-12 .cbx svg path {
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 19;
+    stroke-dashoffset: 19;
+    transition: stroke-dashoffset 0.3s ease;
+    transition-delay: 0.2s;
+  }
+  
+  .checkbox-wrapper-12 .cbx input:checked + label {
+    animation: splash-12 0.6s ease forwards;
+  }
+  
+  .checkbox-wrapper-12 .cbx input:checked + label + svg path {
+    stroke-dashoffset: 0;
+  }
+  
+  @-moz-keyframes splash-12 {
+    40% {
+      background: #ffbd59;
+      box-shadow: 0 -18px 0 -8px #ffbd59, 16px -8px 0 -8px #ffbd59, 16px 8px 0 -8px #ffbd59, 0 18px 0 -8px #ffbd59, -16px 8px 0 -8px #ffbd59, -16px -8px 0 -8px #ffbd59;
+    }
+  
+    100% {
+      background: #ffbd59;
+      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+  }
+  
+  @-webkit-keyframes splash-12 {
+    40% {
+      background: #ffbd59;
+      box-shadow: 0 -18px 0 -8px #ffbd59, 16px -8px 0 -8px #ffbd59, 16px 8px 0 -8px #ffbd59, 0 18px 0 -8px #ffbd59, -16px 8px 0 -8px #ffbd59, -16px -8px 0 -8px #ffbd59;
+    }
+  
+    100% {
+      background: #ffbd59;
+      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+  }
+  
+  @-o-keyframes splash-12 {
+    40% {
+      background: #ffbd59;
+      box-shadow: 0 -18px 0 -8px #ffbd59, 16px -8px 0 -8px #ffbd59, 16px 8px 0 -8px #ffbd59, 0 18px 0 -8px #ffbd59, -16px 8px 0 -8px #ffbd59, -16px -8px 0 -8px #ffbd59;
+    }
+  
+    100% {
+      background: #ffbd59;
+      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+  }
+  
+  @keyframes splash-12 {
+    40% {
+      background: #ffbd59;
+      box-shadow: 0 -18px 0 -8px #ffbd59, 16px -8px 0 -8px #ffbd59, 16px 8px 0 -8px #ffbd59, 0 18px 0 -8px #ffbd59, -16px 8px 0 -8px #ffbd59, -16px -8px 0 -8px #ffbd59;
+    }
+  
+    100% {
+      background: #ffbd59;
+      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+    }
+  }

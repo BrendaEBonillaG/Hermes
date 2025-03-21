@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario - Hermes</title>
+    <link rel="stylesheet" href="CSS/Perfil.css">
+    <link rel="stylesheet" href="CSS/Fondo.css">
+    <link rel="stylesheet" href="CSS/Navbar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+     <!-- Barra de navegación -->
+     <nav class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="Dashboard.html"><i class="bi bi-house-door"></i> Inicio</a></li>
+            <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+            <li><a href="#"><i class="bi bi-list"></i> Pedidos</a></li>
+            <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+            <li>
+                <form class="search-form">
+                    <input type="text" placeholder="Buscar productos..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </li>
+            <li><a href="Perfil.html" class="profile-link">
+                <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar"> 
+            </a></li>
+            <li><a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
+
+    <div class="profile-container">
+        <!-- Foto de perfil y nombre de usuario -->
+        <div class="profile-header">
+            <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img">
+            <h2 id="username">Nombre de Usuario</h2>
+        </div>
+
+        <!-- Mensaje de perfil privado -->
+        <div id="privateMessage" class="profile-message hidden">
+            <p>Este perfil es privado.</p>
+        </div>
+
+        <!-- Perfil público con listas de deseos -->
+        <div id="publicProfile" class="profile-content hidden">
+            <h3>Listas de deseados</h3>
+            <div class="similar-products">
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Lista 1</p>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Lista 2</p>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Lista 3</p>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Lista 4</p>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Lista 5</p>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Lista 6</p>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Perfil de vendedor -->
+        <div id="sellerProfile" class="profile-content hidden">
+            <h3>Productos Publicados</h3>
+            <div class="similar-products">
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Producto 1</p>
+                    <span>$249.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Producto 2</p>
+                    <span>$199.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Producto 3</p>
+                    <span>$279.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Producto 4</p>
+                    <span>$249.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Producto 5</p>
+                    <span>$199.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Producto 6</p>
+                    <span>$279.99</span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Perfil de administrador -->
+        <div id="adminProfile" class="profile-content hidden">
+            <h3>Productos Autorizados</h3>
+            <div class="similar-products">
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Producto 1</p>
+                    <span>$249.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Producto 2</p>
+                    <span>$199.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Producto 3</p>
+                    <span>$279.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
+                    <p>Producto 4</p>
+                    <span>$249.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
+                    <p>Producto 5</p>
+                    <span>$199.99</span>
+                </div>
+                <div class="similar-item">
+                    <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
+                    <p>Producto 6</p>
+                    <span>$279.99</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/profile.js"></script>
+</body>
+</html>

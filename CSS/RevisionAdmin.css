@@ -1,0 +1,80 @@
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin-top: 70px;
+    margin-left: 15%; /* Desplazamiento hacia la derecha */
+}
+
+/* Contenedor para las imágenes, solo una imagen visible a la vez */
+.image-slider {
+    display: flex;  /* Alinea las imágenes en una fila */
+    overflow-x: scroll;  /* Habilita el scroll horizontal */
+    width: 14%;  /* Asegura que ocupe todo el ancho disponible */
+    scroll-snap-type: x mandatory;  /* Habilita el "snap" para el scroll */
+    gap: 10;  /* Elimina el espacio entre las imágenes */
+}
+
+.image-placeholder {
+    width: 100%;  /* La imagen ocupa todo el ancho del contenedor */
+    max-width: 150px;  /* Ancho máximo de la imagen */
+    height: 150px;  /* Altura de las imágenes */
+    background-color: #ccc;
+    border-radius: 5px;
+    flex-shrink: 0;  /* Evita que las imágenes se encojan */
+    scroll-snap-align: start;  /* Hace que la imagen se alinee al inicio del contenedor */
+    margin-right: 5px;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 5%; /* Menos desplazamiento en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-left: 0%; /* Sin desplazamiento en pantallas muy pequeñas */
+    }
+}
+
+.card {
+    background-color: #ffffff33;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+
+.info {
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accept {
+    background-color: #A4BF7A;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.reject {
+    background-color: #DA441F;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
