@@ -1,3 +1,38 @@
+.InfoLista {
+    display: flex;  /* Asegura que la imagen y el texto estén en la misma línea */
+    align-items: center;  /* Centra verticalmente */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding-left: 20%;
+    gap: 15px; /* Espacio entre la imagen y el texto */
+    width: fit-content; /* Ajusta el ancho del contenedor al contenido */
+}
+
+.FotoLista {
+    width: 100px; /* Ajusta el tamaño de la imagen */
+    height: 100px;
+    border-radius: 15%;
+    flex-shrink: 0; /* Evita que la imagen se reduzca */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+}
+
+.TextoLista {
+    display: flex;
+    flex-direction: column; /* Apila los textos verticalmente */
+    justify-content: center; /* Centra el texto verticalmente */
+    text-align: left; /* Asegura que el texto esté alineado a la izquierda */
+}
+
+.TextoLista h1, .TextoLista h2 {
+    color: #fff;
+    margin: 0; /* Elimina márgenes para evitar desplazamientos */
+    font-size: 1.2em;
+    white-space: nowrap; /* Evita saltos de línea en los textos */
+}
+
+
 
 .container {
     width: 90%;
@@ -121,20 +156,3 @@
   }
   
  
-  .InfoLista{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    cursor: pointer;
-    color: #fff;
-    background-color: #ffffff33;
-}
-.FotoLista{
-    width: 50px;
-    height: 50px;
-    border-radius: 15%;
-
-}
-  
