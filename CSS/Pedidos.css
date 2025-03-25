@@ -1,0 +1,153 @@
+.InfoLista {
+    display: flex;  
+    align-items: center; 
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding-left: 20%;
+    gap: 15px; 
+    width: fit-content; 
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin-top: 70px;
+    margin-left: 15%;
+}
+
+/* Contenedor para las imágenes, solo una imagen visible a la vez */
+.image-slider {
+    display: flex;  
+    overflow-x: scroll;  
+    width: 14%;  
+    scroll-snap-type: x mandatory;  
+    gap: 10;  
+}
+
+.image-placeholder {
+    width: 100%;  
+    max-width: 150px;  
+    height: 150px;  
+    background-color: #ccc;
+    border-radius: 5px;
+    flex-shrink: 0; 
+    scroll-snap-align: start;  
+    margin-right: 5px;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 5%; 
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-left: 0%; 
+    }
+}
+
+.card {
+    background-color: #ffffff33;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+
+.info {
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accept {
+    background-color: #A4BF7A;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.reject {
+    background-color: #DA441F;
+    border: none;
+    padding: 8px 12px;
+    color: white;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+
+/* From Uiverse.io by JaydipPrajapati1910 */
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+    background-color: #ff9800;
+    outline: 3px #181717 solid;
+    outline-offset: -3px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  .button .text {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1em;
+    transition: 400ms;
+  }
+  
+  .button svg path {
+    transition: 400ms;
+  }
+  
+  .button:hover {
+    background-color: #ffbd59;
+  }
+  
+  .button:hover .text {
+    color: #181717;
+  }
+  
+  .button:hover svg path {
+    fill: #181717;
+  }
+  
+ .Botones{
+    justify-content: center;
+    flex-direction: row; 
+    gap: 10px;
+    margin: 0 20% 0 30%;
+ }
+
+.Proceso, .Enviados{
+    border-radius: 15px;
+    font-size: 25px;
+    font-weight: 15px;
+    background-color: #ff9800;
+    color: #fff;
+
+}
+
+.Proceso:hover, .Enviados:hover{
+    background-color: #ffbd59;
+    color: #181717;
+}
