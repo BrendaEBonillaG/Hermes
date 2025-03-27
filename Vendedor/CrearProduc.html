@@ -38,20 +38,34 @@
         <!-- Sección de subida de imágenes -->
         <div class="upload-section">
             <div class="tabs">
-                <button class="tab active">Fotos</button>
-                <button class="tab">Videos</button>
+                <button class="tab active" id="btnFotos">Fotos</button>
+                <button class="tab" id="btnVideos">Videos</button>
             </div>
-            <div class="image-list">
-                <div class="image-placeholder"></div>
-                <div class="image-placeholder"></div>
-
+        
+            <div id="fotosContainer">
+                <div class="image-list">
+                    <div class="image-placeholder"></div>
+                    <div class="image-placeholder"></div>
+                </div>
+                <div class="upload-buttons">
+                    <button class="select-button">Seleccionar Fotos</button>
+                    <button class="upload-button">Subir Fotos</button>
+                </div>
             </div>
-            <div class="upload-buttons">
-                <input type="file" id="fileInput" hidden>
-                <button class="select-button" onclick="document.getElementById('fileInput').click()">Seleccionar imagen</button>
-                <button class="upload-button">Subir</button>
+        
+            <div id="videosContainer" style="display: none;">
+                <div class="video-list">
+                    <div class="video-placeholder"></div>
+                    <div class="video-placeholder"></div>
+                </div>
+                <div class="upload-buttons">
+                    <button class="select-button">Seleccionar Videos</button>
+                    <button class="upload-button">Subir Videos</button>
+                </div>
             </div>
         </div>
+        
+        
     
         <!-- Sección del formulario -->
         <div class="form-section">
@@ -102,6 +116,7 @@
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../JS/modalLogout.js"></script>
+    <script src="../JS/ContSubirMult.js"></script>
 </body>
 
 </html>

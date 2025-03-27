@@ -1,4 +1,5 @@
 CREATE DATABASE Hermes;
+
 USE Hermes;
 SHOW TABLES;
 DROP DATABASE Hermes;
@@ -73,7 +74,6 @@ CREATE TABLE Productos (
     tipo VARCHAR (50) NOT NULL,
     id_vendedor INT NOT NULL,
     id_categoria INT NOT NULL,
-    -- id_administrador INT NULL
     estado VARCHAR(50) DEFAULT 'pendiente' NOT NULL,
     FOREIGN KEY (id_vendedor) REFERENCES Usuarios(id) ,
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id) 
