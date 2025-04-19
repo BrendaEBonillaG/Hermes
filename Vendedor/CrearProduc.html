@@ -73,10 +73,16 @@
                 <textarea name="descripcion" placeholder="Descripción..." class="input-field" required></textarea>
                 
                 <div class="row">
-                    <select name="categoria" class="input-field" required>
-                        <option value="">Selecciona categoría...</option>
-                        <!-- Opciones dinámicas -->
-                    </select>
+                    <input type="text" 
+                    name="categoria" 
+                    class="input-field" 
+                    placeholder="Escribe o selecciona una categoría..." 
+                    list="categoriasList"
+                    required>
+             <datalist id="categoriasList">
+                 <!-- Las opciones se cargarán dinámicamente -->
+             </datalist>
+         
                     <input type="number" name="precio" placeholder="Precio..." class="input-field small" min="0.01" step="0.01" required>
                     <input type="number" name="cantidad" placeholder="Cantidad..." class="input-field small" min="1" required>
                 </div>

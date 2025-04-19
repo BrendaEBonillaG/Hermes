@@ -199,3 +199,76 @@ CREATE TABLE Mensajes (
 );
 
 SELECT * FROM Mensajes;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_registrar_producto(
+    IN p_nombre VARCHAR(100),
+    IN p_descripcion TEXT,
+    IN p_precio DECIMAL(10,2),
+    IN p_cantidad INT,
+    IN p_categoria VARCHAR(100),
+    IN p_id_vendedor INT,
+    IN p_acepta_cotizaciones BOOLEAN,
+    OUT p_id_producto INT,
+    OUT p_mensaje VARCHAR(255)
+)
+BEGIN
+    DECLARE v_id_categoria INT;
+    DECLARE v_categoria_existe INT;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        GET DIAGNOSTICS CONDITION 1
+        @sqlstate = RETURNED_SQLSTATE, 
+        @errno = MYSQL_ERRNO, 
+        @text = MESSAGE_TEXT;
+        
+        SET p_mensaje = CONCAT('Error: ', @sqlstate, ' - ', @errno, ' - ', @text);
+    END;
+    
+    START TRANSACTION;
+    
+    -- Verificar si la categoría existe
+    SELECT COUNT(*) INTO v_categoria_existe FROM Categorias WHERE nombre = p_categoria;
+    
+    -- Si no existe, crear nueva categoría
+    IF v_categoria_existe = 0 THEN
+        INSERT INTO Categorias (nombre, id_usuario) VALUES (p_categoria, p_id_vendedor);
+        SET v_id_categoria = LAST_INSERT_ID();
+    ELSE
+        -- Obtener ID de categoría existente
+        SELECT id INTO v_id_categoria FROM Categorias WHERE nombre = p_categoria LIMIT 1;
+    END IF;
+    
+    -- Insertar el producto
+    INSERT INTO Productos (
+        nombre, 
+        descripcion, 
+        precio, 
+        cantidad_Disponible, 
+        tipo, 
+        id_vendedor, 
+        id_categoria, 
+        estado, 
+        acepta_cotizaciones
+    ) VALUES (
+        p_nombre,
+        p_descripcion,
+        p_precio,
+        p_cantidad,
+        'físico',
+        p_id_vendedor,
+        v_id_categoria,
+        'pendiente',
+        p_acepta_cotizaciones
+    );
+    
+    SET p_id_producto = LAST_INSERT_ID();
+    SET p_mensaje = 'Producto registrado correctamente';
+    
+    COMMIT;
+END //
+
+DELIMITER ;
