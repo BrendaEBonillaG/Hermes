@@ -1,5 +1,4 @@
 CREATE DATABASE Hermes;
-
 USE Hermes;
 SHOW TABLES;
 DROP DATABASE Hermes;
@@ -23,6 +22,8 @@ CREATE TABLE Usuarios (
 );
 DROP TABLE IF EXISTS Usuarios;
 SELECT * FROM Usuarios;
+SELECT * FROM productos;
+SELECT * FROM Categorias;
 
 
 SHOW PROCEDURE STATUS WHERE Db = 'Hermes';
@@ -69,15 +70,36 @@ CREATE TABLE Productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
+    precio DECIMAL(10 , 2 ) NOT NULL,
     cantidad_Disponible INT NOT NULL,
-    tipo VARCHAR (50) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
     id_vendedor INT NOT NULL,
     id_categoria INT NOT NULL,
     estado VARCHAR(50) DEFAULT 'pendiente' NOT NULL,
-    FOREIGN KEY (id_vendedor) REFERENCES Usuarios(id) ,
-    FOREIGN KEY (id_categoria) REFERENCES Categorias(id) 
+    FOREIGN KEY (id_vendedor)
+        REFERENCES Usuarios (id),
+    FOREIGN KEY (id_categoria)
+        REFERENCES Categorias (id)
 );
+INSERT INTO Categorias (nombre, descripcion, id_usuario) 
+VALUES ('zaptos', 'Descripción', 1);
+
+
+
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 3', 'Descripción del producto 4', 49.99,4, 'qwewq',1,1, 'activo');
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 29.99,4, 'jabon',2,1, 'activo');
+
+
 
 -- Tabla de Imágenes de Productos
 CREATE TABLE Imagenes_Productos (
@@ -104,6 +126,9 @@ CREATE TABLE Listas (
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
+
+INSERT INTO Listas (nombre, descripcion, privacidad,id_usuario) 
+VALUES ('lista 1', 'Descripción del producto 2', 'publica',3);
 
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
