@@ -1,5 +1,5 @@
 // Simulando el rol del usuario (puedes modificar esta variable para cambiar el comportamiento)
-let userRole = 'comprador'; // Opciones: 'comprador', 'vendedor', 'administrador', 'privado'
+let role = vendedor; // Opciones: 'comprador', 'vendedor', 'administrador', 'privado'
 
 // Función para cargar el perfil según el rol
 function loadUserProfile(role) {
@@ -20,4 +20,8 @@ function loadUserProfile(role) {
     }
 }
 
-loadUserProfile(userRole);
+
+
+
+
+
