@@ -2,7 +2,7 @@
 $host = 'localhost';
 $dbname = 'Hermes';
 $username = 'root';
-$password = '';
+$password = 'Admin';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
