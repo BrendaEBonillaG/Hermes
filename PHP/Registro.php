@@ -1,105 +1,83 @@
 <?php
-session_start();
+session_start(); // Inicia la sesión
 
-require '../config.php'; 
+header('Content-Type: application/json');
+require_once '../config.php';
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// Función para validar la contraseña
-function validarContrasena($contrasena) {
-    if (strlen($contrasena) > 8) {
-        return false;
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Obtener los datos del formulario
+    $nombre = $_POST['nombres'] ?? ''; // Nombre
+    $nom_usuario = $_POST['nombreUsu'] ?? ''; // Nombre de usuario
+    $correo = $_POST['correo'] ?? ''; // Correo
+    $contrasena = $_POST['contrasena'] ?? ''; // Contraseña
+    $fecha_nacimiento = $_POST['fechaNacim'] ?? ''; // Fecha de nacimiento
+    $genero = $_POST['sexo'] ?? ''; // Sexo
+    $privacidad = $_POST['privacidad'] ?? ''; // Visibilidad
+    $imagen = $_FILES['imageUpload'] ?? null; // Imagen
+    $apellidoP = $_POST['apePa'] ?? ''; // Apellido Paterno
+    $apellidoM = $_POST['apeMa'] ?? ''; // Apellido Materno
+    $rol = $_POST['rol'] ?? ''; // Rol de usuario
+
+    // Validación de campos
+    if (!$nombre || !$nom_usuario || !$correo || !$contrasena || !$fecha_nacimiento || !$genero) {
+        echo json_encode(["success" => false, "error" => "Faltan campos"]);
+        exit;
     }
 
-
-    $patron = '/^(?=.*[A-ZÑ])(?=.*[a-zñ])(?=.*\d).+$/';
-    return preg_match($patron, $contrasena);
-}
-
-// Función para validar el correo electrónico
-function validarCorreo($correo) {
-    return filter_var($correo, FILTER_VALIDATE_EMAIL);
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $correo = $_POST['correo'];
-    $nombreUsu = $_POST['nombreUsu'];
-    $contrasena = $_POST['contrasena'];
-    $rol = $_POST['rol'];
-    $nombres = $_POST['nombres'];
-    $apePa = $_POST['apePa'];
-    $apeMa = $_POST['apeMa'];
-    $fechaNacim = $_POST['fechaNacim'];
-    $sexo = $_POST['sexo'];
-    $privacidad = $_POST['privacidad'];
-
-    // Validar el correo electrónico
-    if (!validarCorreo($correo)) {
-        die("Error: El correo electrónico no es válido.");
+    // Subida de imagen (si existe)
+    $fotoBinaria = null;
+    if ($imagen && $imagen['error'] === UPLOAD_ERR_OK) {
+        $fotoBinaria = file_get_contents($imagen['tmp_name']); // Leemos el archivo binario de la imagen
     }
 
-    // Validar la contraseña
-    if (!validarContrasena($contrasena)) {
-        die("Error: La contraseña no cumple con los requisitos.");
+    // Encriptación de la contraseña
+    $hash = password_hash($contrasena, PASSWORD_DEFAULT);
+
+    // Consulta para insertar los datos del usuario
+    $sql = "INSERT INTO Usuarios (nombreUsu, correo, contrasena, rol, foto, fotoNombre, nombres, apePa, apeMa, fechaNacim, sexo, privacidad)
+            VALUES (:nombreUsu, :correo, :contrasena, 'Usuario', :foto, :fotoNombre, :nombres, :apePa, :apeMa, :fechaNacim, :sexo, :privacidad)";
+
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        echo json_encode(["success" => false, "error" => "Error al preparar la consulta: " . $conn->errorInfo()]);
+        exit;
     }
 
-    // Hash de la contraseña
-    $contrasenaHash = password_hash($contrasena, PASSWORD_BCRYPT);
+    // Vinculamos los parámetros a la consulta preparada
+    $stmt->bindValue(':nombreUsu', $nom_usuario, PDO::PARAM_STR);
+    $stmt->bindValue(':correo', $correo, PDO::PARAM_STR);
+    $stmt->bindValue(':contrasena', $hash, PDO::PARAM_STR); // Contraseña encriptada
+    $stmt->bindValue(':foto', $fotoBinaria, PDO::PARAM_LOB); // Foto en formato binario
+    $stmt->bindValue(':fotoNombre', $imagen['name'], PDO::PARAM_STR); // Nombre de la imagen
+    $stmt->bindValue(':nombres', $nombre, PDO::PARAM_STR);
+    $stmt->bindValue(':apePa', $apellidoP, PDO::PARAM_STR);
+    $stmt->bindValue(':apeMa', $apellidoM, PDO::PARAM_STR);
+    $stmt->bindValue(':fechaNacim', $fecha_nacimiento, PDO::PARAM_STR);
+    $stmt->bindValue(':sexo', $genero, PDO::PARAM_STR);
+    $stmt->bindValue(':privacidad', $privacidad, PDO::PARAM_STR);
 
-    // Manejo de la imagen (avatar)
-    $foto = null;
-    $fotoNombre = null;
+    // Ejecutamos la consulta
+    if ($stmt->execute()) {
+        // Obtener el id del nuevo usuario registrado
+        $user_id = $conn->lastInsertId(); // Usamos lastInsertId() en PDO
 
-    if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_ERR_OK) {
-        $fotoNombre = basename($_FILES['imageUpload']['name']);
-        $foto = file_get_contents($_FILES['imageUpload']['tmp_name']);
+        // Almacenar la sesión
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['nom_usuario'] = $nom_usuario;
+        $_SESSION['correo'] = $correo;
+
+        echo json_encode(["success" => true, "message" => "Registro exitoso, sesión iniciada"]);
+    } else {
+        echo json_encode(["success" => false, "error" => $stmt->errorInfo()]);
     }
 
-    try {
-
-        $stmt = $pdo->prepare("CALL sp_insert_usuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bindParam(1, $correo, PDO::PARAM_STR);
-        $stmt->bindParam(2, $nombreUsu, PDO::PARAM_STR);
-        $stmt->bindParam(3, $contrasenaHash, PDO::PARAM_STR);
-        $stmt->bindParam(4, $rol, PDO::PARAM_STR);
-        $stmt->bindParam(5, $foto, PDO::PARAM_LOB);
-        $stmt->bindParam(6, $fotoNombre, PDO::PARAM_STR);
-        $stmt->bindParam(7, $nombres, PDO::PARAM_STR);
-        $stmt->bindParam(8, $apePa, PDO::PARAM_STR);
-        $stmt->bindParam(9, $apeMa, PDO::PARAM_STR);
-        $stmt->bindParam(10, $fechaNacim, PDO::PARAM_STR);
-        $stmt->bindParam(11, $sexo, PDO::PARAM_STR);
-        $stmt->bindParam(12, $privacidad, PDO::PARAM_STR);
-
-        $stmt->execute();
-
- 
-        $usuarioId = $pdo->lastInsertId();
-
-        // Almacenar los datos del usuario en la sesión
-        $_SESSION['usuario'] = [
-            'id' => $usuarioId,
-            'correo' => $correo,
-            'nombreUsu' => $nombreUsu,
-            'rol' => $rol,
-            'nombres' => $nombres,
-            'apePa' => $apePa,
-            'apeMa' => $apeMa,
-            'fechaNacim' => $fechaNacim,
-            'sexo' => $sexo,
-            'privacidad' => $privacidad
-        ];
-
-        // Redirigir al dashboard después del registro exitoso
-        header("Location: ../Dashboard.html");
-        exit();
-    } catch (PDOException $e) {
-
-        die("Error al registrar el usuario: " . $e->getMessage());
-    }
+    // Cerramos la conexión
+    $stmt->closeCursor();
+    $conn = null; // Cerramos la conexión PDO
 } else {
-
-    header("HTTP/1.1 405 Method Not Allowed");
-    echo "Método no permitido.";
-    exit;
+    echo json_encode(["success" => false, "error" => "Método no permitido"]);
 }
 ?>

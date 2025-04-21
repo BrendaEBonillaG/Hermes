@@ -23,7 +23,7 @@ $nombre_usuario = $_SESSION['usuario']['nombreUsu'];
 $user =[];
 
 $sql = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $pdo->prepare($sql);  // Prepara la consulta
+$stmt = $conn ->prepare($sql);  // Prepara la consulta
 $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
 $stmt->execute();
 
@@ -38,7 +38,7 @@ if ($rol_usuario === 'vendedor') {
 
     // Consulta para obtener los productos del vendedor
     $sql = "SELECT * FROM productos WHERE id_vendedor = ?";
-    $stmt = $pdo->prepare($sql);  // Prepara la consulta
+    $stmt = $conn ->prepare($sql);  // Prepara la consulta
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
     $stmt->execute();  // Ejecuta la consulta
 
@@ -48,7 +48,7 @@ if ($rol_usuario === 'vendedor') {
 else if($rol_usuario === 'cliente'){
 
     $sql = "SELECT * FROM Listas WHERE id_usuario = ?";
-    $stmt = $pdo->prepare($sql);  // Prepara la consulta
+    $stmt = $conn ->prepare($sql);  // Prepara la consulta
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
     $stmt->execute();  // Ejecuta la consulta
 

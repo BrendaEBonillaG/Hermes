@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rememberMe = isset($_POST['rememberMe']);
 
     // Buscar el usuario en la base de datos
-    $stmt = $pdo->prepare("SELECT id, nombreUsu, contrasena, rol FROM Usuarios WHERE nombreUsu = ?");
+    $stmt = $conn ->prepare("SELECT id, nombreUsu, contrasena, rol FROM Usuarios WHERE nombreUsu = ?");
     $stmt->execute([$nombreUsu]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
