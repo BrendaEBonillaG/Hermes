@@ -6,7 +6,7 @@ if (isset($_COOKIE['rememberMe'])) {
     list($id, $nombreUsu) = explode(':', base64_decode($_COOKIE['rememberMe']));
 
     // Buscar el usuario en la base de datos
-    $stmt = $pdo->prepare("SELECT id, nombreUsu, rol FROM Usuarios WHERE id = ? AND nombreUsu = ?");
+    $stmt = $conn ->prepare("SELECT id, nombreUsu, rol FROM Usuarios WHERE id = ? AND nombreUsu = ?");
     $stmt->execute([$id, $nombreUsu]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -199,7 +199,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
         </div>
         <script src="JS/main.js"></script>
-        <!-- <script src="API/AJAXRegistro.js"></script>-->
+       
 </body>
 
 </html>

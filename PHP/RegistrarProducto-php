@@ -30,7 +30,7 @@ try {
     $idVendedor = $_SESSION['id_usuario'];
 
     // Llamar al procedimiento almacenado
-    $stmt = $pdo->prepare("CALL sp_registrar_producto(:nombre, :descripcion, :precio, :cantidad, :categoria, :id_vendedor, :acepta_cotizaciones, @id_producto, @mensaje)");
+    $stmt = $conn ->prepare("CALL sp_registrar_producto(:nombre, :descripcion, :precio, :cantidad, :categoria, :id_vendedor, :acepta_cotizaciones, @id_producto, @mensaje)");
     
     $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
     $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
@@ -43,7 +43,7 @@ try {
     $stmt->execute();
 
     // Obtener resultados del procedimiento
-    $result = $pdo->query("SELECT @id_producto AS id_producto, @mensaje AS mensaje")->fetch(PDO::FETCH_ASSOC);
+    $result = $conn ->query("SELECT @id_producto AS id_producto, @mensaje AS mensaje")->fetch(PDO::FETCH_ASSOC);
     
     if (empty($result['id_producto'])) {
         throw new Exception($result['mensaje'] ?? 'Error al registrar el producto');
@@ -68,7 +68,7 @@ try {
                 }
                 
                 if (move_uploaded_file($tmpName, $rutaDestino)) {
-                    $stmt = $pdo->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
+                    $stmt = $conn ->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
                     $stmt->execute([$idProducto, $rutaDestino]);
                     $mediaUploaded = true;
                 } else {
@@ -86,7 +86,7 @@ try {
                 $rutaDestino = '../uploads/productos/' . $nombreArchivo;
                 
                 if (move_uploaded_file($tmpName, $rutaDestino)) {
-                    $stmt = $pdo->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
+                    $stmt = $conn ->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
                     $stmt->execute([$idProducto, $rutaDestino]);
                     $mediaUploaded = true;
                 } else {

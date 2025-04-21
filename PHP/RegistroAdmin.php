@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Preparar la llamada al procedimiento almacenado
-        $stmt = $pdo->prepare("CALL sp_insert_usuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn ->prepare("CALL sp_insert_usuario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $correo, PDO::PARAM_STR);
         $stmt->bindParam(2, $nombreUsu, PDO::PARAM_STR);
         $stmt->bindParam(3, $contrasenaHash, PDO::PARAM_STR);

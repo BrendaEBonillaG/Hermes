@@ -10,8 +10,8 @@ $usuario_id = $_SESSION['usuario']['id'];  // Obtener el ID del usuario desde la
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Conectar a la base de datos
     try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn  = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Recoger los datos del formulario
         $nombreUsu = $_POST['nombreUsu'];
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 WHERE id = :id";
 
         // Preparar la sentencia SQL
-        $stmt = $pdo->prepare($sql);
+        $stmt = $conn ->prepare($sql);
         
        
 

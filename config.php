@@ -2,11 +2,11 @@
 $host = 'localhost';
 $dbname = 'Hermes';
 $username = 'root';
-$password = '';
+$password = 'Admin';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn  = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo 'Error de conexión: ' . $e->getMessage();
 }
