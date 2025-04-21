@@ -100,8 +100,8 @@ if (isset($_COOKIE['rememberMe'])) {
                 <div class="form-title">
                     <span>Crear cuenta</span>
                 </div>
-                <form class="form-inputs" id="registerForm" action="PHP/Registro.php" method="POST"
-                    enctype="multipart/form-data" novalidate>
+                <form class="form-inputs" id="registrarForm" method="POST" enctype="multipart/form-data" novalidate>
+
                     <div class="column1">
                         <!-- Correo Electrónico (único) -->
                         <div class="input-box">
@@ -188,7 +188,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
                     <!-- Botón de Registro -->
                     <div class="input-box">
-                        <button type="submit" class="input-submit">
+                        <button class="input-submit">
                             <span>Registrarse</span>
                             <i class="bx bx-right-arrow-alt"></i>
                         </button>
@@ -198,7 +198,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
 
         </div>
-        <script src="JS/main.js"></script>
+        <script src="../Hermes/JS/main.js"></script>
        
 </body>
 

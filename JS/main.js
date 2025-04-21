@@ -1,6 +1,8 @@
+console.log("si entro"); // DEBUG
 document.addEventListener("DOMContentLoaded", function () {
     // Variables de elementos del DOM
-    const registerForm = document.querySelector(".form-inputs");
+    const registrarForm = document.querySelector(".register-form");
+    const registerForm = document.querySelector(".register-form");
     const loginForm = document.querySelector(".login-form");
     const registerBtn = document.querySelector("#register");
     const loginBtn = document.querySelector("#login");
@@ -43,20 +45,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Validación y envío del formulario de registro
-    registerForm.addEventListener("submit", async function (event) {
+    registrarForm.addEventListener("submit", async function (event) {
         event.preventDefault();
-
-        const username = registerForm.querySelector('#nombreUsu').value;
-        const password = registerForm.querySelector('#contrasena').value;
-        const email = registerForm.querySelector('#correo').value;
-        const fullName = registerForm.querySelector('#nombres').value;
-        const lastName = registerForm.querySelector('#apePa').value;
-        const maternalLastName = registerForm.querySelector('#apeMa').value;
-        const birthDate = registerForm.querySelector('#fechaNacim').value;
-        const gender = registerForm.querySelector('#sexo').value;
-        const privacy = registerForm.querySelector('#privacidad').value;
-        const role = registerForm.querySelector('#rol').value;
-        const profileImage = registerForm.querySelector('#imageUpload').files[0];
+        console.log("Interceptado el submit correctamente"); // DEBUG
+        const username = registrarForm.querySelector('#nombreUsu').value;
+        const password = registrarForm.querySelector('#contrasena').value;
+        const email = registrarForm.querySelector('#correo').value;
+        const fullName = registrarForm.querySelector('#nombres').value;
+        const lastName = registrarForm.querySelector('#apePa').value;
+        const maternalLastName = registrarForm.querySelector('#apeMa').value;
+        const birthDate = registrarForm.querySelector('#fechaNacim').value;
+        const gender = registrarForm.querySelector('#sexo').value;
+        const privacy = registrarForm.querySelector('#privacidad').value;
+        const role = registrarForm.querySelector('#rol').value;
+        const profileImage = registrarForm.querySelector('#imageUpload').files[0];
 
         // Validaciones
         if (!username || !password || !email || !fullName || !lastName || !maternalLastName || !birthDate || !gender || !privacy || !role) {
@@ -104,8 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 if (data.success) {
                     alert('Registro exitoso');
-                    registerForm.reset();  // Limpiar el formulario tras el registro exitoso
-                    window.location.href = 'Dashboard.html'; // Redirigir al dashboard
+                    registrarForm.reset();  // Limpiar el formulario tras el registro exitoso
+                    window.location.href = './Dashboard.html'; // Redirigir al dashboard
                 } else {
                     alert('Error al registrar el usuario: ' + data.message);
                 }
@@ -118,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error en la solicitud:', error);
             alert('Hubo un error al procesar la solicitud. Por favor, inténtelo nuevamente.');
         }
+        
         
     });
 });
