@@ -65,9 +65,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user_id = $conn->lastInsertId(); // Usamos lastInsertId() en PDO
 
         // Almacenar la sesión
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['nom_usuario'] = $nom_usuario;
-        $_SESSION['correo'] = $correo;
+        $_SESSION['usuario'] = [
+            'id' => $user_id,
+            'rol' => $rol,
+            'nombreUsu' => $nom_usuario,
+        ];
 
         echo json_encode(["success" => true, "message" => "Registro exitoso, sesión iniciada"]);
     } else {

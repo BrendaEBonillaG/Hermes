@@ -265,6 +265,6 @@ else if($rol_usuario === 'cliente'){
         </div>
     </div>
 
-    <script src="JS/profile.js"></script>
+
 </body>
 </html>
