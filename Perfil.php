@@ -105,73 +105,74 @@ else if($rol_usuario === 'cliente'){
 
 
     </div> 
+
     <div id="editPopup" class="popup">
-    <div class="popup-content">
-        <span class="close-btn" id="closeBtn">&times;</span>
-        <h3>Editar Información</h3>
-        <form action="editar_perfil.php" method="POST">
-            <!-- Campo para el nombre de usuario -->
-        <label for="nombreUsu">Nombre de Usuario:</label>
-        <input type="text" id="nombreUsu" name="nombreUsu" value="<?php echo htmlspecialchars($user['nombreUsu']); ?>" required><br>
+        <div class="popup-content" id="popup">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <h3>Editar Información</h3>
+            <form action="editar_perfil.php" method="POST">
+                <!-- Campo para el nombre de usuario -->
+            <label for="nombreUsu">Nombre de Usuario:</label>
+            <input type="text" id="nombreUsu" name="nombreUsu" value="<?php echo htmlspecialchars($user['nombreUsu']); ?>" required><br>
 
-        <!-- Campo correo -->
-        <label for="correo">Correo:</label>
-        <input type="text" id="correo" name="correo" value="<?php echo htmlspecialchars($user['correo']); ?>" required><br>
+            <!-- Campo correo -->
+            <label for="correo">Correo:</label>
+            <input type="text" id="correo" name="correo" value="<?php echo htmlspecialchars($user['correo']); ?>" required><br>
 
-        <!-- Campo nombres -->
-        <label for="nombres">Nombres:</label>
-        <input type="text" id="nombres" name="nombres" value="<?php echo htmlspecialchars($user['nombres']); ?>" required><br>
+            <!-- Campo nombres -->
+            <label for="nombres">Nombres:</label>
+            <input type="text" id="nombres" name="nombres" value="<?php echo htmlspecialchars($user['nombres']); ?>" required><br>
 
-        <!-- Campo apellido paterno -->
-        <label for="apePa">Apellido Paterno:</label>
-        <input type="text" id="apePa" name="apePa" value="<?php echo htmlspecialchars($user['apePa']); ?>" required><br>
+            <!-- Campo apellido paterno -->
+            <label for="apePa">Apellido Paterno:</label>
+            <input type="text" id="apePa" name="apePa" value="<?php echo htmlspecialchars($user['apePa']); ?>" required><br>
 
-        <!-- Campo apellido materno -->
-        <label for="apeMa">Apellido Materno:</label>
-        <input type="text" id="apeMa" name="apeMa" value="<?php echo htmlspecialchars($user['apeMa']); ?>" required><br>
+            <!-- Campo apellido materno -->
+            <label for="apeMa">Apellido Materno:</label>
+            <input type="text" id="apeMa" name="apeMa" value="<?php echo htmlspecialchars($user['apeMa']); ?>" required><br>
 
-        <!-- Campo fecha de nacimiento -->
-        <label for="fechaNacim">Fecha Nacimiento: <?php echo htmlspecialchars($user['fechaNacim']); ?></label>
-        <input type="date" id="fechaNacim" name="fechaNacim" value="<?php echo htmlspecialchars($user['fechaNacim']); ?>" required><br>
+            <!-- Campo fecha de nacimiento -->
+            <label for="fechaNacim">Fecha Nacimiento: <?php echo htmlspecialchars($user['fechaNacim']); ?></label>
+            <input type="date" id="fechaNacim" name="fechaNacim" value="<?php echo htmlspecialchars($user['fechaNacim']); ?>" required><br>
 
-        <!-- Campo sexo -->
-        <label for="sexo">Sexo: <?php echo htmlspecialchars($user['sexo']); ?></label>
-        <select class="input-field" id="sexo" name="sexo" >
-                                <option value="" disabled selected>Sexo</option>
-                                <option value="masculino">Masculino</option>
-                                <option value="femenino">Femenino</option>
-        </select>
-        
+            <!-- Campo sexo -->
+            <label for="sexo">Sexo: <?php echo htmlspecialchars($user['sexo']); ?></label>
+            <select class="input-field" id="sexo" name="sexo" >
+                                    <option value="" disabled selected>Sexo</option>
+                                    <option value="masculino">Masculino</option>
+                                    <option value="femenino">Femenino</option>
+            </select>
+            
 
-        <!-- Campo privacidad -->
-        <label for="privacidad">Privacidad: <?php echo htmlspecialchars($user['privacidad']); ?></label>
-        <select class="input-field" id="privacidad" name="privacidad" >
-                                <option value="" disabled selected>Visibilidad</option>
-                                <option value="publico">Público</option>
-                                <option value="privado">Privado</option>
-        </select>
-
-      
-        <!-- Campo contrasena -->
-        <label for="contrasena">Contraseña:</label>
-        <input type="text" id="contrasena" name="contrasena" value=""><br>
-
-
-        <!-- Campo oculto con la contraseña actual -->
-        <input type="hidden" id="contrasena_actual" name="contrasena_actual" value="<?php echo htmlspecialchars($user['contrasena']); ?>">
-
-        <input type="hidden" id="rol_actual" name="rol_actual" value="<?php echo htmlspecialchars($user['rol']); ?>">
-
-        <input type="hidden" id="sexo_actual" name="sexo_actual" value="<?php echo htmlspecialchars($user['sexo']); ?>">
-
-        <input type="hidden" id="privacidad_actual" name="privacidad_actual" value="<?php echo htmlspecialchars($user['privacidad']); ?>">
-
-
-
-        <input type="submit" value="Guardar Cambios">
+            <!-- Campo privacidad -->
+            <label for="privacidad">Privacidad: <?php echo htmlspecialchars($user['privacidad']); ?></label>
+            <select class="input-field" id="privacidad" name="privacidad" >
+                                    <option value="" disabled selected>Visibilidad</option>
+                                    <option value="publico">Público</option>
+                                    <option value="privado">Privado</option>
+            </select>
 
         
-    </div>
+            <!-- Campo contrasena -->
+            <label for="contrasena">Contraseña:</label>
+            <input type="text" id="contrasena" name="contrasena" value=""><br>
+
+
+            <!-- Campo oculto con la contraseña actual -->
+            <input type="hidden" id="contrasena_actual" name="contrasena_actual" value="<?php echo htmlspecialchars($user['contrasena']); ?>">
+
+            <input type="hidden" id="rol_actual" name="rol_actual" value="<?php echo htmlspecialchars($user['rol']); ?>">
+
+            <input type="hidden" id="sexo_actual" name="sexo_actual" value="<?php echo htmlspecialchars($user['sexo']); ?>">
+
+            <input type="hidden" id="privacidad_actual" name="privacidad_actual" value="<?php echo htmlspecialchars($user['privacidad']); ?>">
+
+
+
+            <input type="submit" value="Guardar Cambios">
+
+            
+        </div>
 </div>
 
 
@@ -264,6 +265,18 @@ else if($rol_usuario === 'cliente'){
             </div>
         </div>
     </div>
+
+<script>
+ document.getElementById('edit_btn').addEventListener('click', function() {
+        document.getElementById('editPopup').style.display = 'block';
+    });
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.getElementById('editPopup').style.display = 'none';
+    });
+</script>
+
+
 
 
 </body>
