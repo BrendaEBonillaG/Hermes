@@ -138,10 +138,9 @@ ul li {
     overflow-y: auto;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     
-    /* Grid de 2 columnas */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 /* Etiquetas */
@@ -188,9 +187,23 @@ ul li {
 .close-btn:hover {
     color: #000;
 }
+.popup-content input[type="submit"] {
+    padding: 0.8rem;
+    background-color: #F1DE99;
+    border: none;
+    border-radius: 6px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
 .popup-content input[type="submit"]:hover {
     background-color: #e6a84c;
 }
+
+
 /* Versión móvil */
 @media screen and (max-width: 768px) {
     .popup-content {
