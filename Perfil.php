@@ -37,7 +37,7 @@ if ($rol_usuario === 'vendedor') {
 
 
     // Consulta para obtener los productos del vendedor
-    $sql = "SELECT * FROM productos WHERE id_vendedor = ?";
+    $sql = "SELECT * FROM Productos WHERE id_vendedor = ?";
     $stmt = $conn ->prepare($sql);  // Prepara la consulta
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
     $stmt->execute();  // Ejecuta la consulta
