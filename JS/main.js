@@ -1,7 +1,7 @@
 console.log("si entro"); // DEBUG
 document.addEventListener("DOMContentLoaded", function () {
     // Variables de elementos del DOM
-    const registrarForm = document.querySelector(".register-form");
+    const registrarForm = document.getElementById("registrarForm");
     const registerForm = document.querySelector(".register-form");
     const loginForm = document.querySelector(".login-form");
     const registerBtn = document.querySelector("#register");
