@@ -50,11 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
 
-
-
-
-        
-      
    
         // Preparar la consulta para actualizar el perfil del usuario
         $sql = "UPDATE usuarios SET
