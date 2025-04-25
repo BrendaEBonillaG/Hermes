@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Consulta para insertar los datos del usuario
     $sql = "INSERT INTO Usuarios (nombreUsu, correo, contrasena, rol, foto, fotoNombre, nombres, apePa, apeMa, fechaNacim, sexo, privacidad)
-            VALUES (:nombreUsu, :correo, :contrasena, 'Usuario', :foto, :fotoNombre, :nombres, :apePa, :apeMa, :fechaNacim, :sexo, :privacidad)";
+            VALUES (:nombreUsu, :correo, :contrasena, :rol, :foto, :fotoNombre, :nombres, :apePa, :apeMa, :fechaNacim, :sexo, :privacidad)";
 
     $stmt = $conn->prepare($sql);
 
@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bindValue(':nombreUsu', $nom_usuario, PDO::PARAM_STR);
     $stmt->bindValue(':correo', $correo, PDO::PARAM_STR);
     $stmt->bindValue(':contrasena', $hash, PDO::PARAM_STR); // Contraseña encriptada
+    $stmt->bindValue(':rol', $rol, PDO::PARAM_STR); // Rol de usuario
     $stmt->bindValue(':foto', $fotoBinaria, PDO::PARAM_LOB); // Foto en formato binario
     $stmt->bindValue(':fotoNombre', $imagen['name'], PDO::PARAM_STR); // Nombre de la imagen
     $stmt->bindValue(':nombres', $nombre, PDO::PARAM_STR);
