@@ -113,3 +113,103 @@ ul li {
     font-weight: 600;
     color: #F1DE99;
 }
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.popup-content {
+    position: absolute;
+    right: 500px; /* Controla qué tan a la derecha aparece */
+    top: 80px; /* Controla la posición vertical */
+    background-color: #a7a7a733;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 500px; /* Ancho fijo (no se modifica) */
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+/* Etiquetas */
+.popup-content label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+    color: #fff;
+}
+/* Inputs */
+.popup-content input[type="text"],
+.popup-content input[type="date"],
+.popup-content select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+/* Enfocar inputs */
+.popup-content input[type="text"]:focus,
+.popup-content input[type="date"]:focus,
+.popup-content select:focus {
+    border-color: #ffbd59;
+    outline: none;
+}
+
+/* Botón de cerrar */
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+.popup-content input[type="submit"] {
+    padding: 0.8rem;
+    background-color: #F1DE99;
+    border: none;
+    border-radius: 6px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.popup-content input[type="submit"]:hover {
+    background-color: #e6a84c;
+}
+
+
+/* Versión móvil */
+@media screen and (max-width: 768px) {
+    .popup-content {
+        right: 20px;
+        left: 20px;
+        width: auto;
+        top: 50px;
+    }
+}

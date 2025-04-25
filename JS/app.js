@@ -67,14 +67,21 @@ window.addEventListener('load', () => {
 function visualizarProductos() {
     contenedor.innerHTML = ""
     for (let i = 0; i < productos.length; i++) {
-        if (productos[i].existencia > 0) {
-            contenedor.innerHTML += `<div><img src="${productos[i].urlImagen}"><div class="informacion"><p>${productos[i].nombre}</p><p class="precio">$${productos[i].valor}</p><button onclick=comprar(${i})>Comprar</button></div></div>`
-        }
-        else {
-            contenedor.innerHTML += `<div><img src="${productos[i].urlImagen}"><div class="informacion"><p>${productos[i].nombre}</p><p class="precio">$${productos[i].valor}</p><p class="soldOut">Sold Out</p></div></div>`
-        }
+        const producto = productos[i];
+        const soldOut = producto.existencia <= 0;
+
+        contenedor.innerHTML += `
+        <div class="cardProducto" onclick="irADetalle(${i})">
+            <img src="${producto.urlImagen}">
+            <div class="informacion">
+                <p>${producto.nombre}</p>
+                <p class="precio">$${producto.valor}</p>
+                ${soldOut ? '<p class="soldOut">Sold Out</p>' : '<button onclick="event.stopPropagation(); comprar(' + i + ')">Comprar</button>'}
+            </div>
+        </div>`;
     }
 }
+
 
 function comprar(indice) {
     lista.push({ nombre: productos[indice].nombre, precio: productos[indice].valor })
@@ -142,3 +149,10 @@ x.addEventListener("click", function(){
     contenedorCompra.classList.remove('contenedorCompra')
     informacionCompra.classList.remove('informacionCompra')
 })
+
+function irADetalle(indice) {
+    // Guardamos el producto seleccionado en localStorage
+    guardarAlmacenamientoLocal("productoSeleccionado", productos[indice]);
+    // Redirigimos a la página de detalle
+    window.location.href = "Producto.html";
+}

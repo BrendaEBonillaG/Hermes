@@ -22,7 +22,7 @@ CREATE TABLE Usuarios (
 );
 DROP TABLE IF EXISTS Usuarios;
 SELECT * FROM Usuarios;
-SELECT * FROM productos;
+SELECT * FROM Productos;
 SELECT * FROM Categorias;
 
 
