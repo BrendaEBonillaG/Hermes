@@ -95,7 +95,7 @@
 }
 
 .modal-content {
-    background: white;
+    background: #ffffff33;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
@@ -105,3 +105,29 @@
     z-index: 1000; /* Asegura que esté sobre los demás elementos */
 }
 
+.btn-modal {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-modal.confirm {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-modal.confirm:hover {
+    background-color: #c0392b;
+}
+
+.btn-modal.cancel {
+    background-color: #ffbd59;
+    color: #333;
+}
+
+.btn-modal.cancel:hover {
+    background-color: #ff9800;
+}
