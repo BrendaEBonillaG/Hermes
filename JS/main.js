@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.success) {
                     alert('Registro exitoso');
                     registrarForm.reset();  // Limpiar el formulario tras el registro exitoso
-                    window.location.href = './Dashboard.html'; // Redirigir al dashboard
+                    window.location.href = './Dashboard.php'; // Redirigir al dashboard
                 } else {
                     alert('Error al registrar el usuario: ' + data.message);
                 }

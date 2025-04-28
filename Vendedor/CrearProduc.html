@@ -19,7 +19,7 @@
         <ul class="navbar-menu">
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
             <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-             <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+            <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
             <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
             <li>
                 <form class="search-form">
@@ -40,21 +40,43 @@
         <!-- Sección de subida de imágenes -->
         <div class="upload-section">
             <div class="tabs">
-                <button class="tab active">Fotos</button>
+                <button class="tab">Fotos</button>
                 <button class="tab">Videos</button>
             </div>
-            <div class="image-list">
-                <div class="image-placeholder"></div>
-                <div class="image-placeholder"></div>
+            <div class="media-lists">
+                <div class="image-list">
+                    <div class="image-item">
+                        <img src="https://i.pinimg.com/736x/37/f3/e6/37f3e6e5f1dc0f4d12f821d673634abe.jpg" alt="Imagen subida">
+                        <button class="delete-button" title="Eliminar imagen">🗑️</button>
+                    </div>
+                    <div class="image-item">
+                        <img src="https://i.pinimg.com/736x/2c/a1/99/2ca1990a8a8659d4ca9e7381758806b0.jpg" alt="Imagen subida">
+                        <button class="delete-button" title="Eliminar imagen">🗑️</button>
+                    </div>
+                </div>
+            
+                <div class="video-list">
+                    <div class="video-item">
+                        <video src="https://www.w3schools.com/html/mov_bbb.mp4" controls width="150"></video>
+                        <button class="delete-button" title="Eliminar video">🗑️</button>
+                    </div>
+                    <div class="video-item">
+                        <video src="https://www.w3schools.com/html/movie.mp4" controls width="150"></video>
+                        <button class="delete-button" title="Eliminar video">🗑️</button>
+                    </div>
+                </div>
 
+                
             </div>
             <div class="upload-buttons">
                 <input type="file" id="fileInput" hidden>
-                <button class="select-button" onclick="document.getElementById('fileInput').click()">Seleccionar imagen</button>
-                <button class="upload-button">Subir</button>
+                <button class="select-button" onclick="document.getElementById('fileInput').click()">Seleccionar
+                    imagen</button>
+                <button class="selectV-button" onclick="document.getElementById('fileInput').click()">Seleccionar
+                    video</button>
             </div>
         </div>
-    
+
         <!-- Sección del formulario -->
         <div class="form-section">
             <input type="text" placeholder="Nombre..." class="input-field">
@@ -66,42 +88,60 @@
             </div>
             <div class="checkbox-container">
                 <label>Acepta cotizaciones</label>
-               <!-- From Uiverse.io by Shoh2008 --> 
-<div class="checkbox-wrapper-12">
-    <div class="cbx">
-      <input checked="" type="checkbox" id="cbx-12">
-      <label for="cbx-12"></label>
-      <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
-        <path d="M2 8.36364L6.23077 12L13 2"></path>
-      </svg>
-    </div>
-    
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="goo-12">
-          <feGaussianBlur result="blur" stdDeviation="4" in="SourceGraphic"></feGaussianBlur>
-          <feColorMatrix result="goo-12" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" mode="matrix" in="blur"></feColorMatrix>
-          <feBlend in2="goo-12" in="SourceGraphic"></feBlend>
-        </filter>
-      </defs>
-    </svg>
-  </div>
+                <!-- From Uiverse.io by Shoh2008 -->
+                <div class="checkbox-wrapper-12">
+                    <div class="cbx">
+                        <input checked="" type="checkbox" id="cbx-12">
+                        <label for="cbx-12"></label>
+                        <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                            <path d="M2 8.36364L6.23077 12L13 2"></path>
+                        </svg>
+                    </div>
+
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="goo-12">
+                                <feGaussianBlur result="blur" stdDeviation="4" in="SourceGraphic"></feGaussianBlur>
+                                <feColorMatrix result="goo-12" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7"
+                                    mode="matrix" in="blur"></feColorMatrix>
+                                <feBlend in2="goo-12" in="SourceGraphic"></feBlend>
+                            </filter>
+                        </defs>
+                    </svg>
+                </div>
             </div>
             <button class="create-button">Crear</button>
         </div>
     </div>
-    
+
     <div id="logoutModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
             <h2>¿Deseas cerrar sesión?</h2>
             <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
-                <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+                    sesión</button>
+                <button class="btn-modal cancel"
+                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../JS/modalLogout.js"></script>
+
+        <script>
+            // Espera que cargue todo el contenido
+            document.addEventListener('DOMContentLoaded', function () {
+                const deleteButtons = document.querySelectorAll('.delete-button');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const imageItem = this.parentElement; // El div .image-item
+                        imageItem.remove(); // Elimina todo el contenedor
+                    });
+                });
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../JS/modalLogout.js"></script>
 </body>
 
 </html>

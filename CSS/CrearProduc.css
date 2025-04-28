@@ -27,34 +27,51 @@
     padding: 8px 15px;
     border-radius: 10px;
     border: none;
-    cursor: pointer;
     color: white;
 }
 
-.tab.active {
-    background-color: #3d4a1e;
+.media-lists {
+  display: flex;
+  gap: 50px; /* Espacio entre imágenes y videos */
+  flex-wrap: wrap; /* Opcional: que se acomode si la pantalla es pequeña */
 }
 
-.image-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+.image-list, .video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.image-placeholder {
-    background-color: #ccc;
-    height: 200px;
-    width: 200px;
-    border-radius: 5px;
+.image-item img, .video-item video {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
 }
+
+.delete-button {
+  background: red;
+  border-radius: 50%;
+  width: 40px; /* Define el tamaño del botón */
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 5px;
+  top: 5px; /* Ajusta la posición */
+  right: 5px; /* Ajusta la posición */
+}
+
+
+
 
 .upload-buttons {
     display: flex;
     justify-content: space-between;
 }
 
-.select-button, .upload-button {
+.select-button, .upload-button, .selectV-button {
     background-color: #ff9800;
     border: none;
     padding: 5px 10px;
