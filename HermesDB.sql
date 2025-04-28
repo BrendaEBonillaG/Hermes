@@ -128,7 +128,7 @@ CREATE TABLE Listas (
 );
 
 INSERT INTO Listas (nombre, descripcion, privacidad,id_usuario) 
-VALUES ('lista 1', 'Descripción del producto 2', 'publica',3);
+VALUES ('lista 1', 'Descripción del producto 2', 'publica',2);
 
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
