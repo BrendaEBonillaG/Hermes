@@ -6,72 +6,91 @@ require './config.php';
 
 $usuario_id = $_SESSION['usuario']['id'];  // Obtener el ID del usuario desde la sesión
 
+// Función para validar la contraseña
+function validarContrasena($contrasena) {
+    if (strlen($contrasena) > 8) {
+        return false;
+    }
+
+
+    $patron = '/^(?=.*[A-ZÑ])(?=.*[a-zñ])(?=.*\d).+$/';
+    return preg_match($patron, $contrasena);
+}
+
+// Función para validar el correo electrónico
+function validarCorreo($correo) {
+    return filter_var($correo, FILTER_VALIDATE_EMAIL);
+}
+
 // Verificar si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Conectar a la base de datos
     try {
-        $conn  = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $conn ->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Recoger los datos del formulario
+        // DATOS DEL FORMULARIO
         $nombreUsu = $_POST['nombreUsu'];
         $correo = $_POST['correo'];
-        $contrasena = $_POST['contrasena'];  // Si la contraseña está vacía, no la actualizamos
         $rol = $_POST['rol_actual'];
         $nombres = $_POST['nombres'];
         $apePa = $_POST['apePa'];
         $apeMa = $_POST['apeMa'];
         $fechaNacim = $_POST['fechaNacim'];
-        $sexo = $_POST['sexo'];
-        $privacidad = $_POST['privacidad'];
+        $sexo = $_POST['sexo'] ?? $_POST['sexo_actual'];
+        $privacidad = $_POST['privacidad'] ?? $_POST['privacidad_actual'];
+        $contrasena = $_POST['contrasena'];
 
-        if(empty($contrasena)){
+        if (!validarCorreo($correo)) {
+            die("Error: El correo electrónico no es válido.");
+        }
 
+        if (empty($contrasena)) {
             $contrasena = $_POST['contrasena_actual'];
-
-        }else{
+        } else {
+            if (!validarContrasena($contrasena)) {
+                die("Error: La contraseña no cumple con los requisitos.");
+            }
             $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
         }
 
-        if(empty($sexo)){
+        // FOTO NUEVA (si se subió)
+        $fotoBinaria = null;
+        $fotoNombre = null;
 
-            $sexo = $_POST['sexo_actual'];
-
-        }else{
+        if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_ERR_OK) {
             
+            $fotoBinaria = file_get_contents($_FILES['imageUpload']['tmp_name']);
+            $fotoNombre = $_FILES['imageUpload']['name'];
+        } else {
+            // Recuperar imagen actual si no se sube nueva
+            $stmtImg = $pdo->prepare("SELECT foto, fotoNombre FROM usuarios WHERE id = :id");
+            $stmtImg->bindParam(':id', $usuario_id);
+            $stmtImg->execute();
+            $imgData = $stmtImg->fetch(PDO::FETCH_ASSOC);
+            $fotoBinaria = $imgData['foto'];
+            $fotoNombre = $imgData['fotoNombre'];
         }
 
-        if(empty($privacidad)){
-
-            $privacidad = $_POST['privacidad_actual'];
-
-        }else{
-            
-        }
-
-
-   
-        // Preparar la consulta para actualizar el perfil del usuario
+        // CONSULTA SQL
         $sql = "UPDATE usuarios SET
-                nombreUsu = :nombreUsu,
-                correo = :correo,
-                contrasena = :contrasena,
-                rol = :rol,
-                nombres = :nombres,
-                apePa = :apePa,
-                apeMa = :apeMa,
-                fechaNacim = :fechaNacim,
-                sexo = :sexo,
-                privacidad = :privacidad,
-                foto = :foto
-                WHERE id = :id";
+            nombreUsu = :nombreUsu,
+            correo = :correo,
+            contrasena = :contrasena,
+            rol = :rol,
+            nombres = :nombres,
+            apePa = :apePa,
+            apeMa = :apeMa,
+            fechaNacim = :fechaNacim,
+            sexo = :sexo,
+            privacidad = :privacidad,
+            foto = :foto,
+            fotoNombre = :fotoNombre
+            WHERE id = :id";
 
-        // Preparar la sentencia SQL
-        $stmt = $conn ->prepare($sql);
-        
-       
+        $stmt = $pdo->prepare($sql);
 
-        // Vincular los parámetros
+        // BIND DE LOS DATOS
         $stmt->bindParam(':nombreUsu', $nombreUsu);
         $stmt->bindParam(':correo', $correo);
         $stmt->bindParam(':contrasena', $contrasena);
@@ -82,9 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->bindParam(':fechaNacim', $fechaNacim);
         $stmt->bindParam(':sexo', $sexo);
         $stmt->bindParam(':privacidad', $privacidad);
-        $stmt->bindParam(':foto', $foto, PDO::PARAM_LOB);  // Para almacenar una imagen binaria
+        $stmt->bindValue(':foto', $fotoBinaria, PDO::PARAM_LOB);
+        $stmt->bindValue(':fotoNombre', $fotoNombre, PDO::PARAM_STR);
         $stmt->bindParam(':id', $usuario_id, PDO::PARAM_INT);
 
+ 
+        
         // Ejecutar la consulta
         $stmt->execute();
 
@@ -97,3 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+
+        
+

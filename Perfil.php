@@ -68,7 +68,7 @@ else if($rol_usuario === 'cliente'){
     <!-- Barra de navegación -->
     <nav class="navbar">
         <ul class="navbar-menu">
-            <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
+            <li><a href="Dashboard.html"><i class="bi bi-house-door"></i> Inicio</a></li>
             <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
             <li><a href="#"><i class="bi bi-list"></i> Pedidos</a></li>
             <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
@@ -93,15 +93,22 @@ else if($rol_usuario === 'cliente'){
 
         <!-- Foto de perfil y nombre de usuario -->
         <div class="profile-header">
-            <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img">
+            
 
             <?php
+            // Convertir la imagen en base64
+    $imagenBlob = $user['foto']; // Esto es el BLOB que viene de la base de datos
+    $imagenBase64 = base64_encode($imagenBlob);
+
+    // Puedes ajustar el tipo MIME si no es jpg
+    echo '<img src="data:image/jpeg;base64,' . $imagenBase64 . '" alt="Foto de perfil" class="profile-img">';
+    
           
                     echo '<h2 id="username">'.$user['nombreUsu'].   '</h2>'.'<br>';
                     echo '<h2 id="username">'.$user['rol'].   '</h2>';
                
           
-                ?>
+            ?>
 
             <button id="edit_btn">Editar</button>
 
@@ -112,7 +119,7 @@ else if($rol_usuario === 'cliente'){
             <div class="popup-content" id="popup">
                 <span class="close-btn" id="closeBtn">&times;</span>
                 <h3>Editar Información</h3>
-                <form action="editar_perfil.php" method="POST">
+                <form action="editar_perfil.php" method="POST" enctype="multipart/form-data">
                     <!-- Campo para el nombre de usuario -->
                     <div class="form-group">
                         <label for="nombreUsu">Nombre de Usuario:</label>
@@ -162,6 +169,27 @@ else if($rol_usuario === 'cliente'){
                             <option value="publico">Público</option>
                             <option value="privado">Privado</option>
                         </select>
+
+                        <!-- Campo foto de perfil -->
+                        <div class="input-box-Image">
+                              <!-- Imagen actual del usuario (preview) -->
+                            <?php
+                            echo '<img id="preview" src="data:image/jpeg;base64,' . $imagenBase64 . '" alt="Foto de perfil" class="profile-img">';
+                            ?>
+
+                            <!-- Botón personalizado para subir -->
+                            <label for="imageUpload" class="custom-file-upload">
+                            <i class="bx bx-upload"></i> Subir Imagen
+                            </label>
+
+                             <!-- Input oculto que responde al label -->
+                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">
+    
+                            <!-- Nombre del archivo -->
+                            <span id="file-name">Ningún archivo seleccionado</span>
+  
+                        </div>
+
 
 
                         <!-- Campo contrasena -->
@@ -296,7 +324,27 @@ else if($rol_usuario === 'cliente'){
     document.getElementById('closeBtn').addEventListener('click', function() {
         document.getElementById('editPopup').style.display = 'none';
     });
+
+    
+document.getElementById('imageUpload').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById('preview');
+    const fileName = document.getElementById('file-name');
+
+    if (file) {
+        fileName.textContent = file.name;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result; // Actualiza la imagen
+        };
+        reader.readAsDataURL(file); // Convierte a base64
+    } else {
+        fileName.textContent = "Ningún archivo seleccionado";
+    }
+});
     </script>
+  
 
 
 
