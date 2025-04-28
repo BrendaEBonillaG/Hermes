@@ -95,38 +95,38 @@ if (isset($_COOKIE['rememberMe'])) {
                 </form>
             </div>
 
-            <!-- Register Form Container -->
-            <div class="register-form">
+        <!-- Register Form Container -->
+        <div class="register-form">
                 <div class="form-title">
                     <span>Crear cuenta</span>
                 </div>
-                <form class="form-inputs" id="registrarForm" method="POST" enctype="multipart/form-data" novalidate>
+                <form class="form-inputs" id="registerForm" novalidate>
 
                     <div class="column1">
                         <!-- Correo Electrónico (único) -->
                         <div class="input-box">
-                            <input type="email" class="input-field" id="correo" name="correo"
-                                placeholder="Correo Electrónico" required>
+                            <input type="email" class="input-field" id="correo" placeholder="Correo Electrónico" required>
                             <i class="bx bx-envelope icon"></i>
                         </div>
+                        
 
                         <!-- Nombre de Usuario (mínimo 3 caracteres) -->
                         <div class="input-box">
-                            <input type="text" class="input-field" id="nombreUsu" name="nombreUsu"
-                                placeholder="Nombre de Usuario" required minlength="3">
+                            <input type="text" class="input-field" id="nombreUsu" placeholder="Nombre de Usuario"
+                                required minlength="3">
                             <i class="bx bx-user icon"></i>
                         </div>
 
                         <!-- Contraseña (mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número y 1 carácter especial) -->
                         <div class="input-box">
-                            <input type="password" class="input-field" id="contrasena" name="contrasena"
-                                placeholder="Contraseña" required minlength="8">
+                            <input type="password" class="input-field" id="contrasena" placeholder="Contraseña" required
+                                minlength="8">
                             <i class="bx bx-lock-alt icon"></i>
                         </div>
 
                         <!-- Rol de Usuario -->
                         <div class="input-box">
-                            <select class="input-field" id="rol" name="rol" required>
+                            <select class="input-field" id="rol" required>
                                 <option value="" disabled selected>Rol de Usuario</option>
                                 <option value="vendedor">Vendedor</option>
                                 <option value="cliente">Cliente</option>
@@ -140,36 +140,33 @@ if (isset($_COOKIE['rememberMe'])) {
                             <label for="imageUpload" class="custom-file-upload">
                                 <i class="bx bx-upload"></i> Subir Imagen
                             </label>
-                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+                            <input type="file" id="imageUpload" accept="image/*">
                             <span id="file-name">Ningún archivo seleccionado</span>
                         </div>
 
                         <!-- Nombre Completo -->
                         <div class="input-box">
-                            <input type="text" class="input-field" id="nombres" name="nombres" placeholder="Nombres"
-                                required>
+                            <input type="text" class="input-field" id="nombres" placeholder="Nombres" required>
                             <i class="bx bx-user-circle icon"></i>
                         </div>
                         <div class="input-box">
-                            <input type="text" class="input-field" id="apePa" name="apePa"
-                                placeholder="Apellido paterno" required>
+                            <input type="text" class="input-field" id="apePa" placeholder="Apellido paterno" required>
                             <i class="bx bx-user-circle icon"></i>
                         </div>
                         <div class="input-box">
-                            <input type="text" class="input-field" id="apeMa" name="apeMa"
-                                placeholder="Apellido materno" required>
+                            <input type="text" class="input-field" id="apeMa" placeholder="Apellido materno" required>
                             <i class="bx bx-user-circle icon"></i>
                         </div>
 
                         <!-- Fecha de Nacimiento -->
                         <div class="input-box">
-                            <input type="date" class="input-field" id="fechaNacim" name="fechaNacim" required>
+                            <input type="date" class="input-field" id="fechaNacim" required>
                             <i class="bx bx-calendar icon"></i>
                         </div>
 
                         <!-- Sexo -->
                         <div class="input-box">
-                            <select class="input-field" id="sexo" name="sexo" required>
+                            <select class="input-field" id="sexo" required>
                                 <option value="" disabled selected>Sexo</option>
                                 <option value="masculino">Masculino</option>
                                 <option value="femenino">Femenino</option>
@@ -178,7 +175,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
                         <!-- Visibilidad -->
                         <div class="input-box">
-                            <select class="input-field" id="privacidad" name="privacidad" required>
+                            <select class="input-field" id="privacidad" required>
                                 <option value="" disabled selected>Visibilidad</option>
                                 <option value="publico">Público</option>
                                 <option value="privado">Privado</option>
@@ -188,7 +185,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
                     <!-- Botón de Registro -->
                     <div class="input-box">
-                        <button class="input-submit">
+                        <button type="submit" class="input-submit">
                             <span>Registrarse</span>
                             <i class="bx bx-right-arrow-alt"></i>
                         </button>
@@ -197,9 +194,10 @@ if (isset($_COOKIE['rememberMe'])) {
             </div>
 
 
+
         </div>
         <script src="../Hermes/JS/main.js"></script>
-       
+        <script src="API/AJAXRegistro.js"></script>
 </body>
 
 </html>

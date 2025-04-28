@@ -83,7 +83,7 @@ else if($rol_usuario === 'cliente'){
             <li><a href="Perfil.html" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-            <li><a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 
@@ -314,6 +314,16 @@ else if($rol_usuario === 'cliente'){
 
         </div>
     </div>
+    </div>
+
+    <div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+        <h2>¿Deseas cerrar sesión?</h2>
+        <div class="modal-actions">
+            <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
+            <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+        </div>
     </div>
 
     <script>
