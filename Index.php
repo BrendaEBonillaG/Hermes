@@ -19,7 +19,7 @@ if (isset($_COOKIE['rememberMe'])) {
         ];
 
         // Redirigir al dashboard
-        header("Location: ../Dashboard.php");
+        header("Location: ../Dashboard.html");
         exit();
     }
 }

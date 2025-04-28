@@ -70,7 +70,7 @@ else if($rol_usuario === 'cliente'){
         <ul class="navbar-menu">
             <li><a href="Dashboard.html"><i class="bi bi-house-door"></i> Inicio</a></li>
             <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-            <li><a href="#"><i class="bi bi-list"></i> Pedidos</a></li>
+             <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
             <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
             <li>
                 <form class="search-form">
@@ -80,10 +80,10 @@ else if($rol_usuario === 'cliente'){
                     </button>
                 </form>
             </li>
-            <li><a href="Perfil.html" class="profile-link">
+            <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-            <li><a href="#"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 
@@ -316,6 +316,16 @@ else if($rol_usuario === 'cliente'){
     </div>
     </div>
 
+    <div id="logoutModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+        <h2>¿Deseas cerrar sesión?</h2>
+        <div class="modal-actions">
+            <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
+            <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+        </div>
+    </div>
+
     <script>
     document.getElementById('edit_btn').addEventListener('click', function() {
         document.getElementById('editPopup').style.display = 'block';
@@ -345,9 +355,6 @@ document.getElementById('imageUpload').addEventListener('change', function (e) {
 });
     </script>
   
-
-
-
 
 </body>
 

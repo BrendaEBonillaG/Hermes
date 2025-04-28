@@ -11,9 +11,19 @@
     <link rel="stylesheet" href="../CSS/Registrar.css">
     <link rel="stylesheet" href="../CSS/ModalRegAdm.css">
     <link rel="stylesheet" href="../CSS/Fondo.css">
+    <link rel="stylesheet" href="../CSS/Navbar.css">
 </head>
 
 <body>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
     <section>
         <div class="Wave wave1"></div>
         <div class="Wave wave2"></div>
@@ -128,15 +138,27 @@
                 </form>
             </div>
         </div>
-          <!-- Modal para mostrar el mensaje -->
-    <div id="modalMensaje" class="modal">
-        <div class="modal-content">
-            <span id="cerrarModal" class="cerrar-modal">&times;</span>
-            <p id="mensajeModal"></p>
+        <!-- Modal para mostrar el mensaje -->
+        <div id="modalMensaje" class="modal">
+            <div class="modal-content">
+                <span id="cerrarModal" class="cerrar-modal">&times;</span>
+                <p id="mensajeModal"></p>
+            </div>
         </div>
-    </div>
-        <script src="../JS/RegistrarAdmin.js"></script>
-        <!-- <script src="../API/AJAXRegistro.js"></script>-->
+
+        <div id="logoutModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+                <h2>¿Deseas cerrar sesión?</h2>
+                <div class="modal-actions">
+                    <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí,
+                        cerrar sesión</button>
+                    <button class="btn-modal cancel"
+                        onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+                </div>
+            </div>
+            <script src="../JS/RegistrarAdmin.js"></script>
+            <!-- <script src="../API/AJAXRegistro.js"></script>-->
 </body>
 
 </html>
