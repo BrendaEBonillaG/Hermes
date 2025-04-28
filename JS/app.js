@@ -40,7 +40,7 @@ const total = document.getElementById('total');
 const body = document.querySelector("body");
 const x = document.getElementById('x')
 
-// Variables que vamos a usar en nuestoro proyecto
+
 let lista = []
 let valortotal = 0
 
@@ -153,6 +153,6 @@ x.addEventListener("click", function(){
 function irADetalle(indice) {
     // Guardamos el producto seleccionado en localStorage
     guardarAlmacenamientoLocal("productoSeleccionado", productos[indice]);
-    // Redirigimos a la página de detalle
+
     window.location.href = "Producto.html";
 }

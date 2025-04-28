@@ -9,28 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
     const imagenesInput = document.getElementById("imagenesInput");
     const videosInput = document.getElementById("videosInput");
 
-    // Verificar que todos los elementos existen
+ 
     if (!btnFotos || !btnVideos || !fotosContainer || !videosContainer || !productForm || !categoriaSelect || !imagenesInput || !videosInput) {
         console.error("Error: Algunos elementos del DOM no fueron encontrados");
         return;
     }
 
-    // Manejo de pestañas (fotos/videos)
-    btnFotos.addEventListener("click", function() {
-        fotosContainer.style.display = "block";
-        videosContainer.style.display = "none";
-        btnFotos.classList.add("active");
-        btnVideos.classList.remove("active");
-    });
 
-    btnVideos.addEventListener("click", function() {
-        fotosContainer.style.display = "none";
-        videosContainer.style.display = "block";
-        btnVideos.classList.add("active");
-        btnFotos.classList.remove("active");
-    });
-
-    // Cargar categorías al iniciar
     cargarCategorias();
 
     // Manejar envío del formulario
@@ -49,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 body: formData
             });
             
-            // Verificar si la respuesta es JSON válido
+
             const contentType = response.headers.get("content-type");
             if (!contentType || !contentType.includes("application/json")) {
                 const textResponse = await response.text();
@@ -60,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (result.success) {
                 alert(result.message);
-                // Redirigir o limpiar el formulario
+
                 window.location.href = "exito.html?productId=" + result.productId;
             } else {
                 throw new Error(result.error || "Error desconocido");
@@ -76,12 +61,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Función para cargar categorías
+
     async function cargarCategorias() {
         try {
             const response = await fetch("../PHP/ObtenerCategoria.php");
             
-            // Verificar si la respuesta es JSON válido
+
             const contentType = response.headers.get("content-type");
             if (!contentType || !contentType.includes("application/json")) {
                 const textResponse = await response.text();
@@ -90,17 +75,17 @@ document.addEventListener("DOMContentLoaded", function() {
             
             const categorias = await response.json();
             
-            // Verificar que sea un array
+
             if (!Array.isArray(categorias)) {
                 throw new Error("Formato de datos inválido");
             }
             
-            // Limpiar opciones excepto la primera
+
             while (categoriaSelect.options.length > 1) {
                 categoriaSelect.remove(1);
             }
             
-            // Agregar nuevas opciones
+
             categorias.forEach(cat => {
                 const option = document.createElement("option");
                 option.value = cat.nombre;
@@ -110,24 +95,24 @@ document.addEventListener("DOMContentLoaded", function() {
             
         } catch (error) {
             console.error("Error al cargar categorías:", error);
-            // Mostrar mensaje al usuario (opcional)
+
             alert("No se pudieron cargar las categorías. Puedes escribir una nueva manualmente.");
         }
     }
 
-    // Permitir texto libre en el select de categorías
+
     categoriaSelect.addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             e.preventDefault();
             const inputValue = this.value.trim();
             
-            // Validación básica
+
             if (inputValue.length < 2) {
                 alert("La categoría debe tener al menos 2 caracteres");
                 return;
             }
             
-            // Verificar si ya existe (case insensitive)
+
             const existe = Array.from(this.options).some(
                 opt => opt.value.toLowerCase() === inputValue.toLowerCase()
             );

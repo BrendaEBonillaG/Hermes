@@ -32,8 +32,8 @@
 
 .media-lists {
   display: flex;
-  gap: 50px; /* Espacio entre imágenes y videos */
-  flex-wrap: wrap; /* Opcional: que se acomode si la pantalla es pequeña */
+  gap: 50px; 
+  flex-wrap: wrap; 
 }
 
 .image-list, .video-list {
@@ -51,7 +51,7 @@
 .delete-button {
   background: red;
   border-radius: 50%;
-  width: 40px; /* Define el tamaño del botón */
+  width: 40px; 
   height: 40px;
   align-items: center;
   justify-content: center;
@@ -59,8 +59,8 @@
   cursor: pointer;
   font-size: 20px;
   margin-top: 5px;
-  top: 5px; /* Ajusta la posición */
-  right: 5px; /* Ajusta la posición */
+  top: 5px; 
+  right: 5px; 
 }
 
 
@@ -79,7 +79,7 @@
     cursor: pointer;
 }
 
-/* Sección del formulario */
+
 .form-section {
     background-color: transparent;
     padding: 15px;
@@ -94,16 +94,16 @@
     padding: 8px;
     margin-bottom: 10px;
     border: none;
-    color: #fff; /* Color del texto en blanco */
+    color: #fff; 
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     margin-right: 15px;
-    caret-color: white; /* Hace que el cursor también sea blanco */
+    caret-color: white; 
 }
 
-/* Asegurar que el placeholder también sea visible en blanco */
+
 .input-field::placeholder {
-    color: #fff/* Blanco con opacidad */
+    color: #fff
 }
 
 
