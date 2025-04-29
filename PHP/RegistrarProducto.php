@@ -18,17 +18,17 @@ try {
         $id_vendedor = $_SESSION['id_usuario'] ?? 1;
         $tipo = 'venta';
 
-        // 🔥 1. Revisar si la categoría es ID o texto
+        // Revisar si la categoría es ID o texto
         if (is_numeric($categoria)) {
             $id_categoria = $categoria; // Ya es un ID
         } else {
-            // Buscar si existe la categoría por nombre
+
             $stmtCat = $pdo->prepare("SELECT id FROM Categorias WHERE nombre = ?");
             $stmtCat->execute([$categoria]);
             $categoriaExistente = $stmtCat->fetch(PDO::FETCH_ASSOC);
 
             if ($categoriaExistente) {
-                $id_categoria = $categoriaExistente['id']; // Ya existe
+                $id_categoria = $categoriaExistente['id']; 
             } else {
                 // Insertar nueva categoría
                 $stmtNuevaCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
@@ -37,7 +37,7 @@ try {
             }
         }
 
-        // 🔥 2. Insertar el producto
+ 
         $stmt = $pdo->prepare("INSERT INTO Productos (nombre, descripcion, precio, cantidad_Disponible, tipo, id_vendedor, id_categoria, estado)
                                VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente')");
         $stmt->execute([$nombre, $descripcion, $precio, $cantidad, $tipo, $id_vendedor, $id_categoria]);
@@ -52,7 +52,7 @@ try {
             mkdir('uploads/videos', 0777, true);
         }
 
-        // Subir imágenes
+  
         if (isset($_FILES['imagenes'])) {
             foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
                 if ($_FILES['imagenes']['error'][$key] === 0) {
@@ -69,7 +69,7 @@ try {
             }
         }
 
-        // Subir videos
+
         if (isset($_FILES['videos'])) {
             foreach ($_FILES['videos']['tmp_name'] as $key => $tmp_name) {
                 if ($_FILES['videos']['error'][$key] === 0) {

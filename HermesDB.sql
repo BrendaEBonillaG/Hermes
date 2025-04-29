@@ -81,23 +81,6 @@ CREATE TABLE Productos (
     FOREIGN KEY (id_categoria)
         REFERENCES Categorias (id)
 );
-INSERT INTO Categorias (nombre, descripcion, id_usuario) 
-VALUES ('zaptos', 'Descripción', 1);
-
-
-
-
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 3', 'Descripción del producto 4', 49.99,4, 'qwewq',1,1, 'activo');
-
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 2', 'Descripción del producto 2', 29.99,4, 'jabon',2,1, 'activo');
 
 
 
@@ -116,6 +99,24 @@ CREATE TABLE Videos_Productos (
     url_video VARCHAR(255) NOT NULL,
     FOREIGN KEY (id_producto) REFERENCES Productos(id) 
 );
+
+INSERT INTO Categorias (nombre, descripcion, id_usuario) 
+VALUES ('zaptos', 'Descripción', 1);
+
+
+
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 3', 'Descripción del producto 4', 49.99,4, 'qwewq',1,1, 'activo');
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 29.99,4, 'jabon',2,1, 'activo');
 
 -- Tabla de Listas de Compras
 CREATE TABLE Listas (
