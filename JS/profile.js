@@ -1,9 +1,8 @@
-// Simulando el rol del usuario (puedes modificar esta variable para cambiar el comportamiento)
-let role = vendedor; // Opciones: 'comprador', 'vendedor', 'administrador', 'privado'
 
-// Función para cargar el perfil según el rol
+let role = vendedor; 
+
 function loadUserProfile(role) {
-    // Ocultamos todo el contenido primero
+
     document.getElementById('privateMessage').classList.add('hidden');
     document.getElementById('publicProfile').classList.add('hidden');
     document.getElementById('sellerProfile').classList.add('hidden');

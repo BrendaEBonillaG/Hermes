@@ -1,124 +1,98 @@
 <?php
 session_start();
-require 'config.php'; // Tu archivo de conexión existente
-
-header('Content-Type: application/json');
-
-// Validar sesión
-if (!isset($_SESSION['id_usuario'])) {
-    echo json_encode(['success' => false, 'error' => 'No hay sesión activa']);
-    exit;
-}
-
-// Validar datos del formulario
-$requiredFields = ['nombre', 'descripcion', 'precio', 'cantidad', 'categoria'];
-foreach ($requiredFields as $field) {
-    if (empty($_POST[$field])) {
-        echo json_encode(['success' => false, 'error' => "El campo $field es requerido"]);
-        exit;
-    }
-}
+require 'config.php';
 
 try {
-    // Preparar datos
-    $nombre = trim($_POST['nombre']);
-    $descripcion = trim($_POST['descripcion']);
-    $precio = floatval($_POST['precio']);
-    $cantidad = intval($_POST['cantidad']);
-    $categoria = trim($_POST['categoria']);
-    $aceptaCotizaciones = isset($_POST['acepta_cotizaciones']) ? 1 : 0;
-    $idVendedor = $_SESSION['id_usuario'];
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Llamar al procedimiento almacenado
-    $stmt = $conn ->prepare("CALL sp_registrar_producto(:nombre, :descripcion, :precio, :cantidad, :categoria, :id_vendedor, :acepta_cotizaciones, @id_producto, @mensaje)");
-    
-    $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
-    $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
-    $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
-    $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
-    $stmt->bindParam(':categoria', $categoria, PDO::PARAM_STR);
-    $stmt->bindParam(':id_vendedor', $idVendedor, PDO::PARAM_INT);
-    $stmt->bindParam(':acepta_cotizaciones', $aceptaCotizaciones, PDO::PARAM_BOOL);
-    
-    $stmt->execute();
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    // Obtener resultados del procedimiento
-    $result = $conn ->query("SELECT @id_producto AS id_producto, @mensaje AS mensaje")->fetch(PDO::FETCH_ASSOC);
-    
-    if (empty($result['id_producto'])) {
-        throw new Exception($result['mensaje'] ?? 'Error al registrar el producto');
-    }
+        $nombre = $_POST['nombre'];
+        $descripcion = $_POST['descripcion'];
+        $precio = $_POST['precio'];
+        $cantidad = $_POST['cantidad'];
+        $categoria = $_POST['categoria']; // Este puede ser ID o NOMBRE dependiendo tu formulario
+        $aceptaCotizaciones = isset($_POST['acepta_cotizaciones']) ? 'Sí' : 'No';
 
-    $idProducto = $result['id_producto'];
-    
-    // Manejo de archivos multimedia
-    $mediaUploaded = false;
-    $uploadErrors = [];
-    
-    // Subir imágenes
-    if (!empty($_FILES['imagenes'])) {
-        foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmpName) {
-            if ($_FILES['imagenes']['error'][$key] === UPLOAD_ERR_OK) {
-                $nombreArchivo = uniqid() . '_' . basename($_FILES['imagenes']['name'][$key]);
-                $rutaDestino = '../uploads/productos/' . $nombreArchivo;
-                
-                // Verificar y crear directorio si no existe
-                if (!file_exists('../uploads/productos/')) {
-                    mkdir('../uploads/productos/', 0777, true);
-                }
-                
-                if (move_uploaded_file($tmpName, $rutaDestino)) {
-                    $stmt = $conn ->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
-                    $stmt->execute([$idProducto, $rutaDestino]);
-                    $mediaUploaded = true;
-                } else {
-                    $uploadErrors[] = 'Error al subir ' . $_FILES['imagenes']['name'][$key];
+        $id_vendedor = $_SESSION['id_usuario'] ?? 1;
+        $tipo = 'venta';
+
+        // Revisar si la categoría es ID o texto
+        if (is_numeric($categoria)) {
+            $id_categoria = $categoria; // Ya es un ID
+        } else {
+
+            $stmtCat = $pdo->prepare("SELECT id FROM Categorias WHERE nombre = ?");
+            $stmtCat->execute([$categoria]);
+            $categoriaExistente = $stmtCat->fetch(PDO::FETCH_ASSOC);
+
+            if ($categoriaExistente) {
+                $id_categoria = $categoriaExistente['id']; 
+            } else {
+                // Insertar nueva categoría
+                $stmtNuevaCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
+                $stmtNuevaCat->execute([$categoria, 'Categoría creada automáticamente', $id_vendedor]);
+                $id_categoria = $pdo->lastInsertId();
+            }
+        }
+
+ 
+        $stmt = $pdo->prepare("INSERT INTO Productos (nombre, descripcion, precio, cantidad_Disponible, tipo, id_vendedor, id_categoria, estado)
+                               VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente')");
+        $stmt->execute([$nombre, $descripcion, $precio, $cantidad, $tipo, $id_vendedor, $id_categoria]);
+
+        $id_producto = $pdo->lastInsertId();
+
+        // Crear carpetas si no existen
+        if (!is_dir('uploads/imagenes')) {
+            mkdir('uploads/imagenes', 0777, true);
+        }
+        if (!is_dir('uploads/videos')) {
+            mkdir('uploads/videos', 0777, true);
+        }
+
+  
+        if (isset($_FILES['imagenes'])) {
+            foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
+                if ($_FILES['imagenes']['error'][$key] === 0) {
+                    $mime = mime_content_type($tmp_name);
+                    if (str_starts_with($mime, 'image/')) {
+                        $nombreArchivo = uniqid() . '_' . basename($_FILES['imagenes']['name'][$key]);
+                        $ruta_destino = "uploads/imagenes/" . $nombreArchivo;
+                        move_uploaded_file($tmp_name, $ruta_destino);
+
+                        $stmtImg = $pdo->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
+                        $stmtImg->execute([$id_producto, $ruta_destino]);
+                    }
                 }
             }
         }
-    }
-    
-    // Subir videos
-    if (!empty($_FILES['videos'])) {
-        foreach ($_FILES['videos']['tmp_name'] as $key => $tmpName) {
-            if ($_FILES['videos']['error'][$key] === UPLOAD_ERR_OK) {
-                $nombreArchivo = uniqid() . '_' . basename($_FILES['videos']['name'][$key]);
-                $rutaDestino = '../uploads/productos/' . $nombreArchivo;
-                
-                if (move_uploaded_file($tmpName, $rutaDestino)) {
-                    $stmt = $conn ->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
-                    $stmt->execute([$idProducto, $rutaDestino]);
-                    $mediaUploaded = true;
-                } else {
-                    $uploadErrors[] = 'Error al subir ' . $_FILES['videos']['name'][$key];
+
+
+        if (isset($_FILES['videos'])) {
+            foreach ($_FILES['videos']['tmp_name'] as $key => $tmp_name) {
+                if ($_FILES['videos']['error'][$key] === 0) {
+                    $mime = mime_content_type($tmp_name);
+                    if (str_starts_with($mime, 'video/')) {
+                        $nombreArchivo = uniqid() . '_' . basename($_FILES['videos']['name'][$key]);
+                        $ruta_destino = "uploads/videos/" . $nombreArchivo;
+                        move_uploaded_file($tmp_name, $ruta_destino);
+
+                        $stmtVid = $pdo->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
+                        $stmtVid->execute([$id_producto, $ruta_destino]);
+                    }
                 }
             }
         }
+
+        echo "Producto registrado exitosamente.";
+
+    } else {
+        echo "No se enviaron datos.";
     }
-    
-    // Respuesta exitosa
-    $response = [
-        'success' => true,
-        'message' => $result['mensaje'],
-        'productId' => $idProducto,
-        'mediaUploaded' => $mediaUploaded
-    ];
-    
-    if (!empty($uploadErrors)) {
-        $response['uploadWarnings'] = $uploadErrors;
-    }
-    
-    echo json_encode($response);
 
 } catch (PDOException $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => 'Error en la base de datos: ' . $e->getMessage()
-    ]);
-} catch (Exception $e) {
-    echo json_encode([
-        'success' => false,
-        'error' => $e->getMessage()
-    ]);
+    echo "Error: " . $e->getMessage();
 }
 ?>

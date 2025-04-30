@@ -7,46 +7,74 @@
     margin-top: 70px;
     color: #ddd;
 }
-
 /* Sección de imágenes */
 .upload-section {
-    background-color: #ffffff33;
-    padding: 15px;
-    border-radius: 10px;
-    width: 30%;
+  background-color: #ffffff33;
+  padding: 15px;
+  border-radius: 10px;
+  width: 30%;
+  max-height: 500px; 
+  overflow-y: auto; 
 }
 
 .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
 }
 
 .tab {
-    background-color: #6b8e23;
-    padding: 8px 15px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    color: white;
+  background-color: #6b8e23;
+  padding: 8px 15px;
+  border-radius: 10px;
+  border: none;
+  color: white;
 }
 
-.tab.active {
-    background-color: #3d4a1e;
+.media-lists {
+  display: flex;
+  gap: 50px; 
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: auto;  
 }
 
-.image-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
+.image-list, .video-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 10px; 
+  width: 150px; 
+  border: none; 
+  border-radius: 8px; 
 }
 
-.image-placeholder {
-    background-color: #ccc;
-    height: 200px;
-    width: 200px;
-    border-radius: 5px;
+.image-item, .video-item {
+  margin-bottom: 10px; 
+  position: relative; 
+}
+
+.image-item img, .video-item video {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.delete-button {
+  background: red;
+  border-radius: 50%;
+  width: 30px;  
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; 
+  position: absolute;
+  top: 5px;
+  right: 5px; 
+  color: white; 
 }
 
 .upload-buttons {
@@ -54,7 +82,7 @@
     justify-content: space-between;
 }
 
-.select-button, .upload-button {
+.select-button, .upload-button, .selectV-button {
     background-color: #ff9800;
     border: none;
     padding: 5px 10px;
@@ -62,7 +90,6 @@
     cursor: pointer;
 }
 
-/* Sección del formulario */
 .form-section {
     background-color: transparent;
     padding: 15px;
@@ -77,16 +104,15 @@
     padding: 8px;
     margin-bottom: 10px;
     border: none;
-    color: #fff; /* Color del texto en blanco */
+    color: #fff; 
     background: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     margin-right: 15px;
-    caret-color: white; /* Hace que el cursor también sea blanco */
+    caret-color: white; 
 }
 
-/* Asegurar que el placeholder también sea visible en blanco */
 .input-field::placeholder {
-    color: #fff/* Blanco con opacidad */
+    color: #fff
 }
 
 

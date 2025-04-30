@@ -1,14 +1,14 @@
-console.log("si entro"); // DEBUG
+console.log("si entro"); 
 document.addEventListener("DOMContentLoaded", function () {
-    // Variables de elementos del DOM
+
     const registrarForm = document.getElementById("registrarForm");
     const registerForm = document.querySelector(".register-form");
     const loginForm = document.querySelector(".login-form");
     const registerBtn = document.querySelector("#register");
     const loginBtn = document.querySelector("#login");
 
-    // Expresiones regulares para validaciones
-    const usernameRegex = /^[a-zA-Z0-9_]+$/; // Permite letras, números y guiones bajos (_)
+    // validaciones
+    const usernameRegex = /^[a-zA-Z0-9_]+$/; 
     const passwordRegex = /^(?=.*[A-ZÑ])(?=.*[a-zñ])(?=.*\d)(?=.*[¡”#$%&'()*+,-./:;<=>?@[\\\]_{}|~]).{8,}$/;
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("file-name").textContent = fileName;
     });
 
-    // Validación y envío del formulario de registro
     registrarForm.addEventListener("submit", async function (event) {
         event.preventDefault();
         console.log("Interceptado el submit correctamente"); // DEBUG
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const role = registrarForm.querySelector('#rol').value;
         const profileImage = registrarForm.querySelector('#imageUpload').files[0];
 
-        // Validaciones
+
         if (!username || !password || !email || !fullName || !lastName || !maternalLastName || !birthDate || !gender || !privacy || !role) {
             alert('Por favor, complete todos los campos.');
             return;
@@ -98,16 +97,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: formData
             });
         
-            const text = await response.text(); // Leer como texto
-            console.log("Respuesta del servidor: ", text); // Aquí se imprimirá en la consola la respuesta
+            const text = await response.text(); 
+            console.log("Respuesta del servidor: ", text); 
         
             try {
-                const data = JSON.parse(text);  // Intentar convertirlo en JSON
+                const data = JSON.parse(text);  
         
                 if (data.success) {
                     alert('Registro exitoso');
-                    registrarForm.reset();  // Limpiar el formulario tras el registro exitoso
-                    window.location.href = './Dashboard.html'; // Redirigir al dashboard
+                    registrarForm.reset();  
+                    window.location.href = './Dashboard.php'; 
                 } else {
                     alert('Error al registrar el usuario: ' + data.message);
                 }
