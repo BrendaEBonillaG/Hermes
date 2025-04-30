@@ -7,39 +7,51 @@
     margin-top: 70px;
     color: #ddd;
 }
-
 /* Sección de imágenes */
 .upload-section {
-    background-color: #ffffff33;
-    padding: 15px;
-    border-radius: 10px;
-    width: 30%;
+  background-color: #ffffff33;
+  padding: 15px;
+  border-radius: 10px;
+  width: 30%;
+  max-height: 500px; 
+  overflow-y: auto; 
 }
 
 .tabs {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
 }
 
 .tab {
-    background-color: #6b8e23;
-    padding: 8px 15px;
-    border-radius: 10px;
-    border: none;
-    color: white;
+  background-color: #6b8e23;
+  padding: 8px 15px;
+  border-radius: 10px;
+  border: none;
+  color: white;
 }
 
 .media-lists {
   display: flex;
   gap: 50px; 
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: auto;  
 }
 
 .image-list, .video-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-right: 10px; 
+  width: 150px; 
+  border: none; 
+  border-radius: 8px; 
+}
+
+.image-item, .video-item {
+  margin-bottom: 10px; 
+  position: relative; 
 }
 
 .image-item img, .video-item video {
@@ -51,20 +63,19 @@
 .delete-button {
   background: red;
   border-radius: 50%;
-  width: 40px; 
-  height: 40px;
+  width: 30px;  
+  height: 30px;
+  display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   cursor: pointer;
-  font-size: 20px;
-  margin-top: 5px;
-  top: 5px; 
+  font-size: 18px; 
+  position: absolute;
+  top: 5px;
   right: 5px; 
+  color: white; 
 }
-
-
-
 
 .upload-buttons {
     display: flex;
@@ -78,7 +89,6 @@
     border-radius: 5px;
     cursor: pointer;
 }
-
 
 .form-section {
     background-color: transparent;
@@ -100,7 +110,6 @@
     margin-right: 15px;
     caret-color: white; 
 }
-
 
 .input-field::placeholder {
     color: #fff
