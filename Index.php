@@ -196,7 +196,7 @@ if (isset($_COOKIE['rememberMe'])) {
 
         </div>
         <script src="../Hermes/JS/main.js"></script>
-        <script src="API/AJAXRegistro.js"></script>
+       
 </body>
 
 </html>
