@@ -18,7 +18,8 @@ CREATE TABLE Usuarios (
     fechaNacim DATE,
     sexo VARCHAR(30) NOT NULL,
     fechaIngreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    privacidad VARCHAR(20) NOT NULL
+    privacidad VARCHAR(20) NOT NULL,
+    estado TINYINT(1) NOT NULL DEFAULT 1
 );
 DROP TABLE IF EXISTS Usuarios;
 SELECT * FROM Usuarios;
