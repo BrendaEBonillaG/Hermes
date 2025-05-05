@@ -21,44 +21,9 @@ CREATE TABLE Usuarios (
     privacidad VARCHAR(20) NOT NULL
 );
 
-TRUNCATE TABLE Usuarios;
-
-DROP TABLE IF EXISTS Usuarios;
-SELECT * FROM Usuarios;
 SELECT * FROM Productos;
-SELECT * FROM Categorias;
-
-
-SHOW PROCEDURE STATUS WHERE Db = 'Hermes';
-DROP PROCEDURE IF EXISTS sp_insert_usuario;
-
-DELIMITER $$
-
-CREATE PROCEDURE sp_insert_usuario(
-    IN p_correo VARCHAR(100),
-    IN p_nombreUsu VARCHAR(50),
-    IN p_contrasena VARCHAR(255),
-    IN p_rol VARCHAR(50),
-    IN p_foto LONGBLOB,
-    IN p_fotoNombre VARCHAR(100),
-    IN p_nombres VARCHAR(100),
-    IN p_apePa VARCHAR(100),
-    IN p_apeMa VARCHAR(100),
-    IN p_fechaNacim DATE,
-    IN p_sexo VARCHAR(30),
-    IN p_privacidad VARCHAR(20)
-)
-BEGIN
-    -- Insertar los datos en la tabla Usuarios
-    INSERT INTO Usuarios (
-        correo, nombreUsu, contrasena, rol, foto, fotoNombre, nombres, apePa, apeMa, fechaNacim, sexo, privacidad
-    ) VALUES (
-        p_correo, p_nombreUsu, p_contrasena, p_rol, p_foto, p_fotoNombre, p_nombres, p_apePa, p_apeMa, p_fechaNacim, p_sexo, p_privacidad
-    );
-END $$
-
-DELIMITER ;
-
+SELECT * FROM Imagenes_Productos;
+SELECT * FROM Videos_Productos;
 -- Tabla de Categorías
 CREATE TABLE Categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -85,8 +50,6 @@ CREATE TABLE Productos (
         REFERENCES Categorias (id)
 );
 
-
-
 -- Tabla de Imágenes de Productos
 CREATE TABLE Imagenes_Productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -103,24 +66,6 @@ CREATE TABLE Videos_Productos (
     FOREIGN KEY (id_producto) REFERENCES Productos(id) 
 );
 
-INSERT INTO Categorias (nombre, descripcion, id_usuario) 
-VALUES ('zaptos', 'Descripción', 1);
-
-
-
-
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 3', 'Descripción del producto 4', 49.99,4, 'qwewq',1,1, 'activo');
-
-INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 2', 'Descripción del producto 2', 29.99,4, 'jabon',2,1, 'activo');
-
 -- Tabla de Listas de Compras
 CREATE TABLE Listas (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -130,9 +75,6 @@ CREATE TABLE Listas (
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
-
-INSERT INTO Listas (nombre, descripcion, privacidad,id_usuario) 
-VALUES ('lista 1', 'Descripción del producto 2', 'publica',3);
 
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
@@ -228,3 +170,65 @@ CREATE TABLE Mensajes (
 );
 
 SELECT * FROM Mensajes;
+
+
+
+TRUNCATE TABLE Usuarios;
+
+DROP TABLE IF EXISTS Usuarios;
+SELECT * FROM Usuarios;
+SELECT * FROM Productos;
+SELECT * FROM Categorias;
+
+
+SHOW PROCEDURE STATUS WHERE Db = 'Hermes';
+DROP PROCEDURE IF EXISTS sp_insert_usuario;
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_insert_usuario(
+    IN p_correo VARCHAR(100),
+    IN p_nombreUsu VARCHAR(50),
+    IN p_contrasena VARCHAR(255),
+    IN p_rol VARCHAR(50),
+    IN p_foto LONGBLOB,
+    IN p_fotoNombre VARCHAR(100),
+    IN p_nombres VARCHAR(100),
+    IN p_apePa VARCHAR(100),
+    IN p_apeMa VARCHAR(100),
+    IN p_fechaNacim DATE,
+    IN p_sexo VARCHAR(30),
+    IN p_privacidad VARCHAR(20)
+)
+BEGIN
+    -- Insertar los datos en la tabla Usuarios
+    INSERT INTO Usuarios (
+        correo, nombreUsu, contrasena, rol, foto, fotoNombre, nombres, apePa, apeMa, fechaNacim, sexo, privacidad
+    ) VALUES (
+        p_correo, p_nombreUsu, p_contrasena, p_rol, p_foto, p_fotoNombre, p_nombres, p_apePa, p_apeMa, p_fechaNacim, p_sexo, p_privacidad
+    );
+END $$
+
+DELIMITER ;
+
+INSERT INTO Categorias (nombre, descripcion, id_usuario) 
+VALUES ('zaptos', 'Descripción', 1);
+
+
+
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 3', 'Descripción del producto 4', 49.99,4, 'qwewq',1,1, 'activo');
+
+INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
+VALUES ('Producto 2', 'Descripción del producto 2', 29.99,4, 'jabon',2,1, 'activo');
+
+
+INSERT INTO Listas (nombre, descripcion, privacidad,id_usuario) 
+VALUES ('lista 1', 'Descripción del producto 2', 'publica',3);
