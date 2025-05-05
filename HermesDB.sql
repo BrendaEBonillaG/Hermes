@@ -76,6 +76,7 @@ CREATE TABLE Listas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
 
+
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
