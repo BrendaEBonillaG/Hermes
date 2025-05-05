@@ -33,28 +33,38 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 
 <body>
- <!-- Barra de navegación -->
- <nav class="navbar">
-    <ul class="navbar-menu">
-        <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
-        <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-         <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
-        <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
-        <li>
-            <form class="search-form">
-                <input type="text" placeholder="Buscar productos..." class="search-input">
-                <button type="submit" class="search-button">
-                    <i class="bi bi-search"></i>
-                </button>
-            </form>
-        </li>
-        <li><a href="Perfil.php" class="profile-link">
-                <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
-            </a></li>
-            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <ul class="navbar-menu">
+            <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
 
-    </ul>
-</nav>
+            <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
+                <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+
+            <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+                <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
+
+            <?php endif; ?>
+
+            <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+
+            <li>
+                <form class="search-form">
+                    <input type="text" placeholder="Buscar productos..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </li>
+            <li><a href="Perfil.php" class="profile-link">
+                    <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
+                </a></li>
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+        </ul>
+    </nav>
+
     <aside class="filtros" id="filtros">
         <h2>Filtros</h2>
         <form id="filtrosForm">
@@ -99,27 +109,29 @@ if (!isset($_SESSION['usuario'])) {
             <button type="button" class="btn btn-primary" onclick="abrirVentanaPago()">
                 Finalizar Compra
             </button>
-            
+
         </div>
     </main>
 
 
     <div id="logoutModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
-        <h2>¿Deseas cerrar sesión?</h2>
-        <div class="modal-actions">
-            <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
-            <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+            <h2>¿Deseas cerrar sesión?</h2>
+            <div class="modal-actions">
+                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+                    sesión</button>
+                <button class="btn-modal cancel"
+                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-function abrirVentanaPago() {
-    window.open('tarjeta.html', '_blank', 'width=600,height=600');
-}
-</script>
+    <script>
+        function abrirVentanaPago() {
+            window.open('tarjeta.html', '_blank', 'width=600,height=600');
+        }
+    </script>
 
     <script src="JS/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

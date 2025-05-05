@@ -1,3 +1,14 @@
+
+<?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    // Si no hay sesión, redirige al usuario a la página de inicio de sesión
+    header('Location: Index.php');
+    exit; // Detiene la ejecución del script
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,6 +16,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revisión de productos</title>
+
     <link rel="stylesheet" href="../CSS/Fondo.css">
     <link rel="stylesheet" href="../CSS/CrearProduc.css">
     <link rel="stylesheet" href="../CSS/Navbar.css">
@@ -17,10 +29,10 @@
     <!-- Barra de navegación -->
     <nav class="navbar">
         <ul class="navbar-menu">
-            <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
-            <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-            <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
-            <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+            <li><a href="../Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
+            <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
+            <li><a href="../Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+            <li><a href="../Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
             <li>
                 <form class="search-form">
                     <input type="text" placeholder="Buscar productos..." class="search-input">
@@ -29,12 +41,15 @@
                     </button>
                 </form>
             </li>
-            <li><a href="Perfil.php" class="profile-link">
+            <li><a href="../Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-            <li><a href="#" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+                <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
+
+
 
     <!-- Formulario de registro-->
     <form class="upload-form" action="RegistrarProducto.php" method="POST" enctype="multipart/form-data">
@@ -47,11 +62,11 @@
                 </div>
                 <div class="media-lists">
                     <div class="image-list">
-                      
+
                     </div>
 
                     <div class="video-list">
-                        
+
                     </div>
                 </div>
                 <div class="upload-buttons">
@@ -133,12 +148,14 @@
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
             <h2>¿Deseas cerrar sesión?</h2>
             <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+                <button class="btn-modal confirm" onclick="window.location.href='../PHP/Logout.php'">Sí, cerrar
                     sesión</button>
                 <button class="btn-modal cancel"
                     onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
+    </div>
+
 
         <script>
 
