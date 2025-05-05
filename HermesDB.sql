@@ -20,6 +20,9 @@ CREATE TABLE Usuarios (
     fechaIngreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     privacidad VARCHAR(20) NOT NULL
 );
+
+TRUNCATE TABLE Usuarios;
+
 DROP TABLE IF EXISTS Usuarios;
 SELECT * FROM Usuarios;
 SELECT * FROM Productos;
