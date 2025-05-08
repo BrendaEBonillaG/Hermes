@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $nombreUsu = $_POST['nombreUsu'] ?? '';
 
 try {
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM Usuarios WHERE nombreUsu = ?");
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM Usuarios WHERE nombreUsu = ? AND estado = 1");
     $stmt->execute([$nombreUsu]);
     $count = $stmt->fetchColumn();
 

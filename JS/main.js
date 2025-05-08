@@ -82,8 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             console.log("Interceptado el submit correctamente"); // DEBUG
             const username = registrarForm.querySelector('#nombreUsu').value;
-       
-
             const password = registrarForm.querySelector('#contrasena').value;
             const email = registrarForm.querySelector('#correo').value;
             const fullName = registrarForm.querySelector('#nombres').value;

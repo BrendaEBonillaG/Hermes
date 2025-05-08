@@ -121,6 +121,10 @@ else if($rol_usuario === 'cliente'){
             ?>
 
             <button id="edit_btn">Editar</button>
+            <form method="POST" onsubmit="return confirmarBaja();" action="PHP/eliminar_perfil.php">
+            
+            <button type="submit" name="baja_usuario">Desactivar Usuario</button>
+            </form>
 
 
         </div>
@@ -361,11 +365,23 @@ document.getElementById('imageUpload').addEventListener('change', function (e) {
         reader.readAsDataURL(file); // Convierte a base64
     } else {
         fileName.textContent = "Ningún archivo seleccionado";
+
+        
     }
 });
+
+function confirmarBaja() {
+    return confirm("¿Estás seguro de que deseas desactivar este usuario?");
+}
+
+
+
+
+
     </script>
   
 
 </body>
+
 
 </html>

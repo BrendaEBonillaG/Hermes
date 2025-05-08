@@ -4,6 +4,8 @@ SHOW TABLES;
 DROP DATABASE Hermes;
 
 -- Tabla de Usuarios
+
+
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     correo VARCHAR(100) NOT NULL,
@@ -18,8 +20,10 @@ CREATE TABLE Usuarios (
     fechaNacim DATE,
     sexo VARCHAR(30) NOT NULL,
     fechaIngreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    privacidad VARCHAR(20) NOT NULL
+    privacidad VARCHAR(20) NOT NULL,
+    estado TINYINT(1) NOT NULL DEFAULT 1
 );
+SELECT * FROM Usuarios;
 
 SELECT * FROM Productos;
 SELECT * FROM Imagenes_Productos;

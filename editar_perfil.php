@@ -5,6 +5,7 @@ session_start();
 require './config.php'; 
 
 $usuario_id = $_SESSION['usuario']['id'];  // Obtener el ID del usuario desde la sesión
+$nombreActual = $_SESSION['usuario']['nombreUsu'];
 
 // Función para validar la contraseña
 function validarContrasena($contrasena) {
@@ -17,9 +18,30 @@ function validarContrasena($contrasena) {
     return preg_match($patron, $contrasena);
 }
 
+//validar nombre
+function validarNombre($nombreUsu) {
+ 
+    $patron = '/^[\p{L}-]+$/u';
+    
+
+    return preg_match($patron, $nombreUsu);
+}
+
+//validar nombres
+function validarNombres($nombres) {
+ 
+    $patron = '/^[\p{L}-]+$/u';
+    
+
+    return preg_match($patron, $nombres);
+}
+
 // Función para validar el correo electrónico
 function validarCorreo($correo) {
-    return filter_var($correo, FILTER_VALIDATE_EMAIL);
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+    return preg_match('/@(gmail\.com|hotmail\.com)$/i', $correo);
 }
 
 // Verificar si el formulario fue enviado
@@ -41,8 +63,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $privacidad = $_POST['privacidad'] ?? $_POST['privacidad_actual'];
         $contrasena = $_POST['contrasena'];
 
+        $fechaHoy = date('Y-m-d');
+
+        if($fechaHoy < $fechaNacim){
+            echo "<script>
+            alert('El nombre de usuario ya está en uso.');
+            window.location.href = 'Perfil.php';
+        </script>";
+        exit;
+        }
         if (!validarCorreo($correo)) {
             die("Error: El correo electrónico no es válido.");
+        }
+
+        
+       
+
+        if (!validarCorreo($correo)) {
+            die("Error: El correo electrónico no es válido.");
+        }
+        if (!validarNombres($apeMa)) {
+            die("Error: El apellido materno no es válido.");
+        }
+        if (!validarNombres($apePa)) {
+            die("Error: El apellido Paterno no es válido.");
+        }
+        if (!validarNombres($nombres)) {
+            die("Error: el nombre no es válido.");
+        }
+        if ($nombreUsu !== $nombreActual) {
+            // Solo validar si el nombre ha cambiado
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM Usuarios WHERE nombreUsu = :nombreUsu");
+            $stmt->execute([':nombreUsu' => $nombreUsu]);
+            $count = $stmt->fetchColumn();
+        
+            if ($count > 0) {
+               
+                echo "<script>
+                alert('El nombre de usuario ya está en uso.');
+                window.location.href = 'Perfil.php';
+            </script>";
+            exit;
+            }
         }
 
         if (empty($contrasena)) {
@@ -60,8 +122,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (isset($_FILES['imageUpload']) && $_FILES['imageUpload']['error'] === UPLOAD_ERR_OK) {
             
-            $fotoBinaria = file_get_contents($_FILES['imageUpload']['tmp_name']);
-            $fotoNombre = $_FILES['imageUpload']['name'];
+        $imageInfo = getimagesize($_FILES['imageUpload']['tmp_name']);
+  
+        $mimeType = $imageInfo['mime'];
+        if (!in_array($mimeType, ['image/jpeg', 'image/png'])) {
+            echo "<script>
+            alert('seleccione un formato de imagen valido (jpg, jprg,png)');
+            window.location.href = 'Perfil.php';
+        </script>";
+        exit;  
+        }else {
+   
+        echo "El archivo es válido y puede ser procesado.";
+        $fotoBinaria = file_get_contents($_FILES['imageUpload']['tmp_name']);
+        $fotoNombre = $_FILES['imageUpload']['name'];
+    
+        }
+
         } else {
             // Recuperar imagen actual si no se sube nueva
             $stmtImg = $pdo->prepare("SELECT foto, fotoNombre FROM usuarios WHERE id = :id");
