@@ -43,20 +43,24 @@ function agregarNuevaCategoria() {
 
     // Crear y agregar nueva opción justo antes del "+ Agregar nueva"
     const nuevaOpcion = document.createElement("option");
-    nuevaOpcion.value = "nueva_" + Date.now(); // valor único
+    nuevaOpcion.value = nombreNueva; // Ahora se agrega el nombre real
     nuevaOpcion.text = nombreNueva;
 
     select.add(nuevaOpcion, select.options.length - 1);
     select.value = nuevaOpcion.value;
 
-    // Enviar el valor real
-    input.name = "categoria";
-    select.name = "categoria_omitida";
+    // Enviar el valor real de la categoría
+    input.name = "categoria"; // Asegurarse de que se envíe el valor correcto
+    select.name = "categoria_omitida"; // Asegurarse de que el select original no se envíe
 
     // Ocultar campo de texto
     input.value = "";
     document.getElementById("nuevaCategoriaDiv").style.display = "none";
 }
+
+
+
+
 
 // Vista previa de imágenes y videos al seleccionarlos
 document.addEventListener('DOMContentLoaded', function() {

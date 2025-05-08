@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php';
+require __DIR__ . '/../config.php';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
@@ -8,36 +8,32 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
-        $precio = $_POST['precio'];
-        $cantidad = $_POST['cantidad'];
-        $categoria = $_POST['categoria']; // Este puede ser ID o NOMBRE dependiendo tu formulario
-        $aceptaCotizaciones = isset($_POST['acepta_cotizaciones']) ? 'Sí' : 'No';
+        $nombre = $_POST['name'];  // Aquí debería ser 'name'
+        $descripcion = $_POST['description'];  // Aquí debería ser 'description'
+        $precio = $_POST['price'];  // Aquí debería ser 'price'
+        $cantidad = $_POST['quantity'];  // Aquí debería ser 'quantity'
 
+        $categoria = $_POST['categoria']; // ID de categoría seleccionada
+        $nueva_categoria = $_POST['nueva_categoria']; // Si hay una nueva categoría
+
+        // Verificar si se está añadiendo una nueva categoría
+        if (!empty($nueva_categoria)) {
+            // Insertar nueva categoría en la base de datos
+            $stmtCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
+            $stmtCat->execute([$nueva_categoria, 'Categoría creada automáticamente', $_SESSION['id_usuario']]);
+            $id_categoria = $pdo->lastInsertId();
+        } elseif (is_numeric($categoria)) {
+            $id_categoria = $categoria; // Usar la categoría seleccionada
+        } else {
+            // Si la categoría no es válida, mostrar error
+            echo "Error: categoría no válida.";
+            exit;
+        }
+
+        // Insertar producto
         $id_vendedor = $_SESSION['id_usuario'] ?? 1;
         $tipo = 'venta';
 
-        // Revisar si la categoría es ID o texto
-        if (is_numeric($categoria)) {
-            $id_categoria = $categoria; // Ya es un ID
-        } else {
-
-            $stmtCat = $pdo->prepare("SELECT id FROM Categorias WHERE nombre = ?");
-            $stmtCat->execute([$categoria]);
-            $categoriaExistente = $stmtCat->fetch(PDO::FETCH_ASSOC);
-
-            if ($categoriaExistente) {
-                $id_categoria = $categoriaExistente['id']; 
-            } else {
-                // Insertar nueva categoría
-                $stmtNuevaCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
-                $stmtNuevaCat->execute([$categoria, 'Categoría creada automáticamente', $id_vendedor]);
-                $id_categoria = $pdo->lastInsertId();
-            }
-        }
-
- 
         $stmt = $pdo->prepare("INSERT INTO Productos (nombre, descripcion, precio, cantidad_Disponible, tipo, id_vendedor, id_categoria, estado)
                                VALUES (?, ?, ?, ?, ?, ?, ?, 'pendiente')");
         $stmt->execute([$nombre, $descripcion, $precio, $cantidad, $tipo, $id_vendedor, $id_categoria]);
@@ -52,7 +48,7 @@ try {
             mkdir('uploads/videos', 0777, true);
         }
 
-  
+        // Subir imágenes
         if (isset($_FILES['imagenes'])) {
             foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
                 if ($_FILES['imagenes']['error'][$key] === 0) {
@@ -69,7 +65,7 @@ try {
             }
         }
 
-
+        // Subir videos
         if (isset($_FILES['videos'])) {
             foreach ($_FILES['videos']['tmp_name'] as $key => $tmp_name) {
                 if ($_FILES['videos']['error'][$key] === 0) {

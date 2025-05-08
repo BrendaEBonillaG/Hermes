@@ -69,9 +69,18 @@ else if($rol_usuario === 'cliente'){
     <nav class="navbar">
         <ul class="navbar-menu">
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
-            <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-             <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+
+            <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
+                <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+
+            <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+                <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
+
+            <?php endif; ?>
+
             <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+
             <li>
                 <form class="search-form">
                     <input type="text" placeholder="Buscar productos..." class="search-input">
@@ -83,7 +92,8 @@ else if($rol_usuario === 'cliente'){
             <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-                <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 

@@ -4,23 +4,6 @@ SHOW TABLES;
 DROP DATABASE Hermes;
 
 -- Tabla de Usuarios
-CREATE TABLE Usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    correo VARCHAR(100) NOT NULL,
-    nombreUsu VARCHAR(50) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL,
-    rol VARCHAR(50) NOT NULL,
-	foto LONGBLOB,
-    fotoNombre VARCHAR(100),
-    nombres VARCHAR(100) NOT NULL,
-    apePa VARCHAR(100) NOT NULL,
-    apeMa VARCHAR(100) NOT NULL,
-    fechaNacim DATE,
-    sexo VARCHAR(30) NOT NULL,
-    fechaIngreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    privacidad VARCHAR(20) NOT NULL
-);
-
 
 
 CREATE TABLE Usuarios (
@@ -41,6 +24,7 @@ CREATE TABLE Usuarios (
     estado TINYINT(1) NOT NULL DEFAULT 1
 );
 SELECT * FROM Usuarios;
+
 SELECT * FROM Productos;
 SELECT * FROM Imagenes_Productos;
 SELECT * FROM Videos_Productos;
@@ -95,6 +79,7 @@ CREATE TABLE Listas (
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
+
 
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
