@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute([$usuario_id]);
     
         echo "<script>alert('Usuario desactivado correctamente');</script>";
-        header('Location: index.php');  
+        header('Location: ../index.php');  
         exit;
 }
 ?>
