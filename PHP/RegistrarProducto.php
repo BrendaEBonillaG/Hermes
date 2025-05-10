@@ -12,20 +12,27 @@ try {
         $descripcion = $_POST['description'];  // Aquí debería ser 'description'
         $precio = $_POST['price'];  // Aquí debería ser 'price'
         $cantidad = $_POST['quantity'];  // Aquí debería ser 'quantity'
+        // Validar que precio y cantidad no sean negativos
+        if ($precio < 0 || $cantidad < 0) {
+            echo "Error: El precio y la cantidad no pueden ser negativos.";
+            exit;
+        }
+
 
         $categoria = $_POST['categoria']; // ID de categoría seleccionada
-        $nueva_categoria = $_POST['nueva_categoria']; // Si hay una nueva categoría
+        $nueva_categoria = $_POST['nueva_categoria'] ?? null;
 
         // Verificar si se está añadiendo una nueva categoría
         if (!empty($nueva_categoria)) {
-            // Insertar nueva categoría en la base de datos
+
+
             $stmtCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
             $stmtCat->execute([$nueva_categoria, 'Categoría creada automáticamente', $_SESSION['id_usuario']]);
             $id_categoria = $pdo->lastInsertId();
         } elseif (is_numeric($categoria)) {
-            $id_categoria = $categoria; // Usar la categoría seleccionada
+            $id_categoria = $categoria;
         } else {
-            // Si la categoría no es válida, mostrar error
+
             echo "Error: categoría no válida.";
             exit;
         }
@@ -82,7 +89,8 @@ try {
             }
         }
 
-        echo "Producto registrado exitosamente.";
+        header("Location: ../Vendedor/CrearProduc.php?success=1");
+        exit;
 
     } else {
         echo "No se enviaron datos.";

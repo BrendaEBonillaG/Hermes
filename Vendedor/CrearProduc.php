@@ -49,7 +49,11 @@ if (!isset($_SESSION['usuario'])) {
         </ul>
     </nav>
 
-
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+<script>
+    alert("Producto registrado exitosamente.");
+</script>
+<?php endif; ?>
 
     <!-- Formulario de registro-->
     <form class="upload-form" action="../PHP/RegistrarProducto.php" method="POST" enctype="multipart/form-data">
@@ -116,8 +120,8 @@ if (!isset($_SESSION['usuario'])) {
             <button type="button" class="select-button" onclick="agregarNuevaCategoria()">Agregar</button>
         </div>
 
-        <input type="number" name="price" placeholder="Precio..." class="input-field small" required>
-        <input type="number" name="quantity" placeholder="Cantidad..." class="input-field small" required>
+        <input type="number" name="price"  min="0" step="0.01" placeholder="Precio..." class="input-field small" required>
+        <input type="number" name="quantity" min="0" step="1" placeholder="Cantidad..." class="input-field small" required>
     </div>
     <div class="checkbox-container">
         <label>Acepta cotizaciones</label>
