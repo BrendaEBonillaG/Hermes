@@ -47,7 +47,7 @@ if (!isset($_SESSION['usuario'])) {
 
             <?php endif; ?>
 
-            <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+            <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
 
             <li>
                 <form class="search-form">

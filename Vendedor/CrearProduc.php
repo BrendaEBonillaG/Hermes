@@ -31,7 +31,7 @@ if (!isset($_SESSION['usuario'])) {
             <li><a href="../Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
             <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
             <li><a href="../Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
-            <li><a href="../Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
+            <li><a href="../Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
             <li>
                 <form class="search-form">
                     <input type="text" placeholder="Buscar productos..." class="search-input">
