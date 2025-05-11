@@ -176,7 +176,33 @@ CREATE TABLE Mensajes (
 
 SELECT * FROM Mensajes;
 
+INSERT INTO Mensajes (id_emisor, id_receptor, mensaje)
+VALUES (3, 2, 'Hola, ¿cómo estás?');
 
+
+
+
+CREATE TABLE Chat_Privado (
+    id_chat INT AUTO_INCREMENT PRIMARY KEY,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_remitente INT NOT NULL,
+    id_emisor INT NOT NULL,
+    CONSTRAINT chk_diferentes CHECK (id_remitente <> id_emisor), -- Evita que alguien cree un chat consigo mismo
+    FOREIGN KEY (id_remitente) REFERENCES Usuarios(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_emisor) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Mensajes_Privado (
+    id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
+    id_chat INT NOT NULL,
+    id_usuario INT NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR (500) DEFAULT 'texto',
+    visto BIT NOT NULL DEFAULT 0,
+    FOREIGN KEY (id_chat) REFERENCES chat(id_chat) ON DELETE CASCADE,
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
+);
 
 TRUNCATE TABLE Usuarios;
 

@@ -72,7 +72,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // obtiene todos los resultados com
         <?php
         if (count($result) > 0) {
           foreach ($result as $row) {
-            $nombre_usuario = htmlspecialchars($row['nombreUsu']);
+            $nombre_usuario = htmlspecialchars($row['nombreUsu'], ENT_QUOTES, 'UTF-8');
+
             $foto = $row['foto'];
             $id_otro_usuario = $row['id'];
 
@@ -94,13 +95,14 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // obtiene todos los resultados com
 
             echo '<li class="nav-item">';
             echo '<a class="nav-link usuario-chat" href="#" data-nombre="' . $nombre_usuario . '" 
-              data-foto="' . $imagen_perfil . '" data-id-chat="' . $id_chat . '">';
-            echo '<img src="' . $imagen_perfil . '" class="chat-icon me-2"> ' . $nombre_usuario;
+      data-foto="' . $imagen_perfil . '" data-id-chat="' . $id_chat . '">';
+            echo '<img src="' . $imagen_perfil . '" class="profile-pic"> ' . $nombre_usuario;
             echo '</a>';
             echo '</li>';
+
           }
         } else {
-          echo '<li class="nav-item"><a class="nav-link" href="#">No tienes chats activos</a></li>';
+          echo '<li class="nav-item"><span>No tienes chats activos</span></li>';
         }
         $stmt = null;
         $conn = null;
