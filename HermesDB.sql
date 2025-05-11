@@ -175,7 +175,7 @@ CREATE TABLE Chat_Privado (
     FOREIGN KEY (id_emisor) REFERENCES Usuarios(id) ON DELETE CASCADE
 );
 INSERT INTO Chat_Privado (id_remitente, id_emisor)
-VALUES (2, 3);
+VALUES (1, 3);
 
 CREATE TABLE Mensajes_Privado (
     id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
@@ -190,7 +190,7 @@ CREATE TABLE Mensajes_Privado (
 );
 
 INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido, tipo, visto)
-VALUES (2, 3, 'Hola, ¿cómo estás?', 'texto', 0);
+VALUES (1, 3, 'Hola, ¿cómo estás?', 'texto', 0);
 
 SELECT * FROM Mensajes_Privado;
 TRUNCATE TABLE Usuarios;
