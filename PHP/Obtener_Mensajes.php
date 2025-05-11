@@ -2,6 +2,7 @@
 
 require '../config.php';
 
+
 session_start();
 if (!isset($_SESSION['usuario'], $_GET['id_chat'])) {
     http_response_code(400);
@@ -11,7 +12,7 @@ if (!isset($_SESSION['usuario'], $_GET['id_chat'])) {
 $id_usuario = $_SESSION['usuario'];
 $id_chat = intval($_GET['id_chat']);
 
-// CORREGIDA: Se usa id_chat (no id_chat_Privado)
+
 $stmt = $conn->prepare("SELECT id_usuario, contenido, fecha_envio FROM Mensajes_Privado WHERE id_chat = ? ORDER BY fecha_envio ASC");
 $stmt->execute([$id_chat]);
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +26,7 @@ foreach ($result as $row) {
     echo '</div></div>';
 }
 
-$stmt->closeCursor(); // en lugar de ->close() para PDO
-$conn = null;         // cerrar conexión PDO
-?>
 
+$stmt->close();
+$conn->close();
+?>

@@ -1,6 +1,11 @@
 <?php
-require './config.php'; 
+require '../config.php';
+
 session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 if (!isset($_SESSION['usuario'], $_POST['mensaje'], $_POST['id_chat'])) {
     http_response_code(400);
@@ -8,16 +13,21 @@ if (!isset($_SESSION['usuario'], $_POST['mensaje'], $_POST['id_chat'])) {
     exit;
 }
 
-$id_usuario = $_SESSION['usuario'];
-$mensaje = mysqli_real_escape_string($conn, $_POST['mensaje']);
+$id_usuario = (int)$_SESSION['usuario'];
+$mensaje = trim($_POST['mensaje']);
 $id_chat = (int)$_POST['id_chat'];
 
-$sql = "INSERT INTO Mensajes_Privado (id_chat_Privado, id_usuario, contenido) 
-        VALUES ($id_chat, $id_usuario, '$mensaje')";
+// Validar que no esté vacío
+if ($mensaje === '') {
+    echo "Mensaje vacío.";
+    exit;
+}
 
-if (mysqli_query($conn, $sql)) {
-    echo "Mensaje enviado";
-} else {
-    echo "Error al enviar el mensaje: " . mysqli_error($conn);
+try {
+    $stmt = $conn->prepare("INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido) VALUES (?, ?, ?)");
+    $stmt->execute([$id_chat, $id_usuario, $mensaje]);
+    echo "Mensaje enviado correctamente.";
+} catch (PDOException $e) {
+    echo "Error al enviar el mensaje: " . $e->getMessage();
 }
 ?>
