@@ -1,54 +1,55 @@
 <?php
 session_start();
-require './config.php'; 
+require '../config.php'; // Asegúrate de que este archivo devuelve un objeto PDO en $conn
 
-// VERFIICACION USUARIO
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
+// VERIFICACIÓN DE USUARIO
+if (!isset($_SESSION['usuario'])) {
+    header("Location: Index.php");
     exit();
 }
 
-// VERIFICA ID
+// VERIFICACIÓN DE ID VÁLIDO
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("ID de usuario inválido");
 }
 
-$id_emisor = $_SESSION['id_usuario'];
-$id_remitente = $_GET['id'];
+$id_emisor = $_SESSION['usuario'];
+$id_remitente = intval($_GET['id']);
 
-if ($id_emisor == $id_remitente) {
+if ($id_emisor === $id_remitente) {
     die("No puedes chatear contigo mismo");
 }
 
-// VALIDACION DE CHAT EXISTENTE
+// VALIDACIÓN DE CHAT EXISTENTE
 $sql_check = "SELECT id_chat FROM Chat_Privado 
-              WHERE (id_remitente = ? AND id_emisor = ?)
-              OR (id_remitente = ? AND id_emisor = ?)";
+              WHERE (id_remitente = :remitente1 AND id_emisor = :emisor1)
+                 OR (id_remitente = :remitente2 AND id_emisor = :emisor2)";
 
 $stmt_check = $conn->prepare($sql_check);
-$stmt_check->bind_param("iiii", $id_remitente, $id_emisor, $id_emisor, $id_remitente);
-$stmt_check->execute();
-$result = $stmt_check->get_result();
+$stmt_check->execute([
+    ':remitente1' => $id_remitente,
+    ':emisor1'    => $id_emisor,
+    ':remitente2' => $id_emisor,
+    ':emisor2'    => $id_remitente
+]);
 
-if ($result->num_rows == 0) {
+$result = $stmt_check->fetch(PDO::FETCH_ASSOC);
 
-    $sql_insert = "INSERT INTO Chat_Privado (id_remitente, id_emisor) 
-                   VALUES (?, ?)";
-    
+if (!$result) {
+    // No existe, lo insertamos
+    $sql_insert = "INSERT INTO Chat_Privado (id_remitente, id_emisor) VALUES (:emisor, :remitente)";
     $stmt_insert = $conn->prepare($sql_insert);
-    $stmt_insert->bind_param("ii", $id_emisor, $id_remitente);
-    $stmt_insert->execute();
-    $id_chat = $conn->insert_id;
-    $stmt_insert->close();
+    $stmt_insert->execute([
+        ':emisor'    => $id_emisor,
+        ':remitente' => $id_remitente
+    ]);
+    $id_chat = $conn->lastInsertId();
 } else {
-
-    $row = $result->fetch_assoc();
-    $id_chat = $row['id_chat'];
+    // Ya existe, usamos ese ID
+    $id_chat = $result['id_chat'];
 }
 
-$stmt_check->close();
-$conn->close();
-
-header("Location: ../chat.php?id=" . $id_chat);
+// Redirigimos al chat
+header("Location: ../Chat.php?id=" . $id_chat);
 exit();
 ?>

@@ -26,7 +26,4 @@ foreach ($result as $row) {
     echo '</div></div>';
 }
 
-
-$stmt->close();
-$conn->close();
 ?>
