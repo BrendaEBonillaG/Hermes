@@ -24,7 +24,7 @@ CREATE TABLE Usuarios (
     estado TINYINT(1) NOT NULL DEFAULT 1
 );
 SELECT * FROM Usuarios;
-
+SELECT * FROM Categorias;
 SELECT * FROM Productos;
 SELECT * FROM Imagenes_Productos;
 SELECT * FROM Videos_Productos;

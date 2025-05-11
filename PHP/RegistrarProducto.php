@@ -8,37 +8,40 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $nombre = $_POST['name'];  // Aquí debería ser 'name'
-        $descripcion = $_POST['description'];  // Aquí debería ser 'description'
-        $precio = $_POST['price'];  // Aquí debería ser 'price'
-        $cantidad = $_POST['quantity'];  // Aquí debería ser 'quantity'
-        // Validar que precio y cantidad no sean negativos
+        // Recuperar datos del formulario
+        $nombre = $_POST['name'];
+        $descripcion = $_POST['description'];
+        $precio = $_POST['price'];
+        $cantidad = $_POST['quantity'];
+
+        // Validar precio y cantidad
         if ($precio < 0 || $cantidad < 0) {
             echo "Error: El precio y la cantidad no pueden ser negativos.";
             exit;
         }
 
+        // Validar que la categoría esté seleccionada o se haya proporcionado una nueva categoría
+        $categoria = $_POST['categoria'] ?? null;
+        $categoria_id = $_POST['categoria_omitida'] ?? null;
 
-        $categoria = $_POST['categoria']; // ID de categoría seleccionada
-        $nueva_categoria = $_POST['nueva_categoria'] ?? null;
-
-        // Verificar si se está añadiendo una nueva categoría
-        if (!empty($nueva_categoria)) {
-
-
+        // Validar la categoría nueva o existente
+        if ($categoria === 'nueva' && isset($_POST['nuevaCategoria']) && !empty($_POST['nuevaCategoria'])) {
+            // Nueva categoría
+            $nuevaCategoria = trim($_POST['nuevaCategoria']);
             $stmtCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
-            $stmtCat->execute([$nueva_categoria, 'Categoría creada automáticamente', $_SESSION['id_usuario']]);
+            $stmtCat->execute([$nuevaCategoria, 'Categoría creada automáticamente', $_SESSION['id_usuario']]);
             $id_categoria = $pdo->lastInsertId();
-        } elseif (is_numeric($categoria)) {
-            $id_categoria = $categoria;
+        } elseif ($categoria !== 'nueva' && is_numeric($categoria_id) && $categoria_id > 0) {
+            // Categoría existente
+            $id_categoria = $categoria_id;
         } else {
-
-            echo "Error: categoría no válida.";
+            // Error si no se seleccionó o proporcionó una categoría válida
+            echo "Error: Debes seleccionar una categoría existente o agregar una nueva.";
             exit;
         }
 
-        // Insertar producto
-        $id_vendedor = $_SESSION['id_usuario'] ?? 1;
+        // Insertar el producto en la base de datos
+        $id_vendedor = $_SESSION['id_usuario'] ?? 1;  // ID del vendedor
         $tipo = 'venta';
 
         $stmt = $pdo->prepare("INSERT INTO Productos (nombre, descripcion, precio, cantidad_Disponible, tipo, id_vendedor, id_categoria, estado)
@@ -47,7 +50,7 @@ try {
 
         $id_producto = $pdo->lastInsertId();
 
-        // Crear carpetas si no existen
+        // Crear directorios de subida si no existen
         if (!is_dir('uploads/imagenes')) {
             mkdir('uploads/imagenes', 0777, true);
         }
@@ -89,6 +92,7 @@ try {
             }
         }
 
+        // Redirigir con éxito
         header("Location: ../Vendedor/CrearProduc.php?success=1");
         exit;
 
