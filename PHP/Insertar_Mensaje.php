@@ -1,14 +1,14 @@
 <?php
-include '../conexion.php'; 
+require './config.php'; 
 session_start();
 
-if (!isset($_SESSION['id_usuario'], $_POST['mensaje'], $_POST['id_chat'])) {
+if (!isset($_SESSION['usuario'], $_POST['mensaje'], $_POST['id_chat'])) {
     http_response_code(400);
     echo "Faltan datos.";
     exit;
 }
 
-$id_usuario = $_SESSION['id_usuario'];
+$id_usuario = $_SESSION['usuario'];
 $mensaje = mysqli_real_escape_string($conn, $_POST['mensaje']);
 $id_chat = (int)$_POST['id_chat'];
 

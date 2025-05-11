@@ -163,24 +163,7 @@ CREATE TABLE Transacciones (
     FOREIGN KEY (id_metodo_pago) REFERENCES Metodos_Pago(id) 
 );
 
--- Tabla de Mensajes entre Usuarios
-CREATE TABLE Mensajes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_emisor INT NOT NULL,
-    id_receptor INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_emisor) REFERENCES Usuarios(id) ,
-    FOREIGN KEY (id_receptor) REFERENCES Usuarios(id) 
-);
-
-SELECT * FROM Mensajes;
-
-INSERT INTO Mensajes (id_emisor, id_receptor, mensaje)
-VALUES (3, 2, 'Hola, ¿cómo estás?');
-
-
-
+SELECT * FROM Chat_Privado;
 
 CREATE TABLE Chat_Privado (
     id_chat INT AUTO_INCREMENT PRIMARY KEY,
@@ -191,6 +174,8 @@ CREATE TABLE Chat_Privado (
     FOREIGN KEY (id_remitente) REFERENCES Usuarios(id) ON DELETE CASCADE,
     FOREIGN KEY (id_emisor) REFERENCES Usuarios(id) ON DELETE CASCADE
 );
+INSERT INTO Chat_Privado (id_remitente, id_emisor)
+VALUES (2, 3);
 
 CREATE TABLE Mensajes_Privado (
     id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
@@ -200,10 +185,14 @@ CREATE TABLE Mensajes_Privado (
     fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     tipo VARCHAR (500) DEFAULT 'texto',
     visto BIT NOT NULL DEFAULT 0,
-    FOREIGN KEY (id_chat) REFERENCES chat(id_chat) ON DELETE CASCADE,
+    FOREIGN KEY (id_chat) REFERENCES Chat_Privado(id_chat) ON DELETE CASCADE,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
 );
 
+INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido, tipo, visto)
+VALUES (2, 3, 'Hola, ¿cómo estás?', 'texto', 0);
+
+SELECT * FROM Mensajes_Privado;
 TRUNCATE TABLE Usuarios;
 
 DROP TABLE IF EXISTS Usuarios;

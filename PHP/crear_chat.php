@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../conexion.php';
+require './config.php'; 
 
 // VERFIICACION USUARIO
 if (!isset($_SESSION['id_usuario'])) {
