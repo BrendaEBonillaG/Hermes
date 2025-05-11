@@ -9,7 +9,7 @@
   left: 0px; 
   width: 25%;
   height: 91%;
-  background-color: rgba(255, 251, 251, 0.9); 
+  background-color: #ffffff33; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,23 +23,23 @@
 
 .vertical-navbar-white .search-form .form-control {
   padding: 10px;
-  border: 2px solid #ff007f;
+  border: 2px solid #ffbd59;
   border-radius: 4px;
 
 }
 
 .vertical-navbar-white .search-form .btn-outline-secondary {
-    background-color: #ff007f; 
+    background-color: #ffbd59; 
     color: #fff; 
-    border-color: #ff007f; 
+    border-color: #ffbd59; 
 }
 
 .vertical-navbar-white .search-form .btn-outline-secondary:hover {
-  background-color: #a10051;
+  background-color: #ffbd59;
   color: #fff;
 }
 .vertical-navbar-white .nav-link {
-  color: #000;
+  color: #fff;
   padding: 10px 20px;
   display: flex;
   align-items: center;
@@ -51,6 +51,7 @@
   width: 30px;
   height: 30px;
   margin-right: 10px;
+  border-radius: 50px;
 }
 
 .vertical-navbar-white .nav-link:hover,
@@ -108,7 +109,7 @@
   }
   
   .chat-message.outgoing .message-content {
-    background-color: #ff007f;
+    background-color: #ffbd59;
     color: #fff;
   }
   
@@ -127,14 +128,14 @@
 .chat-input input {
   flex: 1;
   padding: 10px;
-  border: 2px solid #ff3198;
+  border: 2px solid #ffbd59;
   border-radius: 5px;
-  background-color: #ff3198;
-  color: #ffc8e3;
+  background-color: #ffbd59;
+  color: #fff;
 }
   
 .chat-input button {
-  background-color: #ff007f;
+  background-color: #ffbd59;
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -143,14 +144,14 @@
 }
   
   .chat-input button:hover {
-    background-color: #a10051;
+    background-color: #F1DE99;
   }
 
   .chat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #444;
+    background-color: #ffffff33;
     padding: 10px 20px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -180,49 +181,5 @@
     display: flex;
     gap: 10px; 
   }
-  
-  .btn-call,
-  .btn-video-call,
-  .btn-options {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: color 0.3s;
-  }
-
-  
-  
-  .btn-call:hover,
-  .btn-video-call:hover,
-  .btn-options:hover {
-    color: #ff007f; 
-  }
-
-  .btn-options {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
-}
-  
-  .btn-options:hover {
-    color: #ff007f;
-  }
-
-  .btn-tasks {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.2em;
-    cursor: pointer;
-  }
-  
-  .btn-tasks:hover {
-    color: #ff007f;
-  }
-  
 
 
