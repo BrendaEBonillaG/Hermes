@@ -3,14 +3,26 @@ function mostrarInputCategoria(select) {
     const nuevaCategoriaInput = document.getElementById('nuevaCategoriaInput');
 
     if (select.value === 'nueva') {
+        // Mostrar el campo para agregar nueva categoría
         nuevaCategoriaDiv.style.display = 'block';
-        nuevaCategoriaInput.required = true;
     } else {
+        // Ocultar el campo de nueva categoría si no es "nueva"
         nuevaCategoriaDiv.style.display = 'none';
-        nuevaCategoriaInput.required = false;
-        nuevaCategoriaInput.value = "";
     }
 }
+
+// Validación al enviar el formulario
+document.querySelector('form').addEventListener('submit', function(event) {
+    const categoriaSelect = document.getElementById('categoriaSelect');
+    const nuevaCategoriaInput = document.getElementById('nuevaCategoriaInput');
+
+    // Verificar si se seleccionó "nueva" y si el campo de nueva categoría no está vacío
+    if (categoriaSelect.value === 'nueva' && nuevaCategoriaInput.value.trim() === '') {
+        event.preventDefault();  // Detener el envío del formulario
+        alert('Por favor, ingresa el nombre de la nueva categoría.');
+        nuevaCategoriaInput.focus();  // Poner el foco en el campo de nueva categoría
+    }
+});
 
 function normalizarTexto(texto) {
     return texto
@@ -19,7 +31,6 @@ function normalizarTexto(texto) {
         .toLowerCase()
         .trim();
 }
-
 function agregarNuevaCategoria() {
     const select = document.getElementById("categoriaSelect");
     const input = document.getElementById("nuevaCategoriaInput");
@@ -49,15 +60,14 @@ function agregarNuevaCategoria() {
     select.add(nuevaOpcion, select.options.length - 1);
     select.value = nuevaOpcion.value;
 
-    // Enviar el valor real de la categoría
-    input.name = "categoria"; // Asegurarse de que se envíe el valor correcto
-    select.name = "categoria_omitida"; // Asegurarse de que el select original no se envíe
+    // Enviar el valor de la nueva categoría al backend a través de un campo oculto
+    input.name = "nuevaCategoria";  // Nombre del campo para enviar la nueva categoría
+    select.name = "categoria_omitida";  // Nombre del campo para enviar la categoría seleccionada
 
     // Ocultar campo de texto
     input.value = "";
     document.getElementById("nuevaCategoriaDiv").style.display = "none";
 }
-
 
 
 

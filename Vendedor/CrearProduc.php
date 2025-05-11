@@ -1,4 +1,3 @@
-
 <?php
 session_start(); // Inicia la sesión
 
@@ -44,12 +43,16 @@ if (!isset($_SESSION['usuario'])) {
             <li><a href="../Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-                <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
-                class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 
-
+    <?php if (isset($_GET['success']) && $_GET['success'] == 1): ?>
+        <script>
+            alert("Producto registrado exitosamente.");
+        </script>
+    <?php endif; ?>
 
     <!-- Formulario de registro-->
     <form class="upload-form" action="../PHP/RegistrarProducto.php" method="POST" enctype="multipart/form-data">
@@ -85,55 +88,59 @@ if (!isset($_SESSION['usuario'])) {
 
 
             <div class="form-section">
-    <input type="text" name="name" placeholder="Nombre..." class="input-field">
-    <textarea name="description" placeholder="Descripción..." class="input-field"></textarea>
-    <div class="row" style="flex-direction: column;">
+                <input type="text" name="name" placeholder="Nombre..." class="input-field">
+                <textarea name="description" placeholder="Descripción..." class="input-field"></textarea>
+                <div class="row" style="flex-direction: column;">
 
-        <?php
-        require_once '../config.php';
-        $categorias = [];
+                    <?php
+                    require_once '../config.php';
+                    $categorias = [];
 
-        // Consulta con PDO (ya que usas $conn que es PDO)
-        $stmt = $conn->query("SELECT id, nombre FROM categorias");
-        $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        ?>
+                    // Consulta con PDO (ya que usas $conn que es PDO)
+                    $stmt = $conn->query("SELECT id, nombre FROM categorias");
+                    $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+                    <div class="form-group">
+                        <label for="categoria">Categoría:</label>
+                        <select id="categoriaSelect" name="categoria" class="input-field"
+                            onchange="mostrarInputCategoria(this)">
+                            <option value="">-- Selecciona una categoría --</option>
+                            <?php foreach ($categorias as $cat): ?>
+                                <option value="<?= htmlspecialchars($cat['id']) ?>">
+                                    <?= htmlspecialchars($cat['nombre']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                            <option value="nueva">+ Agregar nueva categoría</option>
+                        </select>
+                    </div>
 
-        <div class="form-group">
-            <label for="categoria">Categoría:</label>
-            <select id="categoriaSelect" name="categoria" class="input-field" onchange="mostrarInputCategoria(this)" required>
-                <option value="">-- Selecciona una categoría --</option>
-                <?php foreach ($categorias as $cat): ?>
-                    <option value="<?= htmlspecialchars($cat['id']) ?>">
-                        <?= htmlspecialchars($cat['nombre']) ?>
-                    </option>
-                <?php endforeach; ?>
-                <option value="nueva">+ Agregar nueva categoría</option>
-            </select>
-        </div>
+                    <div id="nuevaCategoriaDiv" style="display: none; margin-top: 10px;">
+                        <input type="text" id="nuevaCategoriaInput" class="input-field"
+                            placeholder="Nombre de la nueva categoría">
+                        <button type="button" class="select-button" onclick="agregarNuevaCategoria()">Agregar</button>
+                    </div>
 
-        <div id="nuevaCategoriaDiv" style="display: none; margin-top: 10px;">
-            <input type="text" id="nuevaCategoriaInput" class="input-field" placeholder="Nombre de la nueva categoría" required>
-            <button type="button" class="select-button" onclick="agregarNuevaCategoria()">Agregar</button>
-        </div>
 
-        <input type="number" name="price" placeholder="Precio..." class="input-field small" required>
-        <input type="number" name="quantity" placeholder="Cantidad..." class="input-field small" required>
-    </div>
-    <div class="checkbox-container">
-        <label>Acepta cotizaciones</label>
-        <div class="checkbox-wrapper-12">
-            <div class="cbx">
-                <input type="checkbox" id="cbx-12" name="accept_quotes" checked>
-                <label for="cbx-12"></label>
-                <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
-                    <path d="M2 8.36364L6.23077 12L13 2"></path>
-                </svg>
+                    <input type="number" name="price" min="0" step="0.01" placeholder="Precio..."
+                        class="input-field small" required>
+                    <input type="number" name="quantity" min="0" step="1" placeholder="Cantidad..."
+                        class="input-field small" required>
+                </div>
+                <div class="checkbox-container">
+                    <label>Acepta cotizaciones</label>
+                    <div class="checkbox-wrapper-12">
+                        <div class="cbx">
+                            <input type="checkbox" id="cbx-12" name="accept_quotes" checked>
+                            <label for="cbx-12"></label>
+                            <svg fill="none" viewBox="0 0 15 14" height="14" width="15">
+                                <path d="M2 8.36364L6.23077 12L13 2"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="create-button">Crear</button>
             </div>
-        </div>
-    </div>
-
-    <button type="submit" class="create-button">Crear</button>
-</div>
 
 
         </div>
@@ -155,23 +162,23 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 
 
-        <script>
+    <script>
 
-            document.addEventListener('DOMContentLoaded', function () {
-                const deleteButtons = document.querySelectorAll('.delete-button');
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-button');
 
-                deleteButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const imageItem = this.parentElement;
-                        imageItem.remove(); // Elimina todo el contenedor
-                    });
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const imageItem = this.parentElement;
+                    imageItem.remove(); // Elimina todo el contenedor
                 });
             });
-        </script>
+        });
+    </script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../JS/modalLogout.js"></script>
-        <script src="../JS/MostCat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../JS/modalLogout.js"></script>
+    <script src="../JS/MostCat.js"></script>
 </body>
 
 </html>
