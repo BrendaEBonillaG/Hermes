@@ -25,6 +25,9 @@ CREATE TABLE Usuarios (
 );
 SELECT * FROM Usuarios;
 
+INSERT INTO Usuarios (correo, nombreUsu,contrasena,rol,fotoNombre,nombres,apePa,apeMa,fechaNacim,sexo,privacidad) 
+VALUES ('zaptos@gmail.com', 'Admin05', '$2y$10$sCoyXA5h3bHWEsaQnyXuTOQdXBwj9ixELF02Tq7ndOMH7zE1s1ul2','administrador','foto','alvaro','saldivar','garza','2000-10-05','masculino','publico');
+
 SELECT * FROM Productos;
 SELECT * FROM Imagenes_Productos;
 SELECT * FROM Videos_Productos;
@@ -223,9 +226,9 @@ VALUES ('zaptos', 'Descripción', 1);
 
 
 INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 1', 'Descripción del producto 1', 249.99,4, 'jabon',1,1, 'activo');
+VALUES ('Producto 3', 'Descripción del producto 1', 249.99,4, 'jabon',10,1, 'pendiente');
 INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
-VALUES ('Producto 4', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'activo');
+VALUES ('Producto 6', 'Descripción del producto 4', 29.99,4, 'jamon',1,1, 'pendiente');
 INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 
 VALUES ('Producto 2', 'Descripción del producto 2', 24.99,4, 'weq',1,1, 'activo');
 INSERT INTO Productos (nombre, descripcion, precio,cantidad_Disponible, tipo,id_vendedor,id_categoria,estado) 

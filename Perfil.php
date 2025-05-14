@@ -38,7 +38,7 @@ if ($rol_usuario === 'vendedor') {
 
 
     // Consulta para obtener los productos del vendedor
-    $sql = "SELECT * FROM Productos WHERE id_vendedor = ?";
+    $sql = "SELECT * FROM Productos WHERE id_vendedor = ? AND estado = 'aceptado'";
     $stmt = $conn ->prepare($sql);  // Prepara la consulta
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
     $stmt->execute();  // Ejecuta la consulta
@@ -89,6 +89,9 @@ else if($rol_usuario === 'cliente'){
                     </button>
                 </form>
             </li>
+
+           <li><a href="Admin/RevisionProd.php"><i class="bi bi-chat-dots"></i> Revision Productos</a></li>
+
             <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
@@ -238,7 +241,7 @@ else if($rol_usuario === 'cliente'){
     </div>
 
     <!-- Mensaje de perfil privado -->
-    <div id="privateMessage" class="profile-message hidden">
+    <div id="privateMessage" class="profile-message <?php echo $privacidad_usuario === 'privado' ? '' : 'hidden'; ?>">
         <p>Este perfil es privado.</p>
     </div>
 
@@ -280,7 +283,7 @@ else if($rol_usuario === 'cliente'){
                 } else {
                     echo '<p>No has publicado ningún producto.</p>';
                 }
-                ?>
+            ?>
         </div>
     </div>
 

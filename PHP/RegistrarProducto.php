@@ -31,7 +31,7 @@ try {
         }
 
         // Insertar producto
-        $id_vendedor = $_SESSION['id_usuario'] ?? 1;
+        $id_vendedor = $_SESSION['usuario']['id']?? 1;
         $tipo = 'venta';
 
         $stmt = $pdo->prepare("INSERT INTO Productos (nombre, descripcion, precio, cantidad_Disponible, tipo, id_vendedor, id_categoria, estado)
@@ -39,48 +39,59 @@ try {
         $stmt->execute([$nombre, $descripcion, $precio, $cantidad, $tipo, $id_vendedor, $id_categoria]);
 
         $id_producto = $pdo->lastInsertId();
+        // Obtener la ruta absoluta al directorio Hermes/
+$raizServidor = $_SERVER['DOCUMENT_ROOT'] . '/Hermes/';
 
-        // Crear carpetas si no existen
-        if (!is_dir('uploads/imagenes')) {
-            mkdir('uploads/imagenes', 0777, true);
-        }
-        if (!is_dir('uploads/videos')) {
-            mkdir('uploads/videos', 0777, true);
-        }
+// Crear carpetas si no existen
+if (!is_dir($raizServidor . 'uploads/imagenes')) {
+    mkdir($raizServidor . 'uploads/imagenes', 0777, true);
+}
+if (!is_dir($raizServidor . 'uploads/videos')) {
+    mkdir($raizServidor . 'uploads/videos', 0777, true);
+}
 
-        // Subir imágenes
-        if (isset($_FILES['imagenes'])) {
-            foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
-                if ($_FILES['imagenes']['error'][$key] === 0) {
-                    $mime = mime_content_type($tmp_name);
-                    if (str_starts_with($mime, 'image/')) {
-                        $nombreArchivo = uniqid() . '_' . basename($_FILES['imagenes']['name'][$key]);
-                        $ruta_destino = "uploads/imagenes/" . $nombreArchivo;
-                        move_uploaded_file($tmp_name, $ruta_destino);
+// Subir imágenes
+if (isset($_FILES['imagenes'])) {
+    foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
+        if ($_FILES['imagenes']['error'][$key] === 0) {
+            $mime = mime_content_type($tmp_name);
+            if (str_starts_with($mime, 'image/')) {
+                $nombreOriginal = basename($_FILES['imagenes']['name'][$key]);
 
-                        $stmtImg = $pdo->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
-                        $stmtImg->execute([$id_producto, $ruta_destino]);
-                    }
-                }
+                // Reemplazar caracteres no válidos
+                $nombreLimpio = preg_replace('/[^a-zA-Z0-9.\-_]/', '_', $nombreOriginal);
+
+                $nombreArchivo = uniqid() . '_' . $nombreLimpio;
+                $ruta_destino = $raizServidor . 'uploads/imagenes/' . $nombreArchivo;
+
+                move_uploaded_file($tmp_name, $ruta_destino);
+
+                // Guardar solo la ruta relativa en la base de datos
+                $stmtImg = $pdo->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
+                $stmtImg->execute([$id_producto, 'uploads/imagenes/' . $nombreArchivo]);
             }
         }
+    }
+}
 
-        // Subir videos
-        if (isset($_FILES['videos'])) {
-            foreach ($_FILES['videos']['tmp_name'] as $key => $tmp_name) {
-                if ($_FILES['videos']['error'][$key] === 0) {
-                    $mime = mime_content_type($tmp_name);
-                    if (str_starts_with($mime, 'video/')) {
-                        $nombreArchivo = uniqid() . '_' . basename($_FILES['videos']['name'][$key]);
-                        $ruta_destino = "uploads/videos/" . $nombreArchivo;
-                        move_uploaded_file($tmp_name, $ruta_destino);
+// Subir videos
+if (isset($_FILES['videos'])) {
+    foreach ($_FILES['videos']['tmp_name'] as $key => $tmp_name) {
+        if ($_FILES['videos']['error'][$key] === 0) {
+            $mime = mime_content_type($tmp_name);
+            if (str_starts_with($mime, 'video/')) {
+                $nombreArchivo = uniqid() . '_' . basename($_FILES['videos']['name'][$key]);
+                $ruta_destino = $raizServidor . 'uploads/videos/' . $nombreArchivo;
 
-                        $stmtVid = $pdo->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
-                        $stmtVid->execute([$id_producto, $ruta_destino]);
-                    }
-                }
+                move_uploaded_file($tmp_name, $ruta_destino);
+
+                $stmtVid = $pdo->prepare("INSERT INTO Videos_Productos (id_producto, url_video) VALUES (?, ?)");
+                $stmtVid->execute([$id_producto, 'uploads/videos/' . $nombreArchivo]);
             }
         }
+    }
+}
+
 
         echo "Producto registrado exitosamente.";
 

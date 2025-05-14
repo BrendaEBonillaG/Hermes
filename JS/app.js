@@ -3,30 +3,30 @@ function updatePrecioValue() {
     document.getElementById("precioValor").textContent = "$" + precio;
 }
 // Funciones para almacenar y traer los datos que se almacenan
-function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
-    localStorage.setItem(llave, JSON.stringify(valor_a_guardar))
-}
-function obtenerAlmacenamientoLocal(llave) {
-    const datos = JSON.parse(localStorage.getItem(llave))
-    return datos
-}
-let productos = obtenerAlmacenamientoLocal('productos') || [];
+//function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
+ //   localStorage.setItem(llave, JSON.stringify(valor_a_guardar))
+//}
+//function obtenerAlmacenamientoLocal(llave) {
+//    const datos = JSON.parse(localStorage.getItem(llave))
+ //   return datos
+//}
+//let productos = obtenerAlmacenamientoLocal('productos') || [];
 
-if (productos.length === 0) {
-    productos = [
-        { nombre: "Producto A", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
-        { nombre: "Producto B", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
-        { nombre: "Producto C", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
-        { nombre: "Producto D", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
-        { nombre: "Producto E", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
-        { nombre: "Producto F", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
-        { nombre: "Producto G", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
-        { nombre: "Producto H", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
-        { nombre: "Producto I", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
-        { nombre: "Producto J", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
-    ];
-    guardarAlmacenamientoLocal("productos", productos);
-}
+//if (productos.length === 0) {
+//    productos = [
+ //       { nombre: "Producto A", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
+ //       { nombre: "Producto B", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
+//       { nombre: "Producto C", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
+ //       { nombre: "Producto D", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
+ //       { nombre: "Producto E", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
+//        { nombre: "Producto F", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
+ //       { nombre: "Producto G", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
+ //       { nombre: "Producto H", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
+ //       { nombre: "Producto I", valor: 150, existencia: 5, urlImagen: "https://i.pinimg.com/474x/d0/84/9e/d0849ef8583ee3d834542b5d02832bab.jpg" },
+//        { nombre: "Producto J", valor: 200, existencia: 3, urlImagen: "https://i.pinimg.com/474x/a6/4c/23/a64c2327f410f1f91abff4db7ef4e555.jpg" },
+ //   ];
+ //   guardarAlmacenamientoLocal("productos", productos);
+//}
 // Variables que traemos de nuestro html
 const informacionCompra = document.getElementById('informacionCompra');
 const contenedorCompra = document.getElementById('contenedorCompra');
@@ -64,23 +64,35 @@ window.addEventListener('load', () => {
 
 
 
-function visualizarProductos() {
-    contenedor.innerHTML = ""
-    for (let i = 0; i < productos.length; i++) {
-        const producto = productos[i];
-        const soldOut = producto.existencia <= 0;
+async function visualizarProductos() {
+    try {
+        const respuesta = await fetch('http://localhost/Hermes/productos_enventa.php');
+        const productos = await respuesta.json();
 
-        contenedor.innerHTML += `
-        <div class="cardProducto" onclick="irADetalle(${i})">
-            <img src="${producto.urlImagen}">
-            <div class="informacion">
-                <p>${producto.nombre}</p>
-                <p class="precio">$${producto.valor}</p>
-                ${soldOut ? '<p class="soldOut">Sold Out</p>' : '<button onclick="event.stopPropagation(); comprar(' + i + ')">Comprar</button>'}
-            </div>
-        </div>`;
+        contenedor.innerHTML = "";
+        for (let i = 0; i < productos.length; i++) {
+            const producto = productos[i];
+            const soldOut = producto.existencia <= 0;
+
+            contenedor.innerHTML += `
+                <div class="cardProducto" onclick="irADetalle(${i})">
+                    <img src="${producto.imagenes[0]}">
+                    <div class="informacion">
+                        
+                        <p class="precio">$${producto.precio}</p>
+                        ${soldOut ? '<p class="soldOut">Sold Out</p>' : '<button onclick="event.stopPropagation(); comprar(' + i + ')">Comprar</button>'}
+                    </div>
+                </div>`;
+        }
+
+        
+        window.productos = productos;
+
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
     }
 }
+
 
 
 function comprar(indice) {
@@ -151,8 +163,8 @@ x.addEventListener("click", function(){
 })
 
 function irADetalle(indice) {
-    // Guardamos el producto seleccionado en localStorage
-    guardarAlmacenamientoLocal("productoSeleccionado", productos[indice]);
-
-    window.location.href = "Producto.html";
+    const producto = window.productos[indice];
+    localStorage.setItem("productoSeleccionado", JSON.stringify(producto));
+    window.location.href = "producto.html";
 }
+
