@@ -1,6 +1,8 @@
 <?php
 session_start();
 require __DIR__ . '/../config.php';
+$hash = password_hash('Denso75?', PASSWORD_DEFAULT);
+echo $hash;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombreUsu = $_POST['nombreUsu'];
@@ -26,8 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setcookie('rememberMe', $cookieValue, time() + (86400 * 30), "/"); // 30 días
         }
 
-        // Redirigir al dashboard
-        header("Location: ../Dashboard.php");
+        if($usuario['rol']=='administrador'){
+            header("Location: ../Admin/RevisionProd.php");
+        }else{
+// Redirigir al dashboard
+header("Location: ../Dashboard.php");
+        }
+
+        
         exit();
     } else {
         // Mostrar mensaje de error
