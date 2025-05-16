@@ -137,7 +137,7 @@ $products = [];
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
             <h2>¿Deseas cerrar sesión?</h2>
             <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
+                <button class="btn-modal confirm" onclick="window.location.href='../PHP/Logout.php'">Sí, cerrar sesión</button>
                 <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
