@@ -26,7 +26,6 @@ if (!isset($_SESSION['usuario'])) {
 <body>
 
     <!-- Barra de navegación -->
-    <!-- Barra de navegación -->
     <nav class="navbar">
         <ul class="navbar-menu">
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
@@ -151,7 +150,7 @@ if (!isset($_SESSION['usuario'])) {
                 <li>
                     <!-- From Uiverse.io by JaydipPrajapati1910 -->
         
-                        ...<button class="button add-to-cart">
+                        <button class="button add-to-cart">
                             <svg viewBox="0 0 16 16" class="bi bi-cart-check" height="24" width="24"
                                 xmlns="http://www.w3.org/2000/svg" fill="#333">
                                 <path
