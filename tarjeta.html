@@ -25,7 +25,8 @@
         <div class="payment-card">
             <h3>Tarjeta</h3>
 
-            <form id="payment-form" action="ValidacionesT.php" method="POST" onsubmit="return validateForm()">
+           <form id="payment-form">
+
                 <div class="input-group">
                     <label for="card-number">Número de Tarjeta</label>
                     <input type="text" id="card-number" name="card-number" placeholder="XXXX XXXX XXXX XXXX"
@@ -62,6 +63,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+        <script>
+document.getElementById("payment-form").addEventListener("submit", function (e) {
+    e.preventDefault(); // Evita que se recargue la página
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch("ValidacionesT.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        if (result.trim() === "valido") {
+            alert("¡Tarjeta válida! Procesando el pago...");
+            // Aquí podrías redirigir si quieres, por ejemplo:
+            // window.location.href = 'MainAlumno.php';
+        } else {
+            alert("Tarjeta inválida. Verifica los datos ingresados.");
+        }
+    })
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
+        alert("Hubo un error al procesar el pago.");
+    });
+});
+</script>
+
 </body>
 
 </html>

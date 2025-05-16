@@ -249,8 +249,8 @@ color: #333;
 
 .informacionCompra{
     width: 500px;
-    height: 500px;
-    background-color: #2D4263;
+    height: 550px;
+    background-color: #ffffff33;
     border-radius: 25px;
     display: flex;
     align-items: flex-start;
@@ -336,18 +336,18 @@ color: #333;
 
 .contenedorCompra > button{
     z-index: 1;
-    background-color: #263143;
+    background-color: #ffbd59;
     width: 300px;
     height: 45px;
     border-radius: 10px ;
     border: none;
-
+    color: black;
     font-size: 17px;
     font-weight: 300;
 }
 
 .contenedorCompra > button:hover{
-    background-color: white;
+    background-color: #F1DE99;
     color: black;
 }
 
@@ -374,4 +374,26 @@ color: #333;
     align-items: center;
 }
 
+
+.item-carrito {
+    margin-bottom: 12px;
+    padding: 10px;
+    background-color: #ffffff33;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.item-carrito .detalle-compra {
+    margin-top: 6px;
+}
+
+.item-carrito input[type="number"] {
+    background-color: #ffbd59; /* Color de fondo */
+    color: #333;               /* Color del texto */
+    border: 1px solid #ffbd59; /* Opcional: borde a juego */
+    border-radius: 5px;         /* Opcional: bordes redondeados */
+     width: 60px;
+    padding: 4px;
+    margin-left: 5px;
+}
 
