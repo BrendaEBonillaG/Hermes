@@ -31,6 +31,7 @@ if (!isset($_SESSION['usuario'])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
+   
 </head>
 
 <body>
@@ -40,7 +41,7 @@ if (!isset($_SESSION['usuario'])) {
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
 
             <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
-            <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+                <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
 
                 <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
 
@@ -140,7 +141,7 @@ if (!isset($_SESSION['usuario'])) {
             <div class="total-carrito">
                 Total: <span id="totalCarrito">$0.00</span>
             </div>
-            <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar compra</button>
+            <button class="btn-modal confirm"  id="finalizarPago" onclick="abrirVentanaPago()">Finalizar compra</button>
         </div>
     </div>
 
@@ -150,6 +151,7 @@ if (!isset($_SESSION['usuario'])) {
             window.open('tarjeta.html', '_blank', 'width=600,height=600');
         }
     </script>
+
 
     <script src="JS/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
