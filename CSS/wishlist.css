@@ -69,13 +69,39 @@ button:hover .icon {
     width:24px;
     line-height:24px;
     margin-right:12px;
-    color:#9b9b9b;
+    color:black;
 }
 .label{
     float:left;
     line-height: 24px;
     font-weight:700;
     margin-right:12px;
-    color:#4a4a4a;
+    color:black;
     letter-spacing: 0.8px;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%;
+}
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }
