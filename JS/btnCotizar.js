@@ -6,45 +6,26 @@ const precioInput = document.getElementById('precioCotizacion');
 const formCotizacion = document.getElementById('formCotizacion');
 const closeBtn = modalCotizacion.querySelector('.close-cotizacion');
 
-let productos = []; // Se llenará desde el backend
+let productos = [];
 
-// Función para cargar productos desde el servidor
 function cargarProductosDesdeServidor() {
   fetch('PHP/ObtenerProductos.php')
-    .then(response => response.text())   // <- aquí texto en vez de json
-    .then(text => {
-      console.log('Respuesta del servidor:', text); // VERIFICAR QUÉ TRAE
-      
-      try {
-        const data = JSON.parse(text);
-        if (Array.isArray(data)) {
-          productos = data;
-          renderizarProductos();
-        } else {
-          listaProductos.innerHTML = '<p>Error al cargar productos.</p>';
-          console.error("Respuesta inesperada:", data);
-        }
-      } catch (e) {
-        listaProductos.innerHTML = '<p>Error al analizar la respuesta JSON.</p>';
-        console.error("JSON inválido:", e, text);
-      }
+    .then(response => response.json())
+    .then(data => {
+      productos = data;
+      renderizarProductos();
     })
-    .catch(error => {
-      console.error('Error al obtener productos:', error);
+    .catch(() => {
       listaProductos.innerHTML = '<p>No se pudo cargar productos.</p>';
     });
 }
 
-
-// Función para renderizar productos con radio buttons
 function renderizarProductos() {
   if (productos.length === 0) {
     listaProductos.innerHTML = '<p>No hay productos disponibles.</p>';
     return;
   }
-
-  listaProductos.innerHTML = ''; // limpiar
-
+  listaProductos.innerHTML = '';
   productos.forEach(prod => {
     const div = document.createElement('div');
     div.classList.add('form-check');
@@ -56,15 +37,12 @@ function renderizarProductos() {
     `;
     listaProductos.appendChild(div);
   });
-
-  // Asignar evento para cuando se seleccione un producto
   const radios = listaProductos.querySelectorAll('input[name="producto"]');
   radios.forEach(radio => {
     radio.addEventListener('change', onProductoSeleccionado);
   });
 }
 
-// Cuando se selecciona un producto habilitamos inputs y boton
 function onProductoSeleccionado(e) {
   const idSeleccionado = parseInt(e.target.value);
   const producto = productos.find(p => p.id === idSeleccionado);
@@ -78,7 +56,6 @@ function onProductoSeleccionado(e) {
   }
 }
 
-// Resetea el formulario y deshabilita inputs y botón
 function resetModal() {
   cantidadInput.value = 1;
   precioInput.value = 0;
@@ -86,31 +63,26 @@ function resetModal() {
   precioInput.disabled = true;
   btnGuardarCotizacion.disabled = true;
 
-  // Desmarcar radios
   const radios = listaProductos.querySelectorAll('input[name="producto"]');
   radios.forEach(radio => radio.checked = false);
 }
 
-// Mostrar modal, cargar productos y resetear formulario
 function abrirModal() {
   modalCotizacion.style.display = 'flex';
   resetModal();
-  cargarProductosDesdeServidor(); // Llama al backend
+  cargarProductosDesdeServidor();
 }
 
-// Cerrar modal
 closeBtn.onclick = () => {
   modalCotizacion.style.display = 'none';
 }
 
-// Cerrar modal si se hace clic fuera del contenido
 window.onclick = (event) => {
   if (event.target === modalCotizacion) {
     modalCotizacion.style.display = 'none';
   }
 }
 
-// Manejar submit
 formCotizacion.onsubmit = (e) => {
   e.preventDefault();
 
@@ -124,15 +96,47 @@ formCotizacion.onsubmit = (e) => {
   const cantidad = parseInt(cantidadInput.value);
   const precio = parseFloat(precioInput.value);
 
-  // Aquí envías al backend o haces AJAX para guardar la cotización
-  console.log("Guardar cotización:", { productoId, cantidad, precio });
+  if (cantidad <= 0 || precio <= 0) {
+    alert("Cantidad y precio deben ser mayores a cero.");
+    return;
+  }
 
-  // Cerrar modal y resetear
-  modalCotizacion.style.display = 'none';
-  resetModal();
-};
+  const data = {
+    id_producto: productoId,
+    cantidad: cantidad,
+    precio: precio
+  };
+fetch('PHP/guardarCotizacion.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    id_producto: productoId,
+    cantidad: cantidad,
+    precio: precio
+  })
+})
+.then(response => response.text())  // obtener texto crudo para debug
+.then(text => {
+  console.log("Respuesta del servidor (texto crudo):", text);
+  try {
+    const json = JSON.parse(text);
+    if (json.success) {
+      alert('Cotización guardada correctamente.');
+    } else {
+      alert('Error al guardar cotización: ' + json.message);
+    }
+  } catch (e) {
+    console.error("Error al parsear JSON:", e);
+    alert('Error inesperado en la respuesta del servidor.');
+  }
+})
+.catch(error => {
+  console.error('Error en fetch:', error);
+  alert('Error en la conexión con el servidor.');
+});
 
-// Asociar botón para abrir modal
+}
+
 const btnOpcionesVendedor = document.getElementById('btnOpcionesVendedor');
 if (btnOpcionesVendedor) {
   btnOpcionesVendedor.addEventListener('click', abrirModal);

@@ -139,12 +139,13 @@ CREATE TABLE Cotizaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_producto INT NOT NULL,
     id_comprador INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    estado VARCHAR(30) DEFAULT 'pendiente',
+    precio DECIMAL(10,2) NOT NULL,         -- Precio acordado en la cotización
+    cantidad INT NOT NULL,                  -- Cantidad solicitada
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_producto) REFERENCES Productos(id) ,
-    FOREIGN KEY (id_comprador) REFERENCES Usuarios(id) 
+    FOREIGN KEY (id_producto) REFERENCES Productos(id),
+    FOREIGN KEY (id_comprador) REFERENCES Usuarios(id)
 );
+
 
 -- Tabla de Métodos de Pago
 CREATE TABLE Metodos_Pago (
