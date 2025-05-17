@@ -19,8 +19,15 @@ if (!isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/Fondo.css">
     <link rel="stylesheet" href="CSS/Navbar.css">
-      <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="CSS/wishlist.css">
+    <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
 </head>
 
 <body>
@@ -167,7 +174,20 @@ if (!isset($_SESSION['usuario'])) {
 
                 </li>
                 <li>
-                    <iframe src="wishlist.html" width="100%" height="500px" style="border:none; flex: 1;"></iframe>
+                    <button id="openWishlistModal" class="btn btn-wishlist">
+                        <svg width="56px" height="48px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M 0 0 L 56 0 L 40 48 L 0 48" stroke="none"></path>
+                        </svg>
+                        <div class="icon">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <div class="label">
+                            <span class="label-text">Lista de deseos</span>
+                        </div>
+                    </button>
+
+
+
                 </li>
                 <li> Devoluciones gratuitas en 30 días</li>
                 <li>Enviado por Monarca</li>
@@ -223,28 +243,67 @@ if (!isset($_SESSION['usuario'])) {
         </div>
     </div>
 
-    
-<!-- Modal del Carrito -->
-<div id="modalCarrito" class="modal">
-  <div class="modal-content carrito-modal">
-    <button id="cerrarModal" class="close" onclick="cerrarModal()">×</button>
-    <h2>Carrito</h2>
 
-    <div id="contenidoCarrito">
-      <!-- Ejemplo de producto -->
-      <!-- Esto lo debes generar dinámicamente con JS -->
-      
+    <!-- Modal del Carrito -->
+    <div id="modalCarrito" class="modal">
+        <div class="modal-content carrito-modal">
+            <button id="cerrarModal" class="close" onclick="cerrarModal()">×</button>
+            <h2>Carrito</h2>
+
+            <div id="contenidoCarrito">
+                <!-- Ejemplo de producto -->
+                <!-- Esto lo debes generar dinámicamente con JS -->
+
+            </div>
+
+            <div class="total-compra">
+                <strong>Valor Total</strong>
+                <span id="totalCarrito">$155</span>
+            </div>
+
+            <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar Compra</button>
+
+        </div>
     </div>
 
-    <div class="total-compra">
-      <strong>Valor Total</strong>
-      <span id="totalCarrito">$155</span>
-    </div>
+    <!-- Modal de wishlist -->
+    <div id="wishlistModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span id="closeWishlistModal" class="close">&times;</span>
 
-    <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar Compra</button>
-    
-  </div>
+        <h2>Lista de deseos</h2>
+
+        <!-- Opción 1: Agregar a lista existente -->
+        <form id="formAgregarALista" method="post" enctype="multipart/form-data">
+            <label for="listaExistente">Agregar a lista existente:</label>
+            <select id="listaExistente" name="id_lista" required>
+                <option value="">Selecciona una lista</option>
+                <!-- Opciones se deben llenar con PHP o JS -->
+            </select>
+            <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
+            <button type="submit">Agregar a lista</button>
+        </form>
+
+        <hr>
+
+        <!-- Opción 2: Crear nueva lista -->
+        <form id="formCrearLista" method="post" enctype="multipart/form-data">
+            <h3>Crear nueva lista de deseos</h3>
+            <input type="text" name="nombre" placeholder="Nombre de la lista" required><br>
+            <textarea name="descripcion" placeholder="Descripción"></textarea><br>
+            <select name="privacidad" required>
+                <option value="privada">Privada</option>
+                <option value="pública">Pública</option>
+            </select><br>
+            <label>Foto:</label>
+            <input type="file" name="foto" accept="image/*"><br>
+            <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
+            <button type="submit">Crear lista y agregar producto</button>
+        </form>
+    </div>
 </div>
+
+
 
     <script>
         function changeImage(src) {
@@ -393,7 +452,8 @@ if (!isset($_SESSION['usuario'])) {
     </script>
 
     <script src="JS/carritoDP.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="JS/CrearLista.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

@@ -80,9 +80,11 @@ CREATE TABLE Listas (
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     privacidad VARCHAR(30) NOT NULL,
+    foto VARCHAR(255), -- Campo para la foto
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
+
 
 
 -- Tabla de Productos en Listas
