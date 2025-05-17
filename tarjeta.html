@@ -57,28 +57,29 @@
 
 
             <script>
-               document.addEventListener("DOMContentLoaded", () => {
+                document.addEventListener("DOMContentLoaded", () => {
             const total = localStorage.getItem("totalPago") || "0.00";
 
-            paypal.Buttons({
-                createOrder: function (data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                value: total
-                            }
-                        }]
-                    });
-                },
-                onApprove: function (data, actions) {
-                    return actions.order.capture().then(function (details) {
-                        alert('Pago realizado con éxito por ' + details.payer.name.given_name);
+                    paypal.Buttons({
+                        createOrder: function (data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: total
+                                    }
+                                }]
+                            });
+                        },
+                        onApprove: function (data, actions) {
+                            return actions.order.capture().then(function (details) {
+                                alert('Pago realizado con éxito por ' + details.payer.name.given_name);
                         location.href = 'Dashboard.php'; // Redirigir a la página principal
-                    });
-                }
-            }).render('#paypal-button-container');
-        });
+                            });
+                        }
+                    }).render('#paypal-button-container');
+                });
             </script>
+
 
             <button type="button" class="payment-button oxxo" onclick="location.href='MainAlumno.php'">Oxxo Pay</button>
         </div>

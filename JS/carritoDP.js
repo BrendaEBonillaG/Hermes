@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         totalCarrito.textContent = `$${total.toFixed(2)}`;
         localStorage.setItem("totalPago", total.toFixed(2)); // ← Guarda el total a pagar
+
+
     }
 
     function cambiarCantidad(index, nuevaCantidad) {
