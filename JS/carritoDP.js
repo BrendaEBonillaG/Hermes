@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalCarrito = document.getElementById("totalCarrito");
     const modalCarritoEl = document.getElementById("modalCarrito");
     const cerrarModalBtn = document.getElementById("cerrarModal");
+    const finalizarPagoBtn = document.getElementById("finalizarPago");
 
     function actualizarModal() {
         if (!contenidoCarrito || !totalCarrito) return;
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (carrito.length === 0) {
             contenidoCarrito.innerHTML = "<p>Tu carrito está vacío.</p>";
             totalCarrito.innerText = "$0.00";
+            localStorage.setItem("totalPago", "0.00");
             return;
         }
 
@@ -43,8 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         });
 
-       totalCarrito.textContent = `$${total.toFixed(2)}`;
-
+        totalCarrito.textContent = `$${total.toFixed(2)}`;
+        localStorage.setItem("totalPago", total.toFixed(2)); // ← Guarda el total a pagar
     }
 
     function cambiarCantidad(index, nuevaCantidad) {
@@ -85,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const indexExistente = carrito.findIndex(p => p.nombre === nombre);
 
             if (indexExistente !== -1) {
-                carrito[indexExistente].cantidad += cantidad; // Acumula cantidad
+                carrito[indexExistente].cantidad += cantidad;
             } else {
                 carrito.push({
                     nombre,
@@ -130,6 +132,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ocultarModal();
         }
     });
+
+    // Botón Finalizar Pago
+    if (finalizarPagoBtn) {
+        finalizarPagoBtn.addEventListener("click", () => {
+            // El total ya está guardado en localStorage, simplemente abre la nueva pestaña
+            window.open("pago.html", "_blank");
+        });
+    }
 
     actualizarModal();
 });
