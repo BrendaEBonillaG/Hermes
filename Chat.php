@@ -34,8 +34,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="CSS/chat.css">
-     <link rel="stylesheet" href="CSS/Fondo.css">
-    <link rel="stylesheet" href="CSS/Navbar.css">
+  <link rel="stylesheet" href="CSS/Fondo.css">
+  <link rel="stylesheet" href="CSS/Navbar.css">
 
   <link rel="icon" type="image/png" href="imagenes/TOGETHER.png">
 
@@ -45,36 +45,36 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
   <!-- NAVBAR  -->
- <nav class="navbar">
-        <ul class="navbar-menu">
-            <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
+  <nav class="navbar">
+    <ul class="navbar-menu">
+      <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
 
-            <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
-                <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+      <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
+        <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+        <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
 
-            <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
-                <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
+      <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+        <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
 
-            <?php endif; ?>
+      <?php endif; ?>
 
-            <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
+      <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
 
-            <li>
-                <form class="search-form">
-                    <input type="text" placeholder="Buscar productos..." class="search-input">
-                    <button type="submit" class="search-button">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
-            </li>
-            <li><a href="Perfil.php" class="profile-link">
-                    <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
-                </a></li>
-            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
-                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
-        </ul>
-    </nav>
+      <li>
+        <form class="search-form">
+          <input type="text" placeholder="Buscar productos..." class="search-input">
+          <button type="submit" class="search-button">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </li>
+      <li><a href="Perfil.php" class="profile-link">
+          <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
+        </a></li>
+      <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+            class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+    </ul>
+  </nav>
 
   <!-- NAVBAR BLANCO -->
   <nav class="vertical-navbar-white">
@@ -128,36 +128,24 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <!-- CONTENEDOR DE CHAT -->
   <div class="main-content">
     <div class="chat-header d-flex justify-content-between align-items-center">
-  <div class="user-info d-flex align-items-center">
-    <img src="imagenes/USER.png" class="user-avatar me-2">
-    <span class="user-name"></span>
-  </div>
-<?php if ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
-    <button id="btnOpcionesVendedor" class="btn btn-ticket btn-sm d-none">
-      <i class="bi bi-ticket-detailed"></i> Crear cotización
-    </button>
-<?php endif; ?>
+      <div class="user-info d-flex align-items-center">
+        <img src="imagenes/USER.png" class="user-avatar me-2">
+        <span class="user-name"></span>
+      </div>
+      <?php if ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+        <button id="btnOpcionesVendedor" class="btn btn-ticket btn-sm d-none">
+          <i class="bi bi-ticket-detailed"></i> Crear cotización
+        </button>
+      <?php endif; ?>
 
 
 
 
-</div>
+    </div>
 
 
     <div class="chat-container">
-      <!-- MENSAJES 
-      <div class="chat-message incoming">
-          <div class="message-content">
-              <p>Hola, ¿cómo estás?</p>
-              <span class="message-time">10:00 AM</span>
-          </div>
-      </div>
-      <div class="chat-message outgoing">
-          <div class="message-content">
-              <p>¡Hola! Estoy bien, ¿y tú?</p>
-              <span class="message-time">10:01 AM</span>
-          </div>
-      </div>-->
+
     </div>
 
     <!-- BARRA PARA ESCRIBIR -->
@@ -166,18 +154,49 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <button id="btnEnviar" class="btn btn-primary">Enviar</button>
     </div>
 
-      <div id="logoutModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
-            <h2>¿Deseas cerrar sesión?</h2>
-            <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
-                    sesión</button>
-                <button class="btn-modal cancel"
-                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
-            </div>
+    <div id="logoutModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+        <h2>¿Deseas cerrar sesión?</h2>
+        <div class="modal-actions">
+          <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+            sesión</button>
+          <button class="btn-modal cancel"
+            onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
         </div>
+      </div>
     </div>
+
+    <!-- Modal Crear Cotización -->
+<div id="modalCotizacion" class="modal-cotizacion" style="display:none;">
+  <div class="modal-content-cotizacion">
+    <span class="close-cotizacion" style="cursor:pointer;">&times;</span>
+    <h2>Crear Cotización</h2>
+
+    <form id="formCotizacion">
+      <div id="listaProductos" class="product-list">
+        <!-- Aquí se cargarán los productos con radio buttons -->
+        <p>Cargando productos...</p>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <label>
+          Cantidad:
+          <input type="number" id="cantidadCotizacion" name="cantidad" disabled min="1" value="1" />
+        </label>
+      </div>
+
+      <div style="margin-top: 15px;">
+        <label>
+          Precio:
+          <input type="number" id="precioCotizacion" name="precio" disabled min="0" step="0.01" value="0" />
+        </label>
+      </div>
+
+      <button type="submit" id="btnGuardarCotizacion" class="btn btn-ticket" disabled>Guardar Cotización</button>
+    </form>
+  </div>
+</div>
 
     <!-- SCRIPTS JS -->
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -195,7 +214,8 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     <script src="./JS/ChatFunc.js"></script>
-        <script src="./JS/cambiar-chat.js"></script>
+    <script src="./JS/cambiar-chat.js"></script>
+      <script src="./JS/btnCotizar.js"></script>
 </body>
 
 </html>

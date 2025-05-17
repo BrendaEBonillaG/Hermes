@@ -195,4 +195,120 @@
   box-shadow: none;
 }
 
+/* Estilos básicos para modal */
+.modal-cotizacion {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; top: 0; 
+  width: 100%; height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.6);
+  
+  display: flex;          /* ¡agregado! */
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modal-content-cotizacion {
+  background-color: #ffffff33;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+/* Cerrar modal */
+.close-cotizacion {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Lista de productos */
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: #fff;
+}
+
+/* Producto individual */
+.product-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.product-container img.main-image {
+  width: 100%;
+  border-radius: 4px;
+  object-fit: contain;
+  max-height: 150px;
+}
+
+.product-title {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.product-description {
+  font-size: 14px;
+  color: #fff;
+}
+
+.product-price, #precio2 {
+  font-weight: 600;
+  color: #ffbd59;
+  font-size: 16px;
+  color: #fff;
+}
+
+.cantidad-selector {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-cantidad {
+  background-color: #ffbd59;
+  border: none;
+  padding: 5px 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+input[type=number] {
+  width: 50px;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button.add-to-cart {
+  background-color: #ffbd59;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+}
+
 
