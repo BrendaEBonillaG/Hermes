@@ -5,37 +5,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const contenidoCarrito = document.getElementById("contenidoCarrito");
     const totalCarrito = document.getElementById("totalCarrito");
     const modalCarritoEl = document.getElementById("modalCarrito");
+    const cerrarModalBtn = document.getElementById("cerrarModal"); // Botón cerrar modal
 
     function actualizarModal() {
-        contenidoCarrito.innerHTML = "";
+        if (!contenidoCarrito || !totalCarrito) return;
+
+        contenidoCarrito.innerHTML = '';
         let total = 0;
 
         if (carrito.length === 0) {
             contenidoCarrito.innerHTML = "<p>Tu carrito está vacío.</p>";
-        } else {
-            carrito.forEach((producto, index) => {
-                const item = document.createElement("div");
-                item.classList.add("item-carrito");
-                item.innerHTML = `
-          <p><strong>${producto.nombre}</strong></p>
-          <p>Cantidad: ${producto.cantidad}</p>
-          <p>Precio: $${producto.precio.toFixed(2)}</p>
-          <p>Subtotal: $${(producto.precio * producto.cantidad).toFixed(2)}</p>
-          <button class="btn btn-danger btn-sm eliminar-btn" data-index="${index}">Eliminar</button>
-          <hr>
-        `;
-                contenidoCarrito.appendChild(item);
-                total += producto.precio * producto.cantidad;
-            });
+            totalCarrito.innerText = "$0.00";
+            return;
         }
-        totalCarrito.textContent = `$${total.toFixed(2)}`;
 
-        document.querySelectorAll(".eliminar-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                const index = e.target.getAttribute("data-index");
-                eliminarDelCarrito(parseInt(index));
-            });
+        carrito.forEach((producto, i) => {
+            const subtotal = producto.precio * producto.cantidad;
+            total += subtotal;
+
+            contenidoCarrito.innerHTML += `
+                <div class="item-carrito">
+                    <div class="info-producto">
+                        <p><strong>${producto.nombre}</strong></p>
+                        <p>Precio: $${producto.precio.toFixed(2)}</p>
+                        <p>Cantidad: ${producto.cantidad}</p>
+                        <p>Subtotal: $${subtotal.toFixed(2)}</p>
+                    </div>
+                    <button onclick="eliminarDelCarrito(${i})" class="botonTrash btn btn-danger btn-sm">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                    <hr>
+                </div>`;
         });
+
+        totalCarrito.innerText = `$${total.toFixed(2)}`;
     }
 
     function mostrarModal() {
@@ -50,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addToCartBtn.addEventListener("click", (e) => {
             e.preventDefault();
 
-            console.log("Click add-to-cart");  // Para depurar cuántas veces se ejecuta
+            console.log("Click add-to-cart");  // Para depurar
 
             const nombre = document.getElementById("nombre")?.textContent.trim();
             const descripcion = document.getElementById("descripcion")?.textContent.trim();
@@ -80,8 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
-
-
             localStorage.setItem("carrito", JSON.stringify(carrito));
             actualizarModal();
             mostrarModal();
@@ -101,6 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
         abrirCarrito.addEventListener("click", (e) => {
             e.preventDefault();
             mostrarModal();
+        });
+    }
+
+    if (cerrarModalBtn) {
+        cerrarModalBtn.addEventListener("click", () => {
+            ocultarModal();
         });
     }
 

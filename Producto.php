@@ -17,7 +17,6 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vista de Producto</title>
     <link rel="stylesheet" href="CSS/style.css">
-  
     <link rel="stylesheet" href="CSS/Fondo.css">
     <link rel="stylesheet" href="CSS/Navbar.css">
       <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
@@ -211,7 +210,6 @@ if (!isset($_SESSION['usuario'])) {
     </div>
 
 
-
     <div id="logoutModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
@@ -224,20 +222,29 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
-    <!-- Modal del Carrito -->
-    <div id="modalCarrito" class="modal">
-        <div class="modal-content carrito-modal">
-            <span class="close" onclick="document.getElementById('modalCarrito').style.display='none'">&times;</span>
-            <h2>Tu Carrito</h2>
-            <div id="contenidoCarrito">
-                <!-- Productos agregados se insertarán aquí dinámicamente -->
-            </div>
-            <div class="total-carrito">
-                Total: <span id="totalCarrito">$0.00</span>
-            </div>
-            <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar compra</button>
-        </div>
+
+    
+<!-- Modal del Carrito -->
+<div id="modalCarrito" class="modal">
+  <div class="modal-content carrito-modal">
+    <button id="cerrarModal" class="close" onclick="cerrarModal()">×</button>
+    <h2>Carrito</h2>
+
+    <div id="contenidoCarrito">
+      <!-- Ejemplo de producto -->
+      <!-- Esto lo debes generar dinámicamente con JS -->
+      
     </div>
+
+    <div class="total-compra">
+      <strong>Valor Total</strong>
+      <span id="totalCarrito">$155</span>
+    </div>
+
+    <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar Compra</button>
+    
+  </div>
+</div>
 
     <script>
         function changeImage(src) {
