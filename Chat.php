@@ -127,14 +127,21 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </nav>
   <!-- CONTENEDOR DE CHAT -->
   <div class="main-content">
-    <div class="chat-header">
-      <div class="user-info">
-        <img src="imagenes/USER.png" class="user-avatar">
-        <span class="user-name"></span>
-      </div>
+    <div class="chat-header d-flex justify-content-between align-items-center">
+  <div class="user-info d-flex align-items-center">
+    <img src="imagenes/USER.png" class="user-avatar me-2">
+    <span class="user-name"></span>
+  </div>
+<?php if ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+    <button id="btnOpcionesVendedor" class="btn btn-ticket btn-sm d-none">
+      <i class="bi bi-ticket-detailed"></i> Crear cotización
+    </button>
+<?php endif; ?>
 
-      
-    </div>
+
+
+
+</div>
 
 
     <div class="chat-container">

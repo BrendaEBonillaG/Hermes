@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const usuarios = document.querySelectorAll('.usuario-chat');
     const userNameSpan = document.querySelector('.user-name');
     const userAvatarImg = document.querySelector('.user-avatar');
-    const mainContent = document.querySelector('.main-content'); // Asegúrate de que tienes esta clase
+    const mainContent = document.querySelector('.main-content');
+    const btnVendedor = document.getElementById('btnOpcionesVendedor'); // ← nuevo
 
     window.idChatActivo = null;
 
@@ -20,10 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
             // Activar el chat
             window.idChatActivo = parseInt(idChat);
 
-            // Mostrar main-content cuando se hace clic en un usuario
-            mainContent.style.display = 'flex'; // Asegúrate de que está visible
+            // Mostrar main-content
+            mainContent.style.display = 'flex';
 
-            // Aquí puedes agregar más lógica para cargar los mensajes si es necesario
+            // Mostrar el botón solo si existe (rol vendedor)
+            if (btnVendedor) {
+                btnVendedor.classList.remove('d-none');
+            }
+
+            // Cargar mensajes si es necesario
             obtenerMensajes();
         });
     });

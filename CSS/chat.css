@@ -182,4 +182,17 @@
     gap: 10px; 
   }
 
+  .btn-ticket {
+  background-color: #ffbd59;
+  color: #fff; /* texto negro para buen contraste */
+  border: none;
+}
+
+.btn-ticket:hover, 
+.btn-ticket:focus {
+  background-color: #e6a848; /* un tono un poco más oscuro para hover */
+  color: #fff;
+  box-shadow: none;
+}
+
 
