@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const contenidoCarrito = document.getElementById("contenidoCarrito");
     const totalCarrito = document.getElementById("totalCarrito");
     const modalCarritoEl = document.getElementById("modalCarrito");
-    const cerrarModalBtn = document.getElementById("cerrarModal"); // Botón cerrar modal
+    const cerrarModalBtn = document.getElementById("cerrarModal");
 
     function actualizarModal() {
         if (!contenidoCarrito || !totalCarrito) return;
@@ -25,20 +25,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
             contenidoCarrito.innerHTML += `
                 <div class="item-carrito">
-                    <div class="info-producto">
-                        <p><strong>${producto.nombre}</strong></p>
+                    <div class="img">
+                        <button onclick="eliminarDelCarrito(${i})" class="botonTrash btn btn-danger btn-sm">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                        <p>${producto.nombre}</p>
+                    </div>
+                    <div class="detalle-compra">
                         <p>Precio: $${producto.precio.toFixed(2)}</p>
-                        <p>Cantidad: ${producto.cantidad}</p>
+                        <label>Cantidad:
+                            <input type="number" min="1" value="${producto.cantidad}" onchange="cambiarCantidad(${i}, this.value)">
+                        </label>
                         <p>Subtotal: $${subtotal.toFixed(2)}</p>
                     </div>
-                    <button onclick="eliminarDelCarrito(${i})" class="botonTrash btn btn-danger btn-sm">
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                    <hr>
-                </div>`;
+                </div>
+                ${i < carrito.length - 1 ? '<hr>' : ''}
+            `;
         });
 
-        totalCarrito.innerText = `$${total.toFixed(2)}`;
+       totalCarrito.textContent = `$${total.toFixed(2)}`;
+
+    }
+
+    function cambiarCantidad(index, nuevaCantidad) {
+        const cantidad = parseInt(nuevaCantidad);
+        if (isNaN(cantidad) || cantidad < 1) return;
+
+        carrito[index].cantidad = cantidad;
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        actualizarModal();
     }
 
     function mostrarModal() {
@@ -52,8 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (addToCartBtn) {
         addToCartBtn.addEventListener("click", (e) => {
             e.preventDefault();
-
-            console.log("Click add-to-cart");  // Para depurar
 
             const nombre = document.getElementById("nombre")?.textContent.trim();
             const descripcion = document.getElementById("descripcion")?.textContent.trim();
@@ -72,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const indexExistente = carrito.findIndex(p => p.nombre === nombre);
 
             if (indexExistente !== -1) {
-                carrito[indexExistente].cantidad = cantidad; // Reemplaza, no acumula
+                carrito[indexExistente].cantidad += cantidad; // Acumula cantidad
             } else {
                 carrito.push({
                     nombre,
@@ -96,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.eliminarDelCarrito = eliminarDelCarrito;
+    window.cambiarCantidad = cambiarCantidad;
 
     const abrirCarrito = document.getElementById("abrirCarritoNavbar");
     if (abrirCarrito) {

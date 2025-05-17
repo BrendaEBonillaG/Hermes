@@ -459,7 +459,7 @@ main {
 
 .btn-modal:hover,
 .btn-modal.confirm:hover {
-  background-color: #ffbd59;
+  background-color: #DA961F !important;
 }
 
 /* Botón cerrar */
