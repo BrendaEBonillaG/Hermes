@@ -1,3 +1,14 @@
+<?php
+session_start(); // Inicia la sesión
+
+// Verifica si el usuario ha iniciado sesión
+if (!isset($_SESSION['usuario'])) {
+    // Si no hay sesión, redirige al usuario a la página de inicio de sesión
+    header('Location: Index.php');
+    exit; // Detiene la ejecución del script
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,6 +19,7 @@
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/Fondo.css">
     <link rel="stylesheet" href="CSS/Navbar.css">
+      <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
@@ -17,9 +29,19 @@
     <nav class="navbar">
         <ul class="navbar-menu">
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
-            <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-             <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+
+            <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
+                <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+
+                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+
+            <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
+                <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
+
+            <?php endif; ?>
+
             <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
+
             <li>
                 <form class="search-form">
                     <input type="text" placeholder="Buscar productos..." class="search-input">
@@ -31,35 +53,38 @@
             <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 
     <div class="product-container">
-        <div class="thumbnail-container" >
-   
+        <div class="thumbnail-container">
+
         </div>
 
-        <div >
+        <div>
             <img src="" alt="Imagen principal del producto" class="main-image" id="mainImage">
         </div>
 
         <div class="product-info">
 
-             
+
             <div>
                 <div id="nombre" class="product-title"></div>
                 <div id="descripcion" class="product-description"></div>
-                
+
                 <div id="vendedor" class="product-vendedor"></div>
                 <div id="precio" class="product-price"></div>
                 <ul class="product-details">
-            
-                    <li><p id="cantidad_dis"></p></li>
+
+                    <li>
+                        <p id="cantidad_dis"></p>
+                    </li>
                     <li><strong>Tiempo de envío:</strong> 2-4 días hábiles</li>
                     <li><strong>Política de devoluciones:</strong> Devoluciones gratuitas en 30 días</li>
                     <li><strong>Envío gratuito:</strong> Disponible en pedidos mayores a $500</li>
-              
+
                     <li><strong>Calificación:</strong>
                         <!-- From Uiverse.io by SelfMadeSystem -->
                         <div class="rating">
@@ -118,13 +143,14 @@
                     Cantidad:
                     <div class="cantidad-selector">
                         <button class="btn-cantidad" id="decrementar">-</button>
-                        <input type="number" id="cantidad" value="1" >
+                        <input type="number" id="cantidad" value="1">
                         <button class="btn-cantidad" id="incrementar">+</button>
                     </div>
                 </li>
                 <li>
                     <!-- From Uiverse.io by JaydipPrajapati1910 -->
-                    <button class="button">
+
+                    <button class="button add-to-cart">
                         <svg viewBox="0 0 16 16" class="bi bi-cart-check" height="24" width="24"
                             xmlns="http://www.w3.org/2000/svg" fill="#333">
                             <path
@@ -136,6 +162,9 @@
                         </svg>
                         <p class="text">Agregar al carrito</p>
                     </button>
+
+
+
                 </li>
                 <li>
                     <iframe src="wishlist.html" width="100%" height="500px" style="border:none; flex: 1;"></iframe>
@@ -148,32 +177,32 @@
 
 
     <div class="similar-products">
-        <div class="similar-item" onclick="window.location.href='Producto.html'">
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
             <p>Producto Similar 1</p>
             <span>$249.99</span>
         </div>
-        <div class="similar-item" onclick="window.location.href='Producto.html'">            
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
             <p>Producto Similar 2</p>
             <span>$199.99</span>
         </div>
-        <div class="similar-item" onclick="window.location.href='Producto.html'">            
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
             <p>Producto Similar 3</p>
             <span>$279.99</span>
         </div>
-        <div class="similar-item" onclick="window.location.href='Producto.html'">            
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 4">
             <p>Producto Similar 4</p>
             <span>$249.99</span>
         </div>
-        <div class="similar-item" onclick="window.location.href='Producto.html'">            
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 5">
             <p>Producto Similar 5</p>
             <span>$199.99</span>
         </div>
-        <div class="similar-item" onclick="window.location.href='Producto.html'">            
+        <div class="similar-item" onclick="window.location.href='Producto.php'">
             <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 6">
             <p>Producto Similar 6</p>
             <span>$279.99</span>
@@ -181,16 +210,41 @@
     </div>
 
 
-    
     <div id="logoutModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
             <h2>¿Deseas cerrar sesión?</h2>
             <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
-                <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+                    sesión</button>
+                <button class="btn-modal cancel"
+                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
+    </div>
+
+    
+<!-- Modal del Carrito -->
+<div id="modalCarrito" class="modal">
+  <div class="modal-content carrito-modal">
+    <button id="cerrarModal" class="close" onclick="cerrarModal()">×</button>
+    <h2>Carrito</h2>
+
+    <div id="contenidoCarrito">
+      <!-- Ejemplo de producto -->
+      <!-- Esto lo debes generar dinámicamente con JS -->
+      
+    </div>
+
+    <div class="total-compra">
+      <strong>Valor Total</strong>
+      <span id="totalCarrito">$155</span>
+    </div>
+
+    <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar Compra</button>
+    
+  </div>
+</div>
 
     <script>
         function changeImage(src) {
@@ -200,143 +254,146 @@
 
     <script>
         function abrirVentanaPago() {
-            window.open('../PIA_PCI 2/tarjeta.php', '_blank', 'width=600,height=600');
+            window.open('tarjeta.html', '_blank', 'width=600,height=600');
         }
     </script>
 
-    
-    <script src="../Hermes/JS/app.js"></script>
+
+
 
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
+        document.addEventListener("DOMContentLoaded", () => {
+            const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
 
-    if (!producto) {
-        document.body.innerHTML = "<p>Producto no encontrado.</p>";
-        return;
-    }
+            if (!producto) {
+                document.body.innerHTML = "<p>Producto no encontrado.</p>";
+                return;
+            }
 
-    // Aquí muestra los datos del producto como quieras
-    document.getElementById("nombre").textContent = producto.nombre;
-    document.getElementById("precio").textContent = "$" + producto.precio;
-    document.getElementById("precio2").textContent = "$" + producto.precio;
-    document.getElementById("descripcion").textContent = producto.descripcion;
-    
-    document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
-document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
+            // Aquí muestra los datos del producto como quieras
+            document.getElementById("nombre").textContent = producto.nombre;
+            document.getElementById("precio").textContent = "$" + producto.precio;
+            document.getElementById("precio2").textContent = "$" + producto.precio;
+            document.getElementById("descripcion").textContent = producto.descripcion;
 
-const hoy = new Date();
-const fechaFinal = sumarDiasHabiles(hoy, 2);
-const opcionesFormato = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-};
+            document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
+            document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
 
-const fechaFormateada = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fechaFinal);
+            const hoy = new Date();
+            const fechaFinal = sumarDiasHabiles(hoy, 2);
+            const opcionesFormato = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
 
-// Ponerlo en el HTML
-document.getElementById("fecha-entrega").textContent = "Entrega el: " + fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
+            const fechaFormateada = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fechaFinal);
 
-  // Control de cantidad
-    const inputCantidad = document.getElementById("cantidad");
-    const btnIncrementar = document.getElementById("incrementar");
-    const btnDecrementar = document.getElementById("decrementar");
+            // Ponerlo en el HTML
+            document.getElementById("fecha-entrega").textContent = "Entrega el: " + fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
 
-    const stock = parseInt(producto.cantidad_Disponible);
+            // Control de cantidad
+            const inputCantidad = document.getElementById("cantidad");
+            const btnIncrementar = document.getElementById("incrementar");
+            const btnDecrementar = document.getElementById("decrementar");
 
-    inputCantidad.max = stock;
-    inputCantidad.min = stock > 0 ? 1 : 0;
-    inputCantidad.value = stock > 0 ? 1 : 0;
-    inputCantidad.readOnly = true;
+            const stock = parseInt(producto.cantidad_Disponible);
 
-    btnIncrementar.addEventListener("click", () => {
-        let valor = parseInt(inputCantidad.value);
-        if (valor < inputCantidad.max) {
-            inputCantidad.value = valor + 1;
-            actualizarPrecioTotal();
-           
-        }
-    });
+            inputCantidad.max = stock;
+            inputCantidad.min = stock > 0 ? 1 : 0;
+            inputCantidad.value = stock > 0 ? 1 : 0;
+            inputCantidad.readOnly = true;
 
-    btnDecrementar.addEventListener("click", () => {
-        let valor = parseInt(inputCantidad.value);
-        if (valor > inputCantidad.min) {
-            inputCantidad.value = valor - 1;
-            actualizarPrecioTotal();
-            
-        }
-    });
+            btnIncrementar.addEventListener("click", () => {
+                let valor = parseInt(inputCantidad.value);
+                if (valor < inputCantidad.max) {
+                    inputCantidad.value = valor + 1;
+                    actualizarPrecioTotal();
 
-    // Si no hay stock, deshabilita botones
-   if (stock === 0) {
-    btnIncrementar.disabled = true;
-    btnDecrementar.disabled = true;
-} 
+                }
+            });
+
+            btnDecrementar.addEventListener("click", () => {
+                let valor = parseInt(inputCantidad.value);
+                if (valor > inputCantidad.min) {
+                    inputCantidad.value = valor - 1;
+                    actualizarPrecioTotal();
+
+                }
+            });
+
+            // Si no hay stock, deshabilita botones
+            if (stock === 0) {
+                btnIncrementar.disabled = true;
+                btnDecrementar.disabled = true;
+            }
 
 
 
-    const mainImage = document.getElementById("mainImage");
-    const thumbnailContainer = document.querySelector(".thumbnail-container");
+            const mainImage = document.getElementById("mainImage");
+            const thumbnailContainer = document.querySelector(".thumbnail-container");
 
-    // Establecer la primera imagen como principal
-    mainImage.src = producto.imagenes[0];
+            // Establecer la primera imagen como principal
+            mainImage.src = producto.imagenes[0];
 
-    // Limpiar contenedor de miniaturas
-    thumbnailContainer.innerHTML = "";
+            // Limpiar contenedor de miniaturas
+            thumbnailContainer.innerHTML = "";
 
-    // Generar miniaturas dinámicamente
-    producto.imagenes.forEach((url, index) => {
-        const thumb = document.createElement("img");
-        thumb.src = url;
-        thumb.alt = `Miniatura ${index + 1}`;
-        thumb.classList.add("thumbnail");
+            // Generar miniaturas dinámicamente
+            producto.imagenes.forEach((url, index) => {
+                const thumb = document.createElement("img");
+                thumb.src = url;
+                thumb.alt = `Miniatura ${index + 1}`;
+                thumb.classList.add("thumbnail");
 
-        // Al hacer clic, cambia la imagen principal
-        thumb.addEventListener("click", () => {
-            mainImage.src = url;
+                // Al hacer clic, cambia la imagen principal
+                thumb.addEventListener("click", () => {
+                    mainImage.src = url;
 
-            // Opcional: resaltar la miniatura seleccionada
-            document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
-            thumb.classList.add("active");
+                    // Opcional: resaltar la miniatura seleccionada
+                    document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
+                    thumb.classList.add("active");
+                });
+
+                thumbnailContainer.appendChild(thumb);
+            });
+
+            // Marcar como activa la primera miniatura
+            thumbnailContainer.firstChild.classList.add("active");
+
+            function actualizarPrecioTotal() {
+                const cantidad = parseInt(inputCantidad.value) || 0;
+                const total = producto.precio * cantidad;
+                document.getElementById("precio2").textContent = "$" + total.toFixed(2);
+            }
+
+            function sumarDiasHabiles(fecha, diasHabilesASumar) {
+                let resultado = new Date(fecha);
+                let diasSumados = 0;
+
+                while (diasSumados < diasHabilesASumar) {
+                    resultado.setDate(resultado.getDate() + 1);
+                    const diaSemana = resultado.getDay(); // 0 = domingo, 6 = sábado
+
+                    if (diaSemana !== 0 && diaSemana !== 6) {
+                        diasSumados++;
+                    }
+                }
+
+                return resultado;
+            }
+
+
+
         });
 
-        thumbnailContainer.appendChild(thumb);
-    });
-
-    // Marcar como activa la primera miniatura
-    thumbnailContainer.firstChild.classList.add("active");
-
-    function actualizarPrecioTotal() {
-    const cantidad = parseInt(inputCantidad.value) || 0;
-    const total = producto.precio * cantidad;
-    document.getElementById("precio2").textContent = "$" + total.toFixed(2);
-    }
-
-    function sumarDiasHabiles(fecha, diasHabilesASumar) {
-    let resultado = new Date(fecha);
-    let diasSumados = 0;
-
-    while (diasSumados < diasHabilesASumar) {
-        resultado.setDate(resultado.getDate() + 1);
-        const diaSemana = resultado.getDay(); // 0 = domingo, 6 = sábado
-
-        if (diaSemana !== 0 && diaSemana !== 6) {
-            diasSumados++;
-        }
-    }
-
-    return resultado;
-}
-     
 
 
-});
+    </script>
 
-
-
-</script>
+    <script src="JS/carritoDP.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

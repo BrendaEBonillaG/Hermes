@@ -98,15 +98,15 @@ function validateCVV($cvv, $cardType) {
 }
 
 // Validación final
-if (luhnCheck($cardNumber) && validateCardLength($cardNumber) !== "Invalid" && validateExpiryDate($expiryMonth, $expiryYear) && validateCVV($cvv, validateCardLength($cardNumber))) {
-    echo "<script>
-    
-            window.location.href = 'Valido.html';
-          </script>";
+if (
+    luhnCheck($cardNumber) &&
+    validateCardLength($cardNumber) !== "Invalid" &&
+    validateExpiryDate($expiryMonth, $expiryYear) &&
+    validateCVV($cvv, validateCardLength($cardNumber))
+) {
+    echo "valido";
 } else {
-    echo "<script>
-           
-            window.location.href = 'invalido.html';
-          </script>";
+    echo "invalido";
 }
+
 ?>

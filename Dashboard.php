@@ -19,6 +19,7 @@ if (!isset($_SESSION['usuario'])) {
     <link rel="stylesheet" href="CSS/Fondo.css">
     <link rel="stylesheet" href="CSS/Navbar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <title>Productos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +40,8 @@ if (!isset($_SESSION['usuario'])) {
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
 
             <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
-                <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+            <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
+
                 <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
@@ -126,6 +128,22 @@ if (!isset($_SESSION['usuario'])) {
             </div>
         </div>
     </div>
+
+    <!-- Modal del Carrito -->
+    <div id="modalCarrito" class="modal">
+        <div class="modal-content carrito-modal">
+            <span class="close" onclick="document.getElementById('modalCarrito').style.display='none'">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div id="contenidoCarrito">
+                <!-- Productos agregados se insertarán aquí dinámicamente -->
+            </div>
+            <div class="total-carrito">
+                Total: <span id="totalCarrito">$0.00</span>
+            </div>
+            <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar compra</button>
+        </div>
+    </div>
+
 
     <script>
         function abrirVentanaPago() {
