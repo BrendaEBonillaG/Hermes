@@ -4,8 +4,6 @@ SHOW TABLES;
 DROP DATABASE Hermes;
 
 -- Tabla de Usuarios
-
-
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     correo VARCHAR(100) NOT NULL,
@@ -31,6 +29,8 @@ VALUES ('zaptos@gmail.com', 'Admin05', '$2y$10$sCoyXA5h3bHWEsaQnyXuTOQdXBwj9ixEL
 SELECT * FROM Productos;
 SELECT * FROM Imagenes_Productos;
 SELECT * FROM Videos_Productos;
+
+-- TABLAS PARA MANEJO DE PRODUCTOS ----------------
 -- Tabla de Categorías
 CREATE TABLE Categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,6 +73,7 @@ CREATE TABLE Videos_Productos (
     FOREIGN KEY (id_producto) REFERENCES Productos(id) 
 );
 
+-- TABLAS PARA MANEJO DE WISHLIST ---------------
 -- Tabla de Listas de Compras
 CREATE TABLE Listas (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -93,23 +94,37 @@ CREATE TABLE Listas_Productos (
     FOREIGN KEY (id_producto) REFERENCES Productos(id) 
 );
 
+-- TABLAS PARA MANEJO DE CARRITO DE COMPRA ---------------
 -- Tabla de Carrito de Compras
-CREATE TABLE Carrito (
+CREATE TABLE Carritos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    id_producto INT NOT NULL,
-    cantidad INT NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id),
-    FOREIGN KEY (id_producto) REFERENCES Productos(id) 
+    fecha_creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado ENUM('activo', 'comprado', 'cancelado') DEFAULT 'activo',
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id)
 );
 
+CREATE TABLE CarritoDetalles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_carrito INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) GENERATED ALWAYS AS (cantidad * precio_unitario) STORED,
+    nota TEXT,
+    FOREIGN KEY (id_carrito) REFERENCES Carritos(id),
+    FOREIGN KEY (id_producto) REFERENCES Productos(id)
+);
+-- TABLAS PARA MANEJO DE REPORTES VENDIDOS Y PEDIDOS --------------
 -- Tabla de Pedidos
 CREATE TABLE Pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_comprador INT NOT NULL,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_comprador) REFERENCES Usuarios(id) 
+    estado ENUM('pendiente', 'procesando', 'enviado', 'entregado', 'cancelado') DEFAULT 'pendiente',
+    FOREIGN KEY (id_comprador) REFERENCES Usuarios(id)
 );
+
 
 -- Tabla de Detalles de Pedido
 CREATE TABLE Detalles_Pedido (
@@ -117,10 +132,11 @@ CREATE TABLE Detalles_Pedido (
     id_pedido INT NOT NULL,
     id_producto INT NOT NULL,
     cantidad INT NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id) ,
-    FOREIGN KEY (id_producto) REFERENCES Productos(id) 
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id),
+    FOREIGN KEY (id_producto) REFERENCES Productos(id)
 );
+
 
 -- Tabla de Valoraciones y Comentarios
 CREATE TABLE Valoraciones (
@@ -130,8 +146,9 @@ CREATE TABLE Valoraciones (
     puntuacion INT CHECK (puntuacion BETWEEN 1 AND 10),
     comentario TEXT,
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_producto) REFERENCES Productos(id) ,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
+    FOREIGN KEY (id_producto) REFERENCES Productos(id),
+    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id),
+    UNIQUE (id_producto, id_usuario)
 );
 
 -- Tabla de Cotizaciones
@@ -146,26 +163,6 @@ CREATE TABLE Cotizaciones (
     FOREIGN KEY (id_comprador) REFERENCES Usuarios(id)
 );
 
-
--- Tabla de Métodos de Pago
-CREATE TABLE Metodos_Pago (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
-    tipo VARCHAR(30) NOT NULL,
-    detalles VARCHAR(255) NOT NULL,
-    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
-);
-
--- Tabla de Transacciones
-CREATE TABLE Transacciones (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT NOT NULL,
-    id_metodo_pago INT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    monto DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id) ,
-    FOREIGN KEY (id_metodo_pago) REFERENCES Metodos_Pago(id) 
-);
 
 -- Tabla de Mensajes entre Usuarios
 CREATE TABLE Mensajes (
