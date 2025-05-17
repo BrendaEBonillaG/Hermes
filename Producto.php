@@ -17,9 +17,10 @@ if (!isset($_SESSION['usuario'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vista de Producto</title>
     <link rel="stylesheet" href="CSS/style.css">
-    <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
+  
     <link rel="stylesheet" href="CSS/Fondo.css">
     <link rel="stylesheet" href="CSS/Navbar.css">
+      <link href="CSS/Carrito.css" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
@@ -149,20 +150,20 @@ if (!isset($_SESSION['usuario'])) {
                 </li>
                 <li>
                     <!-- From Uiverse.io by JaydipPrajapati1910 -->
-        
-                        <button class="button add-to-cart">
-                            <svg viewBox="0 0 16 16" class="bi bi-cart-check" height="24" width="24"
-                                xmlns="http://www.w3.org/2000/svg" fill="#333">
-                                <path
-                                    d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z">
-                                </path>
-                                <path
-                                    d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
-                                </path>
-                            </svg>
-                            <p class="text">Agregar al carrito</p>
-                        </button>
-     
+
+                    <button class="button add-to-cart">
+                        <svg viewBox="0 0 16 16" class="bi bi-cart-check" height="24" width="24"
+                            xmlns="http://www.w3.org/2000/svg" fill="#333">
+                            <path
+                                d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z">
+                            </path>
+                            <path
+                                d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
+                            </path>
+                        </svg>
+                        <p class="text">Agregar al carrito</p>
+                    </button>
+
 
 
                 </li>
@@ -222,170 +223,170 @@ if (!isset($_SESSION['usuario'])) {
                     onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
-
-        <!-- Modal del Carrito -->
-        <div id="modalCarrito" class="modal">
-            <div class="modal-content carrito-modal">
-                <span class="close"
-                    onclick="document.getElementById('modalCarrito').style.display='none'">&times;</span>
-                <h2>Tu Carrito</h2>
-                <div id="contenidoCarrito">
-                    <!-- Productos agregados se insertarán aquí dinámicamente -->
-                </div>
-                <div class="total-carrito">
-                    Total: <span id="totalCarrito">$0.00</span>
-                </div>
-                <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar compra</button>
+    </div>
+    <!-- Modal del Carrito -->
+    <div id="modalCarrito" class="modal">
+        <div class="modal-content carrito-modal">
+            <span class="close" onclick="document.getElementById('modalCarrito').style.display='none'">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div id="contenidoCarrito">
+                <!-- Productos agregados se insertarán aquí dinámicamente -->
             </div>
+            <div class="total-carrito">
+                Total: <span id="totalCarrito">$0.00</span>
+            </div>
+            <button class="btn-modal confirm" onclick="abrirVentanaPago()">Finalizar compra</button>
         </div>
+    </div>
 
-        <script>
-            function changeImage(src) {
-                document.getElementById('mainImage').src = src;
+    <script>
+        function changeImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+    </script>
+
+    <script>
+        function abrirVentanaPago() {
+            window.open('tarjeta.html', '_blank', 'width=600,height=600');
+        }
+    </script>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
+
+            if (!producto) {
+                document.body.innerHTML = "<p>Producto no encontrado.</p>";
+                return;
             }
-        </script>
 
-        <script>
-            function abrirVentanaPago() {
-                window.open('tarjeta.html', '_blank', 'width=600,height=600');
-            }
-        </script>
+            // Aquí muestra los datos del producto como quieras
+            document.getElementById("nombre").textContent = producto.nombre;
+            document.getElementById("precio").textContent = "$" + producto.precio;
+            document.getElementById("precio2").textContent = "$" + producto.precio;
+            document.getElementById("descripcion").textContent = producto.descripcion;
 
+            document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
+            document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
 
+            const hoy = new Date();
+            const fechaFinal = sumarDiasHabiles(hoy, 2);
+            const opcionesFormato = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            };
 
+            const fechaFormateada = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fechaFinal);
 
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
+            // Ponerlo en el HTML
+            document.getElementById("fecha-entrega").textContent = "Entrega el: " + fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
 
-                if (!producto) {
-                    document.body.innerHTML = "<p>Producto no encontrado.</p>";
-                    return;
+            // Control de cantidad
+            const inputCantidad = document.getElementById("cantidad");
+            const btnIncrementar = document.getElementById("incrementar");
+            const btnDecrementar = document.getElementById("decrementar");
+
+            const stock = parseInt(producto.cantidad_Disponible);
+
+            inputCantidad.max = stock;
+            inputCantidad.min = stock > 0 ? 1 : 0;
+            inputCantidad.value = stock > 0 ? 1 : 0;
+            inputCantidad.readOnly = true;
+
+            btnIncrementar.addEventListener("click", () => {
+                let valor = parseInt(inputCantidad.value);
+                if (valor < inputCantidad.max) {
+                    inputCantidad.value = valor + 1;
+                    actualizarPrecioTotal();
+
                 }
-
-                // Aquí muestra los datos del producto como quieras
-                document.getElementById("nombre").textContent = producto.nombre;
-                document.getElementById("precio").textContent = "$" + producto.precio;
-                document.getElementById("precio2").textContent = "$" + producto.precio;
-                document.getElementById("descripcion").textContent = producto.descripcion;
-
-                document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
-                document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
-
-                const hoy = new Date();
-                const fechaFinal = sumarDiasHabiles(hoy, 2);
-                const opcionesFormato = {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                };
-
-                const fechaFormateada = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fechaFinal);
-
-                // Ponerlo en el HTML
-                document.getElementById("fecha-entrega").textContent = "Entrega el: " + fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
-
-                // Control de cantidad
-                const inputCantidad = document.getElementById("cantidad");
-                const btnIncrementar = document.getElementById("incrementar");
-                const btnDecrementar = document.getElementById("decrementar");
-
-                const stock = parseInt(producto.cantidad_Disponible);
-
-                inputCantidad.max = stock;
-                inputCantidad.min = stock > 0 ? 1 : 0;
-                inputCantidad.value = stock > 0 ? 1 : 0;
-                inputCantidad.readOnly = true;
-
-                btnIncrementar.addEventListener("click", () => {
-                    let valor = parseInt(inputCantidad.value);
-                    if (valor < inputCantidad.max) {
-                        inputCantidad.value = valor + 1;
-                        actualizarPrecioTotal();
-
-                    }
-                });
-
-                btnDecrementar.addEventListener("click", () => {
-                    let valor = parseInt(inputCantidad.value);
-                    if (valor > inputCantidad.min) {
-                        inputCantidad.value = valor - 1;
-                        actualizarPrecioTotal();
-
-                    }
-                });
-
-                // Si no hay stock, deshabilita botones
-                if (stock === 0) {
-                    btnIncrementar.disabled = true;
-                    btnDecrementar.disabled = true;
-                }
-
-
-
-                const mainImage = document.getElementById("mainImage");
-                const thumbnailContainer = document.querySelector(".thumbnail-container");
-
-                // Establecer la primera imagen como principal
-                mainImage.src = producto.imagenes[0];
-
-                // Limpiar contenedor de miniaturas
-                thumbnailContainer.innerHTML = "";
-
-                // Generar miniaturas dinámicamente
-                producto.imagenes.forEach((url, index) => {
-                    const thumb = document.createElement("img");
-                    thumb.src = url;
-                    thumb.alt = `Miniatura ${index + 1}`;
-                    thumb.classList.add("thumbnail");
-
-                    // Al hacer clic, cambia la imagen principal
-                    thumb.addEventListener("click", () => {
-                        mainImage.src = url;
-
-                        // Opcional: resaltar la miniatura seleccionada
-                        document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
-                        thumb.classList.add("active");
-                    });
-
-                    thumbnailContainer.appendChild(thumb);
-                });
-
-                // Marcar como activa la primera miniatura
-                thumbnailContainer.firstChild.classList.add("active");
-
-                function actualizarPrecioTotal() {
-                    const cantidad = parseInt(inputCantidad.value) || 0;
-                    const total = producto.precio * cantidad;
-                    document.getElementById("precio2").textContent = "$" + total.toFixed(2);
-                }
-
-                function sumarDiasHabiles(fecha, diasHabilesASumar) {
-                    let resultado = new Date(fecha);
-                    let diasSumados = 0;
-
-                    while (diasSumados < diasHabilesASumar) {
-                        resultado.setDate(resultado.getDate() + 1);
-                        const diaSemana = resultado.getDay(); // 0 = domingo, 6 = sábado
-
-                        if (diaSemana !== 0 && diaSemana !== 6) {
-                            diasSumados++;
-                        }
-                    }
-
-                    return resultado;
-                }
-
-
-
             });
 
+            btnDecrementar.addEventListener("click", () => {
+                let valor = parseInt(inputCantidad.value);
+                if (valor > inputCantidad.min) {
+                    inputCantidad.value = valor - 1;
+                    actualizarPrecioTotal();
+
+                }
+            });
+
+            // Si no hay stock, deshabilita botones
+            if (stock === 0) {
+                btnIncrementar.disabled = true;
+                btnDecrementar.disabled = true;
+            }
 
 
-        </script>
 
-        <script src="JS/app.js"></script>
+            const mainImage = document.getElementById("mainImage");
+            const thumbnailContainer = document.querySelector(".thumbnail-container");
+
+            // Establecer la primera imagen como principal
+            mainImage.src = producto.imagenes[0];
+
+            // Limpiar contenedor de miniaturas
+            thumbnailContainer.innerHTML = "";
+
+            // Generar miniaturas dinámicamente
+            producto.imagenes.forEach((url, index) => {
+                const thumb = document.createElement("img");
+                thumb.src = url;
+                thumb.alt = `Miniatura ${index + 1}`;
+                thumb.classList.add("thumbnail");
+
+                // Al hacer clic, cambia la imagen principal
+                thumb.addEventListener("click", () => {
+                    mainImage.src = url;
+
+                    // Opcional: resaltar la miniatura seleccionada
+                    document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
+                    thumb.classList.add("active");
+                });
+
+                thumbnailContainer.appendChild(thumb);
+            });
+
+            // Marcar como activa la primera miniatura
+            thumbnailContainer.firstChild.classList.add("active");
+
+            function actualizarPrecioTotal() {
+                const cantidad = parseInt(inputCantidad.value) || 0;
+                const total = producto.precio * cantidad;
+                document.getElementById("precio2").textContent = "$" + total.toFixed(2);
+            }
+
+            function sumarDiasHabiles(fecha, diasHabilesASumar) {
+                let resultado = new Date(fecha);
+                let diasSumados = 0;
+
+                while (diasSumados < diasHabilesASumar) {
+                    resultado.setDate(resultado.getDate() + 1);
+                    const diaSemana = resultado.getDay(); // 0 = domingo, 6 = sábado
+
+                    if (diaSemana !== 0 && diaSemana !== 6) {
+                        diasSumados++;
+                    }
+                }
+
+                return resultado;
+            }
+
+
+
+        });
+
+
+
+    </script>
+
+    <script src="JS/carritoDP.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
