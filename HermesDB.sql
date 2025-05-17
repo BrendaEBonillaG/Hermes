@@ -5,6 +5,7 @@ DROP DATABASE Hermes;
 
 -- Tabla de Usuarios
 
+ALTER TABLE productos ADD FULLTEXT(nombre, descripcion);
 
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -4,31 +4,33 @@ header("Access-Control-Allow-Origin: *"); // Permite acceso desde cualquier orig
 
 require 'config.php'; 
 
-try {
-    $stmt = $conn->prepare("
-        SELECT 
-            productos.*, 
-            usuarios.nombreUsu AS nombreVendedor,
-            GROUP_CONCAT(imagenes_productos.url_imagen) AS imagenes
-        FROM productos
-        INNER JOIN usuarios ON productos.id_vendedor = usuarios.id
-        LEFT JOIN imagenes_productos ON productos.id = imagenes_productos.id_producto
-        GROUP BY productos.id
-    ");
-    $stmt->execute();
-    $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']); // Sanitiza por seguridad
 
-    // Convertir la cadena de imágenes a un array
-    foreach ($productos as &$producto) {
-        $producto['imagenes'] = $producto['imagenes']
-            ? explode(',', $producto['imagenes'])
-            : [];
+    // Conectar a la base de datos
+    // Buscar el producto con ese ID
+    // Ejemplo ficticio:
+    $conexion = new mysqli("localhost", "root", "", "tu_base_de_datos");
+    $stmt = $conexion->prepare("SELECT * FROM productos WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($producto = $resultado->fetch_assoc()) {
+        // Mostrar los datos
+        echo "<h1>{$producto['nombre']}</h1>";
+        echo "<p>{$producto['descripcion']}</p>";
+        echo "<p>Precio: {$producto['precio']}</p>";
+    } else {
+        echo "Producto no encontrado.";
     }
 
-    echo json_encode($productos);
-} catch (PDOException $e) {
-    echo json_encode(["error" => "Error al obtener productos: " . $e->getMessage()]);
+    $stmt->close();
+    $conexion->close();
+} else {
+    echo "ID de producto no especificado.";
 }
 ?>
+
 
 

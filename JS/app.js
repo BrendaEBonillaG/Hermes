@@ -1,6 +1,9 @@
 function updatePrecioValue() {
     const precio = document.getElementById("precio").value;
     document.getElementById("precioValor").textContent = "$" + precio;
+
+    // Filtrar productos por precio (sin recargar la página)
+    visualizarProductos("", precio);
 }
 // Funciones para almacenar y traer los datos que se almacenan
 //function guardarAlmacenamientoLocal(llave, valor_a_guardar) {
@@ -61,37 +64,60 @@ window.addEventListener('load', () => {
     visualizarProductos();
     contenedorCompra.classList.add("none")
 })
+function aplicarFiltros() {
+    const precio = document.getElementById("precio").value;
+    const venta = document.querySelector('input[name="venta"]:checked')?.value || "";
+    const calificacion = document.getElementById("calificacion").value;
+
+    // Llamar a visualizarProductos con los filtros aplicados
+    visualizarProductos("", precio, venta, calificacion);
+}
 
 
-
-async function visualizarProductos() {
+async function visualizarProductos(busqueda = "", usarFiltros = true) {
     try {
-        const respuesta = await fetch('http://localhost/Hermes/productos_enventa.php');
+        let url = "http://localhost/Hermes/PHP/BuscarProductos.php";
+
+        if (usarFiltros && busqueda) {
+            // Si se están usando los filtros (por ejemplo, en el dashboard)
+            url += `?buscar=${encodeURIComponent(busqueda)}`;
+            const precio = document.getElementById("precio") ? document.getElementById("precio").value : "";
+            if (precio) {
+                url += `&precio=${encodeURIComponent(precio)}`;
+            }
+        }
+
+        const respuesta = await fetch(url);
         const productos = await respuesta.json();
 
+        // Limpiar los productos mostrados
+        const contenedor = document.getElementById("contenedor");
         contenedor.innerHTML = "";
+
+        // Mostrar los productos
         for (let i = 0; i < productos.length; i++) {
             const producto = productos[i];
-            const soldOut = producto.existencia <= 0;
 
             contenedor.innerHTML += `
                 <div class="cardProducto" onclick="irADetalle(${i})">
                     <img src="${producto.imagenes[0]}">
                     <div class="informacion">
-                        
                         <p class="precio">$${producto.precio}</p>
-                        ${soldOut ? '<p class="soldOut">Sold Out</p>' : '<button onclick="event.stopPropagation(); comprar(' + i + ')">Comprar</button>'}
+                        <p class="nombre">${producto.nombre}</p>
+                      
                     </div>
                 </div>`;
         }
 
-        
         window.productos = productos;
 
     } catch (error) {
         console.error("Error al cargar productos:", error);
     }
 }
+
+
+
 
 
 
@@ -167,4 +193,15 @@ function irADetalle(indice) {
     localStorage.setItem("productoSeleccionado", JSON.stringify(producto));
     window.location.href = "producto.html";
 }
+
+function irADetalle2(productId) {
+    console.log("Product ID: " + productId);  // Muestra el ID en la consola
+    localStorage.setItem("producto_" + producto.id, JSON.stringify(producto));
+    window.location.href = "Producto.html?id=" + encodeURIComponent(producto.id);
+    // Redirige a Producto.html con el ID del producto en la URL
+    window.location.href = "Producto.html?id=" + encodeURIComponent(productId);
+}
+
+
+
 

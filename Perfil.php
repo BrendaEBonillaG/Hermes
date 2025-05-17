@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="CSS/Navbar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
+  <script src="JS/app.js" defer></script>
     <?php
 session_start();
 require __DIR__ . '/config.php';
@@ -35,17 +36,29 @@ $listas=[];
 
 // Verificar si el rol es 'vendedor'
 if ($rol_usuario === 'vendedor') {
+    $sql = "SELECT productos.*, usuarios.nombreUsu AS nombreVendedor,
+            GROUP_CONCAT(imagenes_productos.url_imagen) AS imagenes
+            FROM productos
+            INNER JOIN usuarios ON productos.id_vendedor = usuarios.id
+            LEFT JOIN imagenes_productos ON productos.id = imagenes_productos.id_producto
+            WHERE productos.id_vendedor = ? AND productos.estado = 'aceptado'
 
+            GROUP BY productos.id";
 
-    // Consulta para obtener los productos del vendedor
-    $sql = "SELECT * FROM Productos WHERE id_vendedor = ? AND estado = 'aceptado'";
-    $stmt = $conn ->prepare($sql);  // Prepara la consulta
-    $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
-    $stmt->execute();  // Ejecuta la consulta
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(1, $user_id, PDO::PARAM_INT);
+    $stmt->execute();
 
-    // Obtener los resultados con PDO
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($products as &$producto) {
+        $producto['imagenes'] = $producto['imagenes']
+            ? explode(',', $producto['imagenes'])
+            : [];
+    }
+    
 }
+
 else if($rol_usuario === 'cliente'){
 
     $sql = "SELECT * FROM Listas WHERE id_usuario = ?";
@@ -248,13 +261,14 @@ else if($rol_usuario === 'cliente'){
     <!-- Perfil público con listas de deseos -->
     <div id="publicProfile" class="profile-content <?php echo $rol_usuario === 'cliente' ? '' : 'hidden'; ?>">
         <h3>Listas de deseados</h3>
-        <div class="similar-products" onclick="window.location.href='ListaDeseos.html'">
+        <div class="similar-item">
+
             <?php
                 if (count($listas) > 0) {
                     // Mostrar cada producto
                     foreach ($listas as $lista) {
                         echo '<div class="similar-item">';
-                        echo '<h3>' . htmlspecialchars($lista['nombre']) . '</h3>';
+                       
                         echo '<p>' . htmlspecialchars($lista['descripcion']) . '</p>';
                         echo '<p>' . htmlspecialchars($lista['privacidad']) . '</p>';
                         echo '</div>';
@@ -270,20 +284,27 @@ else if($rol_usuario === 'cliente'){
     <!-- Perfil de vendedor -->
     <div id="sellerProfile" class="profile-content <?php echo $rol_usuario === 'vendedor' ? '' : 'hidden'; ?>">
         <h3>Productos Publicados</h3>
-        <div class="similar-products" onclick="window.location.href='Producto.html'">
+        <div class="similar-products"  >
             <?php
-                if (count($products) > 0) {
-                    // Mostrar cada producto
-                    foreach ($products as $product) {
-                        echo '<div class="similar-item">';
-                        echo '<p>' . htmlspecialchars($product['nombre']) . '</p>';
-                        echo '<span>$' . number_format($product['precio'], 2) . '</span>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo '<p>No has publicado ningún producto.</p>';
-                }
-            ?>
+if (count($products) > 0) {
+    // Mostrar cada producto
+    foreach ($products as $product) {
+                     
+        echo '<div class="similar-item" onclick="window.location.href=\'productoPerfil.php?id=' . $product['id'] . '\'">';
+
+        if (!empty($product['imagenes'])) {
+            echo '<img src="' . htmlspecialchars($product['imagenes'][0]) . '" >';
+        } 
+
+        echo '<p>' . htmlspecialchars($product['nombre']) . '</p>';
+        echo '<span>$' . number_format($product['precio'], 2) . '</span>';
+        echo '</div>';
+    }
+} else {
+    echo '<p>No has publicado ningún producto.</p>';
+}
+?>
+
         </div>
     </div>
 
@@ -375,6 +396,8 @@ document.getElementById('imageUpload').addEventListener('change', function (e) {
 
 function confirmarBaja() {
     return confirm("¿Estás seguro de que deseas desactivar este usuario?");
+
+    
 }
 
 
@@ -382,7 +405,9 @@ function confirmarBaja() {
 
 
     </script>
-  
+ 
+    
+
 
 </body>
 

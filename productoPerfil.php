@@ -207,10 +207,50 @@
     
     <script src="../Hermes/JS/app.js"></script>
 
+<?php
+$producto = null;
+
+if (isset($_GET['id'])) {
+    $id = intval($_GET['id']);
+
+    // Conexión a la base de datos
+    $conexion = new mysqli("localhost", "root", "", "Hermes");
+    $stmt = $conexion->prepare("SELECT productos.id,
+            productos.nombre,
+            productos.descripcion,
+            productos.precio,
+            usuarios.nombreUsu AS nombreVendedor,
+            GROUP_CONCAT(imagenes_productos.url_imagen) AS imagenes
+        FROM productos
+        INNER JOIN usuarios ON productos.id_vendedor = usuarios.id
+        LEFT JOIN imagenes_productos ON productos.id = imagenes_productos.id_producto
+        WHERE productos.id = ?
+        GROUP BY productos.id");
+
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+
+    if ($resultado->num_rows > 0) {
+        $producto = $resultado->fetch_assoc();
+
+        // Convertir la cadena de imágenes separada por comas en array
+        $producto['imagenes'] = isset($producto['imagenes']) && $producto['imagenes'] !== ""
+            ? explode(',', $producto['imagenes'])
+            : [];
+    }
+
+    $stmt->close();
+    $conexion->close();
+}
+?>
+
+
+
     <script>
 document.addEventListener("DOMContentLoaded", () => {
-    const producto = JSON.parse(localStorage.getItem("productoSeleccionado"));
-    
+   
+     const producto = <?php echo json_encode($producto); ?>;
 
 
     if (!producto) {
