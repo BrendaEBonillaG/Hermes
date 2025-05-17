@@ -121,10 +121,12 @@ if (!isset($_SESSION['usuario'])) {
                     </div>
 
 
-                    <input type="number" name="price" min="0" step="0.01" placeholder="Precio..."
+                    <input type="number" id="precioInput" name="price" min="0" step="0.01" placeholder="Precio..."
                         class="input-field small" required>
-                    <input type="number" name="quantity" min="0" step="1" placeholder="Cantidad..."
-                        class="input-field small" required>
+
+                   <input type="number" id="cantidadInput" name="quantity" min="0" step="1" placeholder="Cantidad..."
+    class="input-field small" required>
+
                 </div>
                 <div class="checkbox-container">
                     <label>Acepta cotizaciones</label>
@@ -146,6 +148,35 @@ if (!isset($_SESSION['usuario'])) {
         </div>
         </div>
     </form>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkbox = document.getElementById('cbx-12');
+    const precio = document.getElementById('precioInput');
+    const cantidad = document.querySelector('input[name="quantity"]');
+
+    function actualizarEstadoCampos() {
+        if (checkbox.checked) {
+            // Si acepta cotizaciones, el precio y la cantidad no deben modificarse
+            precio.value = 0;
+            precio.readOnly = true;
+
+            cantidad.value = 0;
+            cantidad.readOnly = true;
+        } else {
+            precio.readOnly = false;
+            precio.value = '';
+
+            cantidad.readOnly = false;
+            cantidad.value = '';
+        }
+    }
+
+    checkbox.addEventListener('change', actualizarEstadoCampos);
+    actualizarEstadoCampos(); // Ejecutar al cargar la página
+});
+</script>
+
+
 
 
     <div id="logoutModal" class="modal">
