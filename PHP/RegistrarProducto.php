@@ -8,6 +8,18 @@ try {
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+        // Validar cantidad de imágenes y videos subidos
+    $imagenes_subidas = isset($_FILES['imagenes']) ? count(array_filter($_FILES['imagenes']['name'])) : 0;
+    $videos_subidos = isset($_FILES['videos']) ? count(array_filter($_FILES['videos']['name'])) : 0;
+
+    if ($imagenes_subidas < 3) {
+        echo "Error: Debes subir al menos 3 imágenes.";
+        exit;
+    }
+    if ($videos_subidos < 1) {
+        echo "Error: Debes subir al menos 1 video.";
+        exit;
+    }
         $nombre = $_POST['name'];  // Aquí debería ser 'name'
         $descripcion = $_POST['description'];  // Aquí debería ser 'description'
         $precio = $_POST['price'];  // Aquí debería ser 'price'
