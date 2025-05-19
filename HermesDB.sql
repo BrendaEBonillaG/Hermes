@@ -201,7 +201,7 @@ CREATE TABLE Cotizaciones (
 SELECT * FROM Mensajes_Privado;
 SHOW CREATE TABLE Chat_Privado;
 
-CREATE TABLE chat_privado (
+CREATE TABLE Chat_Privado (
     id_chat INT PRIMARY KEY AUTO_INCREMENT,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     id_remitente INT NOT NULL,
@@ -211,7 +211,7 @@ CREATE TABLE chat_privado (
     CONSTRAINT fk_emisor FOREIGN KEY (id_emisor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
-CREATE TABLE mensajes_privado (
+CREATE TABLE Mensajes_Privado (
     id_mensaje INT PRIMARY KEY AUTO_INCREMENT,
     id_chat INT NOT NULL,
     id_usuario INT NOT NULL,

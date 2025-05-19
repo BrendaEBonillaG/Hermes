@@ -175,8 +175,13 @@ if (!isset($_SESSION['usuario'])) {
 
                 </li>
                 <li>
-                    <button class="cotizar"> <p class="text">Cotizar</p></button>
+
+                    <button id="btnCotizar" class="btn btn-primary">Cotizar</button>
+
+
+
                 </li>
+
                 <li>
                     <button id="openWishlistModal" class="btn btn-wishlist">
                         <svg width="56px" height="48px" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -333,7 +338,7 @@ if (!isset($_SESSION['usuario'])) {
                 return;
             }
 
-            // Aquí muestra los datos del producto como quieras
+            // Mostrar información del producto
             document.getElementById("nombre").textContent = producto.nombre;
             document.getElementById("precio").textContent = "$" + producto.precio;
             document.getElementById("precio2").textContent = "$" + producto.precio;
@@ -342,18 +347,11 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
             document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
 
+            // Fecha de entrega en días hábiles
             const hoy = new Date();
             const fechaFinal = sumarDiasHabiles(hoy, 2);
-            const opcionesFormato = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
-
+            const opcionesFormato = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const fechaFormateada = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fechaFinal);
-
-            // Ponerlo en el HTML
             document.getElementById("fecha-entrega").textContent = "Entrega el: " + fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
 
             // Control de cantidad
@@ -362,7 +360,6 @@ if (!isset($_SESSION['usuario'])) {
             const btnDecrementar = document.getElementById("decrementar");
 
             const stock = parseInt(producto.cantidad_Disponible);
-
             inputCantidad.max = stock;
             inputCantidad.min = stock > 0 ? 1 : 0;
             inputCantidad.value = stock > 0 ? 1 : 0;
@@ -373,7 +370,6 @@ if (!isset($_SESSION['usuario'])) {
                 if (valor < inputCantidad.max) {
                     inputCantidad.value = valor + 1;
                     actualizarPrecioTotal();
-
                 }
             });
 
@@ -382,39 +378,29 @@ if (!isset($_SESSION['usuario'])) {
                 if (valor > inputCantidad.min) {
                     inputCantidad.value = valor - 1;
                     actualizarPrecioTotal();
-
                 }
             });
 
-            // Si no hay stock, deshabilita botones
             if (stock === 0) {
                 btnIncrementar.disabled = true;
                 btnDecrementar.disabled = true;
             }
 
-
-
+            // Manejo de imágenes
             const mainImage = document.getElementById("mainImage");
             const thumbnailContainer = document.querySelector(".thumbnail-container");
 
-            // Establecer la primera imagen como principal
             mainImage.src = producto.imagenes[0];
-
-            // Limpiar contenedor de miniaturas
             thumbnailContainer.innerHTML = "";
 
-            // Generar miniaturas dinámicamente
             producto.imagenes.forEach((url, index) => {
                 const thumb = document.createElement("img");
                 thumb.src = url;
                 thumb.alt = `Miniatura ${index + 1}`;
                 thumb.classList.add("thumbnail");
 
-                // Al hacer clic, cambia la imagen principal
                 thumb.addEventListener("click", () => {
                     mainImage.src = url;
-
-                    // Opcional: resaltar la miniatura seleccionada
                     document.querySelectorAll(".thumbnail").forEach(t => t.classList.remove("active"));
                     thumb.classList.add("active");
                 });
@@ -422,8 +408,28 @@ if (!isset($_SESSION['usuario'])) {
                 thumbnailContainer.appendChild(thumb);
             });
 
-            // Marcar como activa la primera miniatura
             thumbnailContainer.firstChild.classList.add("active");
+
+            // Botón de cotización
+            const btnCotizar = document.getElementById("btnCotizar");
+            const btnAgregarCarrito = document.querySelector(".button.add-to-cart");
+
+            // Ocultar botón de cotizar si no es cotización
+            if (producto.tipo !== "cotizacion") {
+                btnCotizar.style.display = "none";
+            } else {
+                // Si es cotización, también ocultar el botón de agregar al carrito
+                if (btnAgregarCarrito) {
+                    btnAgregarCarrito.style.display = "none";
+                }
+
+                btnCotizar.addEventListener("click", () => {
+                    const idVendedor = producto.id_vendedor;
+                    window.location.href = `PHP/crear_chat.php?id=${idVendedor}`;
+                });
+            }
+
+
 
             function actualizarPrecioTotal() {
                 const cantidad = parseInt(inputCantidad.value) || 0;
@@ -446,10 +452,10 @@ if (!isset($_SESSION['usuario'])) {
 
                 return resultado;
             }
-
-
-
         });
+
+
+
 
 
 
