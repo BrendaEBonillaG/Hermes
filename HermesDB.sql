@@ -198,21 +198,30 @@ CREATE TABLE Cotizaciones (
     FOREIGN KEY (id_comprador) REFERENCES Usuarios(id)
 );
 
+SELECT * FROM Mensajes_Privado;
+SHOW CREATE TABLE Chat_Privado;
 
--- Tabla de Mensajes entre Usuarios
-CREATE TABLE Mensajes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE chat_privado (
+    id_chat INT PRIMARY KEY AUTO_INCREMENT,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_remitente INT NOT NULL,
     id_emisor INT NOT NULL,
-    id_receptor INT NOT NULL,
-    mensaje TEXT NOT NULL,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_emisor) REFERENCES Usuarios(id) ,
-    FOREIGN KEY (id_receptor) REFERENCES Usuarios(id) 
+    CONSTRAINT chk_diferentes CHECK (id_remitente <> id_emisor),
+    CONSTRAINT fk_remitente FOREIGN KEY (id_remitente) REFERENCES usuarios(id) ON DELETE CASCADE,
+    CONSTRAINT fk_emisor FOREIGN KEY (id_emisor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
-SELECT * FROM Mensajes;
-
-
+CREATE TABLE mensajes_privado (
+    id_mensaje INT PRIMARY KEY AUTO_INCREMENT,
+    id_chat INT NOT NULL,
+    id_usuario INT NOT NULL,
+    contenido TEXT NOT NULL,
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR(500) DEFAULT 'texto',
+    visto BIT(1) NOT NULL DEFAULT b'0',
+    CONSTRAINT fk_mensaje_chat FOREIGN KEY (id_chat) REFERENCES chat_privado(id_chat) ON DELETE CASCADE,
+    CONSTRAINT fk_mensaje_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
 
 TRUNCATE TABLE Usuarios;
 
