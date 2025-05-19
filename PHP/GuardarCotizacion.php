@@ -54,11 +54,14 @@ try {
 
 
     // Crear mensaje con nombre, descripción, cantidad y precio total
-    $mensaje = "Nueva cotización:\n";
-    $mensaje .= "Producto: " . $producto['nombre'] . "\n";
-    $mensaje .= "Descripción: " . $producto['descripcion'] . "\n";
-    $mensaje .= "Cantidad: {$cantidad}\n";
-    $mensaje .= "Precio total: $" . number_format($precio, 2);
+    $mensaje = "<div class='cotizacion-box'>";
+    $mensaje .= "<p><strong>Producto:</strong> " . htmlspecialchars($producto['nombre']) . "</p>";
+    $mensaje .= "<p><strong>Descripción:</strong> " . htmlspecialchars($producto['descripcion']) . "</p>";
+    $mensaje .= "<p><strong>Cantidad:</strong> {$cantidad}</p>";
+    $mensaje .= "<p><strong>Precio total:</strong> $" . number_format($precio, 2) . "</p>";
+    $mensaje .= "<button class='btn-ver-cotizacion' data-producto-id='{$id_producto}'>Pagar</button>";
+    $mensaje .= "</div>";
+
 
     // Insertar mensaje en chat
     $stmt2 = $conn->prepare("INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido) VALUES (:id_chat, :id_usuario, :contenido)");

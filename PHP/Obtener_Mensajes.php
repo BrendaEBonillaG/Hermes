@@ -21,7 +21,14 @@ foreach ($result as $row) {
     $clase = ($row['id_usuario'] == $id_usuario) ? 'outgoing' : 'incoming';
     echo '<div class="chat-message ' . $clase . '">';
     echo '<div class="message-content">';
-    echo '<p>' . htmlspecialchars($row['contenido']) . '</p>';
+    $esMensajeSistema = strpos($row['contenido'], 'btn-ver-cotizacion') !== false;
+
+    if ($esMensajeSistema) {
+        echo '<p>' . $row['contenido'] . '</p>';
+    } else {
+        echo '<p>' . htmlspecialchars($row['contenido']) . '</p>';
+    }
+
     echo '<span class="message-time">' . date("H:i", strtotime($row['fecha_envio'])) . '</span>';
     echo '</div></div>';
 }
