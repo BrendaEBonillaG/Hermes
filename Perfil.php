@@ -11,57 +11,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <?php
-session_start();
-require __DIR__ . '/config.php';
+    session_start();
+    require __DIR__ . '/config.php';
 
-// Variables de control
-$user_id = $_SESSION['usuario']['id'];
-$rol_usuario = $_SESSION['usuario']['rol'];
-$nombre_usuario = $_SESSION['usuario']['nombreUsu'];
-
-
-
-$user =[];
-
-$sql = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $conn ->prepare($sql);  // Prepara la consulta
-$stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
-$stmt->execute();
-
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$products = [];
-$listas=[];
-
-// Verificar si el rol es 'vendedor'
-if ($rol_usuario === 'vendedor') {
+    // Variables de control
+    $user_id = $_SESSION['usuario']['id'];
+    $rol_usuario = $_SESSION['usuario']['rol'];
+    $nombre_usuario = $_SESSION['usuario']['nombreUsu'];
 
 
-    // Consulta para obtener los productos del vendedor
-    $sql = "SELECT * FROM Productos WHERE id_vendedor = ? AND estado = 'aceptado'";
-    $stmt = $conn ->prepare($sql);  // Prepara la consulta
+
+    $user = [];
+
+    $sql = "SELECT * FROM usuarios WHERE id = ?";
+    $stmt = $conn->prepare($sql);  // Prepara la consulta
     $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
-    $stmt->execute();  // Ejecuta la consulta
+    $stmt->execute();
 
-    // Obtener los resultados con PDO
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-else if($rol_usuario === 'cliente'){
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT * FROM Listas WHERE id_usuario = ?";
-    $stmt = $conn ->prepare($sql);  // Prepara la consulta
-    $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
-    $stmt->execute();  // Ejecuta la consulta
+    $products = [];
+    $listas = [];
 
-    // Obtener los resultados con PDO
-    $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Verificar si el rol es 'vendedor'
+    if ($rol_usuario === 'vendedor') {
 
 
-}
+        // Consulta para obtener los productos del vendedor
+        $sql = "SELECT * FROM Productos WHERE id_vendedor = ? AND estado = 'aceptado'";
+        $stmt = $conn->prepare($sql);  // Prepara la consulta
+        $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
+        $stmt->execute();  // Ejecuta la consulta
+    
+        // Obtener los resultados con PDO
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else if ($rol_usuario === 'cliente') {
+
+        $sql = "SELECT * FROM Listas WHERE id_usuario = ?";
+        $stmt = $conn->prepare($sql);  // Prepara la consulta
+        $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
+        $stmt->execute();  // Ejecuta la consulta
+    
+        // Obtener los resultados con PDO
+        $listas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+    }
 
 
 
-?>
+    ?>
 </head>
 
 <body>
@@ -76,7 +75,7 @@ else if($rol_usuario === 'cliente'){
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
                 <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
-<li><a href="ventas.php"><i class="bi bi-list"></i> Envios</a></li>
+                <li><a href="ventas.php"><i class="bi bi-list"></i> Envios</a></li>
             <?php endif; ?>
 
             <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
@@ -90,7 +89,7 @@ else if($rol_usuario === 'cliente'){
                 </form>
             </li>
 
-           <li><a href="Admin/RevisionProd.php"><i class="bi bi-chat-dots"></i> Revision Productos</a></li>
+            <li><a href="Admin/RevisionProd.php"><i class="bi bi-chat-dots"></i> Revision Productos</a></li>
 
             <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
@@ -106,27 +105,27 @@ else if($rol_usuario === 'cliente'){
 
         <!-- Foto de perfil y nombre de usuario -->
         <div class="profile-header">
-            
+
 
             <?php
             // Convertir la imagen en base64
-    $imagenBlob = $user['foto']; // Esto es el BLOB que viene de la base de datos
-    $imagenBase64 = base64_encode($imagenBlob);
+            $imagenBlob = $user['foto']; // Esto es el BLOB que viene de la base de datos
+            $imagenBase64 = base64_encode($imagenBlob);
 
-    // Puedes ajustar el tipo MIME si no es jpg
-    echo '<img src="data:image/jpeg;base64,' . $imagenBase64 . '" alt="Foto de perfil" class="profile-img">';
-    
-          
-                    echo '<h2 id="username">'.$user['nombreUsu'].   '</h2>'.'<br>';
-                    echo '<h2 id="username">'.$user['rol'].   '</h2>';
-               
-          
+            // Puedes ajustar el tipo MIME si no es jpg
+            echo '<img src="data:image/jpeg;base64,' . $imagenBase64 . '" alt="Foto de perfil" class="profile-img">';
+
+
+            echo '<h2 id="username">' . $user['nombreUsu'] . '</h2>' . '<br>';
+            echo '<h2 id="username">' . $user['rol'] . '</h2>';
+
+
             ?>
 
             <button id="edit_btn">Editar</button>
             <form method="POST" onsubmit="return confirmarBaja();" action="PHP/eliminar_perfil.php">
-            
-            <button type="submit" name="baja_usuario">Desactivar Usuario</button>
+
+                <button type="submit" name="baja_usuario">Desactivar Usuario</button>
             </form>
 
 
@@ -189,22 +188,23 @@ else if($rol_usuario === 'cliente'){
 
                         <!-- Campo foto de perfil -->
                         <div class="input-box-Image">
-                              <!-- Imagen actual del usuario (preview) -->
+                            <!-- Imagen actual del usuario (preview) -->
                             <?php
                             echo '<img id="preview" src="data:image/jpeg;base64,' . $imagenBase64 . '" alt="Foto de perfil" class="profile-img">';
                             ?>
 
                             <!-- Botón personalizado para subir -->
                             <label for="imageUpload" class="custom-file-upload">
-                            <i class="bx bx-upload"></i> Subir Imagen
+                                <i class="bx bx-upload"></i> Subir Imagen
                             </label>
 
-                             <!-- Input oculto que responde al label -->
-                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*" style="display: none;">
-    
+                            <!-- Input oculto que responde al label -->
+                            <input type="file" id="imageUpload" name="imageUpload" accept="image/*"
+                                style="display: none;">
+
                             <!-- Nombre del archivo -->
                             <span id="file-name">Ningún archivo seleccionado</span>
-  
+
                         </div>
 
 
@@ -248,21 +248,22 @@ else if($rol_usuario === 'cliente'){
     <!-- Perfil público con listas de deseos -->
     <div id="publicProfile" class="profile-content <?php echo $rol_usuario === 'cliente' ? '' : 'hidden'; ?>">
         <h3>Listas de deseados</h3>
-        <div class="similar-products" onclick="window.location.href='ListaDeseos.html'">
+        <div class="similar-products"onclick="verDetallesLista(ID)"
+>
             <?php
-                if (count($listas) > 0) {
-                    // Mostrar cada producto
-                    foreach ($listas as $lista) {
-                        echo '<div class="similar-item">';
-                        echo '<h3>' . htmlspecialchars($lista['nombre']) . '</h3>';
-                        echo '<p>' . htmlspecialchars($lista['descripcion']) . '</p>';
-                        echo '<p>' . htmlspecialchars($lista['privacidad']) . '</p>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo '<p>No has creado ninguna lista.</p>';
+            if (count($listas) > 0) {
+                foreach ($listas as $lista) {
+                    echo '<div class="similar-item" onclick="verDetallesLista(' . $lista['id'] . ')">';
+                    echo '<h3>' . htmlspecialchars($lista['nombre']) . '</h3>';
+                    echo '<p>' . htmlspecialchars($lista['descripcion']) . '</p>';
+                    echo '<p>' . htmlspecialchars($lista['privacidad']) . '</p>';
+                    echo '</div>';
                 }
-                ?>
+            } else {
+                echo '<p>No has creado ninguna lista.</p>';
+            }
+            ?>
+
 
         </div>
     </div>
@@ -272,17 +273,17 @@ else if($rol_usuario === 'cliente'){
         <h3>Productos Publicados</h3>
         <div class="similar-products" onclick="window.location.href='Producto.php'">
             <?php
-                if (count($products) > 0) {
-                    // Mostrar cada producto
-                    foreach ($products as $product) {
-                        echo '<div class="similar-item">';
-                        echo '<p>' . htmlspecialchars($product['nombre']) . '</p>';
-                        echo '<span>$' . number_format($product['precio'], 2) . '</span>';
-                        echo '</div>';
-                    }
-                } else {
-                    echo '<p>No has publicado ningún producto.</p>';
+            if (count($products) > 0) {
+                // Mostrar cada producto
+                foreach ($products as $product) {
+                    echo '<div class="similar-item">';
+                    echo '<p>' . htmlspecialchars($product['nombre']) . '</p>';
+                    echo '<span>$' . number_format($product['precio'], 2) . '</span>';
+                    echo '</div>';
                 }
+            } else {
+                echo '<p>No has publicado ningún producto.</p>';
+            }
             ?>
         </div>
     </div>
@@ -334,55 +335,63 @@ else if($rol_usuario === 'cliente'){
     </div>
 
     <div id="logoutModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
-        <h2>¿Deseas cerrar sesión?</h2>
-        <div class="modal-actions">
-            <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar sesión</button>
-            <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
+            <h2>¿Deseas cerrar sesión?</h2>
+            <div class="modal-actions">
+                <button class="btn-modal confirm" onclick="window.location.href='../Hermes/PHP/Logout.php'">Sí, cerrar
+                    sesión</button>
+                <button class="btn-modal cancel"
+                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+            </div>
         </div>
-    </div>
 
-    <script>
-    document.getElementById('edit_btn').addEventListener('click', function() {
-        document.getElementById('editPopup').style.display = 'block';
-    });
+        <script>
+            document.getElementById('edit_btn').addEventListener('click', function () {
+                document.getElementById('editPopup').style.display = 'block';
+            });
 
-    document.getElementById('closeBtn').addEventListener('click', function() {
-        document.getElementById('editPopup').style.display = 'none';
-    });
+            document.getElementById('closeBtn').addEventListener('click', function () {
+                document.getElementById('editPopup').style.display = 'none';
+            });
 
-    
-document.getElementById('imageUpload').addEventListener('change', function (e) {
-    const file = e.target.files[0];
-    const preview = document.getElementById('preview');
-    const fileName = document.getElementById('file-name');
 
-    if (file) {
-        fileName.textContent = file.name;
+            document.getElementById('imageUpload').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                const preview = document.getElementById('preview');
+                const fileName = document.getElementById('file-name');
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            preview.src = e.target.result; // Actualiza la imagen
-        };
-        reader.readAsDataURL(file); // Convierte a base64
-    } else {
-        fileName.textContent = "Ningún archivo seleccionado";
+                if (file) {
+                    fileName.textContent = file.name;
 
-        
-    }
-});
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result; // Actualiza la imagen
+                    };
+                    reader.readAsDataURL(file); // Convierte a base64
+                } else {
+                    fileName.textContent = "Ningún archivo seleccionado";
 
-function confirmarBaja() {
-    return confirm("¿Estás seguro de que deseas desactivar este usuario?");
-}
 
+                }
+            });
+
+            function confirmarBaja() {
+                return confirm("¿Estás seguro de que deseas desactivar este usuario?");
+            }
 
 
 
 
-    </script>
-  
+
+            function verDetallesLista(idLista) {
+                // Redirige a la página con el ID de lista como parámetro
+                window.location.href = 'ListaDeseos.php?id=' + idLista;
+            }
+
+
+        </script>
+
 
 </body>
 
