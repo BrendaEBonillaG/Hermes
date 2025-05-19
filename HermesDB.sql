@@ -109,6 +109,9 @@ CREATE TABLE Videos_Productos (
 
 -- TABLAS PARA MANEJO DE WISHLIST ---------------
 DROP TABLE Listas;
+
+
+SELECT * FROM Listas_Productos;
 -- Tabla de Listas de Compras
 CREATE TABLE Listas (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -120,10 +123,6 @@ CREATE TABLE Listas (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) 
 );
 
-INSERT INTO Listas (nombre, descripcion, privacidad, foto, id_usuario)
-VALUES ('Favoritos de verano', 'Productos que me gustaron para el verano', 'publico', 'uploads/imagenes/6828481f0ebbe_1728272896855.jpg', 6);
-
-
 -- Tabla de Productos en Listas
 CREATE TABLE Listas_Productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -132,6 +131,10 @@ CREATE TABLE Listas_Productos (
     FOREIGN KEY (id_lista) REFERENCES Listas(id) ,
     FOREIGN KEY (id_producto) REFERENCES Productos(id) 
 );
+
+INSERT INTO Listas (nombre, descripcion, privacidad, foto, id_usuario)
+VALUES ('Favoritos de verano', 'Productos que me gustaron para el verano', 'publico', 'uploads/imagenes/6828481f0ebbe_1728272896855.jpg', 6);
+
 
 -- TABLAS PARA MANEJO DE CARRITO DE COMPRA ---------------
 -- Tabla de Carrito de Compras
