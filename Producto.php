@@ -183,7 +183,7 @@ if (!isset($_SESSION['usuario'])) {
                 </li>
 
                 <li>
-                    <button id="openWishlistModal" class="btn btn-wishlist">
+                    <button id="openWishlistModal" class="btn btn-wishlist" >
                         <svg width="56px" height="48px" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <path d="M 0 0 L 56 0 L 40 48 L 0 48" stroke="none"></path>
                         </svg>
@@ -290,7 +290,7 @@ if (!isset($_SESSION['usuario'])) {
                     <!-- Opciones se deben llenar con PHP o JS -->
                 </select>
                 <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
-                <button type="submit">Agregar a lista</button>
+                <button id="agregarAListaBtn" >Agregar a lista</button>
             </form>
 
             <hr>
@@ -452,12 +452,9 @@ if (!isset($_SESSION['usuario'])) {
 
                 return resultado;
             }
+            document.getElementById("openWishlistModal").dataset.productoId = producto.id;
+
         });
-
-
-
-
-
 
     </script>
 
