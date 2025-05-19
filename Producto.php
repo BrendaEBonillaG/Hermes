@@ -80,7 +80,7 @@ if (!isset($_SESSION['usuario'])) {
             <div>
                 <div id="nombre" class="product-title"></div>
                 <div id="descripcion" class="product-description"></div>
-                <div id="id_producto" ></div>
+                <div id="id_producto"></div>
 
                 <div id="vendedor" class="product-vendedor"></div>
                 <div id="precio" class="product-price"></div>
@@ -173,6 +173,9 @@ if (!isset($_SESSION['usuario'])) {
 
 
 
+                </li>
+                <li>
+                    <button class="cotizar"> <p class="text">Cotizar</p></button>
                 </li>
                 <li>
                     <button id="openWishlistModal" class="btn btn-wishlist">
@@ -269,40 +272,40 @@ if (!isset($_SESSION['usuario'])) {
 
     <!-- Modal de wishlist -->
     <div id="wishlistModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <span id="closeWishlistModal" class="close">&times;</span>
+        <div class="modal-content">
+            <span id="closeWishlistModal" class="close">&times;</span>
 
-        <h2>Lista de deseos</h2>
+            <h2>Lista de deseos</h2>
 
-        <!-- Opción 1: Agregar a lista existente -->
-        <form id="formAgregarALista" method="post" enctype="multipart/form-data">
-            <label for="listaExistente">Agregar a lista existente:</label>
-            <select id="listaExistente" name="id_lista" required>
-                <option value="">Selecciona una lista</option>
-                <!-- Opciones se deben llenar con PHP o JS -->
-            </select>
-            <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
-            <button type="submit">Agregar a lista</button>
-        </form>
+            <!-- Opción 1: Agregar a lista existente -->
+            <form id="formAgregarALista" method="post" enctype="multipart/form-data">
+                <label for="listaExistente">Agregar a lista existente:</label>
+                <select id="listaExistente" name="id_lista" required>
+                    <option value="">Selecciona una lista</option>
+                    <!-- Opciones se deben llenar con PHP o JS -->
+                </select>
+                <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
+                <button type="submit">Agregar a lista</button>
+            </form>
 
-        <hr>
+            <hr>
 
-        <!-- Opción 2: Crear nueva lista -->
-        <form id="formCrearLista" method="post" enctype="multipart/form-data">
-            <h3>Crear nueva lista de deseos</h3>
-            <input type="text" name="nombre" placeholder="Nombre de la lista" required><br>
-            <textarea name="descripcion" placeholder="Descripción"></textarea><br>
-            <select name="privacidad" required>
-                <option value="privada">Privada</option>
-                <option value="pública">Pública</option>
-            </select><br>
-            <label>Foto:</label>
-            <input type="file" name="foto" accept="image/*"><br>
-             <!-- ID del producto -->
-            <button type="submit">Crear lista y agregar producto</button>
-        </form>
+            <!-- Opción 2: Crear nueva lista -->
+            <form id="formCrearLista" method="post" enctype="multipart/form-data">
+                <h3>Crear nueva lista de deseos</h3>
+                <input type="text" name="nombre" placeholder="Nombre de la lista" required><br>
+                <textarea name="descripcion" placeholder="Descripción"></textarea><br>
+                <select name="privacidad" required>
+                    <option value="privada">Privada</option>
+                    <option value="pública">Pública</option>
+                </select><br>
+                <label>Foto:</label>
+                <input type="file" name="foto" accept="image/*"><br>
+                <!-- ID del producto -->
+                <button type="submit">Crear lista y agregar producto</button>
+            </form>
+        </div>
     </div>
-</div>
 
 
 
