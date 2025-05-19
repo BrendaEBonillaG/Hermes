@@ -17,11 +17,17 @@ if (!$lista) {
 }
 
 // Ahora buscamos los productos de esa lista
-$stmtProductos = $conn->prepare("SELECT p.nombre, p.descripcion FROM productos p
+// Ahora buscamos los productos de esa lista, con más campos (precio, stock, categoria)
+$stmtProductos = $conn->prepare("
+    SELECT p.nombre, p.descripcion, p.precio, p.cantidad_Disponible AS stock, c.nombre AS categoria
+    FROM productos p
     INNER JOIN Listas_Productos lp ON p.id = lp.id_producto
-    WHERE lp.id_lista = ?");
+    INNER JOIN Categorias c ON p.id_categoria = c.id
+    WHERE lp.id_lista = ?
+");
 $stmtProductos->execute([$idLista]);
-$productos = $stmtProductos->fetchAll();
+$productos = $stmtProductos->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
