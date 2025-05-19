@@ -56,6 +56,36 @@ CREATE TABLE Productos (
     FOREIGN KEY (id_categoria)
         REFERENCES Categorias (id)
 );
+DROP TABLE Compra;
+CREATE TABLE Compra (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_comprador INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    estado VARCHAR(50) DEFAULT 'espera' NOT NULL,
+    
+    fechaIngreso TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_comprador)
+        REFERENCES Usuarios (id),
+    FOREIGN KEY (id_producto)
+        REFERENCES productos (id)
+);
+SELECT*FROM Compra;
+SELECT*FROM productos;
+DELIMITER $$
+
+CREATE TRIGGER after_insert_compra
+    AFTER INSERT
+    ON Compra
+    FOR EACH ROW
+BEGIN
+    -- Reducción de la cantidad en la tabla Productos
+    UPDATE Productos
+    SET cantidad_Disponible = cantidad_Disponible - NEW.cantidad
+    WHERE id = NEW.id_producto;
+END $$
+
+DELIMITER ;
 
 -- Tabla de Imágenes de Productos
 CREATE TABLE Imagenes_Productos (

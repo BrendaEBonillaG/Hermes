@@ -80,6 +80,7 @@ if (!isset($_SESSION['usuario'])) {
             <div>
                 <div id="nombre" class="product-title"></div>
                 <div id="descripcion" class="product-description"></div>
+                <div id="id_producto" ></div>
 
                 <div id="vendedor" class="product-vendedor"></div>
                 <div id="precio" class="product-price"></div>
@@ -297,7 +298,7 @@ if (!isset($_SESSION['usuario'])) {
             </select><br>
             <label>Foto:</label>
             <input type="file" name="foto" accept="image/*"><br>
-            <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
+             <!-- ID del producto -->
             <button type="submit">Crear lista y agregar producto</button>
         </form>
     </div>
@@ -334,7 +335,7 @@ if (!isset($_SESSION['usuario'])) {
             document.getElementById("precio").textContent = "$" + producto.precio;
             document.getElementById("precio2").textContent = "$" + producto.precio;
             document.getElementById("descripcion").textContent = producto.descripcion;
-
+            document.getElementById("id_producto").textContent = producto.id;
             document.getElementById("vendedor").textContent = "Vendido por: " + producto.nombreVendedor;
             document.getElementById("cantidad_dis").textContent = "Cantidad:" + producto.cantidad_Disponible;
 

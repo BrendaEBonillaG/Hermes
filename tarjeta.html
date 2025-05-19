@@ -110,8 +110,27 @@
                 .then(result => {
                     if (result.trim() === "valido") {
                         alert("¡Tarjeta válida! Procesando el pago...");
-                        // Aquí podrías redirigir si quieres, por ejemplo:
-                        // window.location.href = 'MainAlumno.php';
+
+                         // ✅ Obtener productos del carrito
+                const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+console.log("Carrito a enviar:", carrito);  // Verifica si está cargando correctamente
+
+                // Enviarlo a un script PHP para guardarlos en la base de datos
+                fetch("RegistrarCompra.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ carrito }) 
+                    
+               
+
+                })
+                .then(response => response.text())
+.then(data => {
+    console.log("Respuesta de RegistrarCompra.php:", data);
+    alert("Compra registrada con éxito.");
+})
                     } else {
                         alert("Tarjeta inválida. Verifica los datos ingresados.");
                     }

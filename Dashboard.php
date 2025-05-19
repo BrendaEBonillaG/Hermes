@@ -1,6 +1,6 @@
 <?php
 session_start(); // Inicia la sesión
-
+require_once './config.php';
 // Verifica si el usuario ha iniciado sesión
 if (!isset($_SESSION['usuario'])) {
     // Si no hay sesión, redirige al usuario a la página de inicio de sesión
@@ -31,7 +31,20 @@ if (!isset($_SESSION['usuario'])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
 
-   
+
+        <?php
+     $sql = "SELECT * FROM productos"; // por ejemplo
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$precios = array_column($productos, 'precio');
+$precioMin = min($precios);
+
+$precios = array_column($productos, 'precio');
+$precioMax = max($precios);
+        ?>
+
 </head>
 
 <body>
@@ -41,8 +54,7 @@ if (!isset($_SESSION['usuario'])) {
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
 
             <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
-                <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-
+                <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
                 <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
@@ -50,11 +62,11 @@ if (!isset($_SESSION['usuario'])) {
 
             <?php endif; ?>
 
-            <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
+            <li><a href="Chat.html"><i class="bi bi-chat-dots"></i> Chats</a></li>
 
             <li>
-                <form class="search-form">
-                    <input type="text" placeholder="Buscar productos..." class="search-input">
+                <form class="search-form" id="search-form">
+                    <input type="text" placeholder="Buscar productos..." class="search-input" id="search-input">
                     <button type="submit" class="search-button">
                         <i class="bi bi-search"></i>
                     </button>
@@ -69,30 +81,31 @@ if (!isset($_SESSION['usuario'])) {
     </nav>
 
     <aside class="filtros" id="filtros">
-        <h2>Filtros</h2>
-        <form id="filtrosForm">
-            <label for="precio">Precio:</label>
-            <input type="range" id="precio" min="0" max="1000" step="10" onchange="updatePrecioValue()">
-            <span id="precioValor">0</span>
+    <h2>Filtros</h2>
+    <form id="filtrosForm">
+        <label for="precio">Precio:</label>
+        <input type="range" id="precio" min="<?= $precioMin ?>" max="<?= $precioMax ?>" step="1"  onchange="updatePrecioValue()">
+        <span id="precioValor">0</span>
 
-            <label for="masVendidos">Más Vendidos:</label>
-            <input type="radio" id="masVendidos" name="venta" value="masVendidos">
+        <!-- Otros filtros -->
+        <label for="masVendidos">Más Vendidos:</label>
+        <input type="radio" id="masVendidos" name="venta" value="masVendidos">
 
-            <label for="menosVendidos">Menos Vendidos:</label>
-            <input type="radio" id="menosVendidos" name="venta" value="menosVendidos">
+        <label for="menosVendidos">Menos Vendidos:</label>
+        <input type="radio" id="menosVendidos" name="venta" value="menosVendidos">
 
-            <label for="calificacion">Calificación:</label>
-            <select id="calificacion">
-                <option value="1">1 estrella</option>
-                <option value="2">2 estrellas</option>
-                <option value="3">3 estrellas</option>
-                <option value="4">4 estrellas</option>
-                <option value="5">5 estrellas</option>
-            </select>
+        <label for="calificacion">Calificación:</label>
+        <select id="calificacion">
+            <option value="1">1 estrella</option>
+            <option value="2">2 estrellas</option>
+            <option value="3">3 estrellas</option>
+            <option value="4">4 estrellas</option>
+            <option value="5">5 estrellas</option>
+        </select>
 
-            <button type="submit">Aplicar Filtros</button>
-        </form>
-    </aside>
+        <button type="submit" onclick="event.preventDefault(); aplicarFiltros();">Aplicar Filtros</button>
+    </form>
+</aside>
 
     <main>
         <!-- Contenedor principal para los productos -->
@@ -155,7 +168,21 @@ if (!isset($_SESSION['usuario'])) {
 
     <script src="JS/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    document.getElementById("search-form").addEventListener("submit", function(e) {
+    e.preventDefault(); // Evita que se recargue la página
+
+    const busqueda = document.getElementById("search-input").value.trim();
+    console.log("Término de búsqueda enviado:", busqueda); // ✅ Debug
+
+    // Llama a tu función de visualización con el término de búsqueda
+    visualizarProductos(busqueda);
+});
+</script>
 </body>
 
 
 </html>
+
+  
