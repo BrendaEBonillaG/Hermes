@@ -77,9 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const vendedor = document.getElementById("vendedor")?.textContent.trim();
             const precioTexto = document.getElementById("precio")?.textContent.trim().replace("$", "").replace(",", ".");
             const cantidadInput = document.getElementById("cantidad")?.value;
-
+            const id_producto = document.getElementById("id_producto")?.textContent.trim();
             const precio = parseFloat(precioTexto);
             const cantidad = parseInt(cantidadInput);
+console.log("ID Producto:", id_producto);  // Verifica que se está leyendo correctamente
 
             if (!nombre || isNaN(precio) || isNaN(cantidad) || cantidad <= 0) {
                 alert("Información del producto incompleta o incorrecta.");
@@ -95,12 +96,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     nombre,
                     descripcion,
                     vendedor,
+                   id_producto: parseInt(id_producto),
                     precio,
                     cantidad
                 });
             }
 
             localStorage.setItem("carrito", JSON.stringify(carrito));
+            console.log("Carrito actualizado:", carrito); 
             actualizarModal();
             mostrarModal();
         });

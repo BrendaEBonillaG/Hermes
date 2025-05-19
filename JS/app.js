@@ -27,39 +27,54 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    window.addEventListener('load', () => {
-        visualizarProductos();
-        if(contenedorCompra) contenedorCompra.classList.add("none");
-    });
+  window.addEventListener('load', () => {
+    visualizarProductos();
+    contenedorCompra.classList.add("none")
+})
+function updatePrecioValue() {
+    const precio = document.getElementById("precio").value;
+    document.getElementById("precioValor").textContent = "$" + precio;
 
-    async function visualizarProductos() {
-        try {
-            const respuesta = await fetch('http://localhost/Hermes/productos_enventa.php');
-            productos = await respuesta.json();
+    // Filtrar productos por precio (sin recargar la página)
+    visualizarProductos("", precio);
+}
 
-            if(!contenedor) return;
+window.visualizarProductos = async function(busqueda = "")  {
+    try {
+        // Agregar los parámetros de búsqueda en la URL
+        const url = new URL('http://localhost/Hermes/productos_enventa.php');
+        if (busqueda) url.searchParams.append("buscar", busqueda);
 
-            contenedor.innerHTML = "";
-            for (let i = 0; i < productos.length; i++) {
-                const producto = productos[i];
-                const soldOut = producto.existencia <= 0;
+        const respuesta = await fetch(url);
+        const productos = await respuesta.json();
 
-                contenedor.innerHTML += `
-                    <div class="cardProducto" onclick="irADetalle(${i})">
+        
+        if (!contenedor) return;
+
+        contenedor.innerHTML = "";
+        for (let i = 0; i < productos.length; i++) {
+            const producto = productos[i];
+
+            contenedor.innerHTML += `
+                <div class="cardProducto" onclick="irADetalle(${i})">
                         <img src="${producto.imagenes[0]}">
                         <div class="informacion">
+                        <p class="precio">$${producto.nombre}</p>
                             <p class="precio">$${producto.precio}</p>
-                            ${soldOut ? '<p class="soldOut">Sold Out</p>' : `<button onclick="event.stopPropagation(); comprar(${i})">Comprar</button>`}
+                           
                         </div>
                     </div>`;
-            }
-            // Guardamos productos en window para acceso global (opcional)
-            window.productos = productos;
-
-        } catch (error) {
-            console.error("Error al cargar productos:", error);
         }
+
+        // Guardamos productos globalmente si es necesario
+        window.productos = productos;
+
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
     }
+}
+
+
 
     function comprar(indice) {
         if(!productos[indice]) return; // Evitar error si índice inválido

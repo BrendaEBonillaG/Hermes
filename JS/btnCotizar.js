@@ -106,15 +106,32 @@ formCotizacion.onsubmit = (e) => {
     cantidad: cantidad,
     precio: precio
   };
+
+  const idChatActual = window.idChatActivo;
+
+if (!idChatActual) {
+  alert('No se ha seleccionado ningún chat.');
+  return;
+}
+
+console.log({
+  id_producto: productoId,
+  cantidad: cantidad,
+  precio: precio,
+  id_chat: idChatActual
+});
+
 fetch('PHP/guardarCotizacion.php', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     id_producto: productoId,
     cantidad: cantidad,
-    precio: precio
+    precio: precio,
+    id_chat: idChatActual
   })
 })
+
 .then(response => response.text())  // obtener texto crudo para debug
 .then(text => {
   console.log("Respuesta del servidor (texto crudo):", text);

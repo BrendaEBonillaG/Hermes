@@ -169,7 +169,7 @@ main {
 }
 .contenedor>div{
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    background-color: #ffffff33;
+    background-color: #ffffff33 !important;
     border-radius: 20px;
 }
 .contenedor>div:hover{
@@ -212,14 +212,14 @@ color: #333;
     background-color: #F1DE99;
 }
 
-.infromacio button:active{
+.infromacion button:active{
     background-color: white;
     color: black;
 }
 
 .diseñoNumero {
     padding: 10px;
-    background-color: red;
+    background-color: #ffbd59;
     border-radius: 100%;
     width: 20px;
     height: 20px;
@@ -266,6 +266,7 @@ color: #333;
 }
 
 .x{
+     background-color: transparent !important; 
     padding-top: 30px;
     padding-right: 30px;
     cursor: pointer;
@@ -302,7 +303,7 @@ color: #333;
 }
 
 .productosCompra::-webkit-scrollbar-thumb{
-    background: white ;
+    background: #ffffff33 ;
     border-radius: 3px;
 }
 
@@ -362,7 +363,7 @@ color: #333;
 
 
 .soldOut{
-    background-color: red;
+    background-color: #ffbd59;
     padding: 7px 10px;
     border-radius: 10px;
 }
@@ -397,3 +398,20 @@ color: #333;
     margin-left: 5px;
 }
 
+.modal-content {
+  background-color: #ffffff33 !important; /* Fondo negro */
+  color: white;                      /* Texto blanco para contraste */
+}
+
+.btn-modal{
+     background-color: #ffbd59 !important; /* Fondo negro */
+  color: white;    
+}
+
+.cerrarModal {
+  background-color: transparent !important; /* Fondo transparente */
+  border: none;                            /* Sin borde */
+  color: white;                            /* Color del texto */
+  font-size: 1.5rem;                        /* Opcional: tamaño del ícono "×" */
+  cursor: pointer;                         /* Cursor tipo botón */
+}
