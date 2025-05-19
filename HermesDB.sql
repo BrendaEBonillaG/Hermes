@@ -22,6 +22,7 @@ CREATE TABLE Usuarios (
     estado TINYINT(1) NOT NULL DEFAULT 1
 );
 SELECT * FROM Usuarios;
+SELECT id, nombre FROM Listas WHERE id_usuario = 6;
 
 INSERT INTO Usuarios (correo, nombreUsu,contrasena,rol,fotoNombre,nombres,apePa,apeMa,fechaNacim,sexo,privacidad) 
 VALUES ('zaptos@gmail.com', 'Admin05', '$2y$10$sCoyXA5h3bHWEsaQnyXuTOQdXBwj9ixELF02Tq7ndOMH7zE1s1ul2','administrador','foto','alvaro','saldivar','garza','2000-10-05','masculino','publico');

@@ -290,7 +290,7 @@ if (!isset($_SESSION['usuario'])) {
                     <!-- Opciones se deben llenar con PHP o JS -->
                 </select>
                 <input type="hidden" name="id_producto" value="123"> <!-- ID del producto -->
-                <button type="submit">Agregar a lista</button>
+                <button id="agregarAListaBtn">Agregar a lista</button>
             </form>
 
             <hr>
@@ -306,9 +306,13 @@ if (!isset($_SESSION['usuario'])) {
                 </select><br>
                 <label>Foto:</label>
                 <input type="file" name="foto" accept="image/*"><br>
-                <!-- ID del producto -->
+
+                <!-- Campo oculto para el ID del producto -->
+                <input type="hidden" name="id_producto" id="idProductoHidden">
+
                 <button type="submit">Crear lista y agregar producto</button>
             </form>
+
         </div>
     </div>
 
@@ -452,12 +456,11 @@ if (!isset($_SESSION['usuario'])) {
 
                 return resultado;
             }
+            document.getElementById("openWishlistModal").dataset.productoId = producto.id;
+            console.log("Asignando id al botón: ", producto.id);
+
+
         });
-
-
-
-
-
 
     </script>
 
