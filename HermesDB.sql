@@ -57,6 +57,8 @@ CREATE TABLE Productos (
         REFERENCES Categorias (id)
 );
 DROP TABLE Compra;
+
+
 CREATE TABLE Compra (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_comprador INT NOT NULL,
@@ -72,6 +74,7 @@ CREATE TABLE Compra (
 );
 SELECT*FROM Compra;
 SELECT*FROM productos;
+SELECT*FROM Carritos;
 DELIMITER $$
 
 CREATE TRIGGER after_insert_compra
