@@ -76,7 +76,7 @@ else if($rol_usuario === 'cliente'){
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
                 <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
-
+<li><a href="ventas.php"><i class="bi bi-list"></i> Envios</a></li>
             <?php endif; ?>
 
             <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>

@@ -39,12 +39,12 @@ function updatePrecioValue() {
     visualizarProductos("", precio);
 }
 
-window.visualizarProductos = async function(busqueda = "")  {
+window.visualizarProductos = async function(busqueda = "", precio = "")  {
     try {
         // Agregar los parámetros de búsqueda en la URL
         const url = new URL('http://localhost/Hermes/productos_enventa.php');
         if (busqueda) url.searchParams.append("buscar", busqueda);
-
+ if (busqueda) url.searchParams.append("precio",precio);
         const respuesta = await fetch(url);
         const productos = await respuesta.json();
 

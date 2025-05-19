@@ -55,7 +55,7 @@ $precioMax = max($precios);
 
             <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
                 <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+                <li><a href="Pedidos.php"><i class="bi bi-list"></i> Pedidos</a></li>
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
                 <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
@@ -85,7 +85,7 @@ $precioMax = max($precios);
     <form id="filtrosForm">
         <label for="precio">Precio:</label>
         <input type="range" id="precio" min="<?= $precioMin ?>" max="<?= $precioMax ?>" step="1"  onchange="updatePrecioValue()">
-        <span id="precioValor">0</span>
+        <span id="precioValor"></span>
 
         <!-- Otros filtros -->
         <label for="masVendidos">Más Vendidos:</label>
@@ -174,6 +174,7 @@ $precioMax = max($precios);
     e.preventDefault(); // Evita que se recargue la página
 
     const busqueda = document.getElementById("search-input").value.trim();
+    const busqueda = document.getElementById("precio").value.trim();
     console.log("Término de búsqueda enviado:", busqueda); // ✅ Debug
 
     // Llama a tu función de visualización con el término de búsqueda
