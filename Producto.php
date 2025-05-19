@@ -40,7 +40,7 @@ if (!isset($_SESSION['usuario'])) {
             <?php if ($_SESSION['usuario']['rol'] === 'cliente'): ?>
                 <li><a href="#" id="abrirCarritoNavbar"><i class="bi bi-cart"></i> Carrito de compras</a></li>
 
-                <li><a href="Pedidos.html"><i class="bi bi-list"></i> Pedidos</a></li>
+                <li><a href="Pedidos.php"><i class="bi bi-list"></i> Pedidos</a></li>
 
             <?php elseif ($_SESSION['usuario']['rol'] === 'vendedor'): ?>
                 <li><a href="Vendedor/CrearProduc.php"><i class="bi bi-list"></i> Subir producto</a></li>
