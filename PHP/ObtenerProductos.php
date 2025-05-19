@@ -13,9 +13,10 @@ try {
 
     $idVendedor = $_SESSION['usuario']['id'];  // <- aquí accedes al id numérico
 
-    $sql = "SELECT id, nombre, descripcion, precio, cantidad_Disponible AS cantidad, tipo 
-            FROM Productos 
-            WHERE id_vendedor = :id AND estado = 'aceptado'";
+   $sql = "SELECT id, nombre, descripcion, precio, cantidad_Disponible AS cantidad, tipo 
+        FROM Productos 
+        WHERE id_vendedor = :id AND estado = 'aceptado' AND tipo = 'cotizacion'";
+
 
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':id', $idVendedor, PDO::PARAM_INT);
