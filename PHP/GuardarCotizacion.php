@@ -52,15 +52,13 @@ try {
         exit;
     }
 
-    // Calcular precio total
-    $precio_total = $cantidad * $precio;
 
     // Crear mensaje con nombre, descripción, cantidad y precio total
     $mensaje = "Nueva cotización:\n";
     $mensaje .= "Producto: " . $producto['nombre'] . "\n";
     $mensaje .= "Descripción: " . $producto['descripcion'] . "\n";
     $mensaje .= "Cantidad: {$cantidad}\n";
-    $mensaje .= "Precio total: $" . number_format($precio_total, 2);
+    $mensaje .= "Precio total: $" . number_format($precio, 2);
 
     // Insertar mensaje en chat
     $stmt2 = $conn->prepare("INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido) VALUES (:id_chat, :id_usuario, :contenido)");
