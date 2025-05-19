@@ -77,3 +77,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 1000);
 });
+
+document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList.contains('btn-ver-cotizacion')) {
+        const idProducto = e.target.getAttribute('data-producto-id');
+
+    
+        function abrirVentanaPago() {
+            window.open('tarjeta.html', '_blank', 'width=600,height=600');
+        }
+   abrirVentanaPago();
+    }
+   
+});
+
