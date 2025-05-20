@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     cargarCategorias();
 
-    // Manejar envío del formulario
+
     productForm.addEventListener("submit", async function(e) {
         e.preventDefault();
         

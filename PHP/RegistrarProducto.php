@@ -20,24 +20,24 @@ try {
             echo "Error: Debes subir al menos 1 video.";
             exit;
         }
-        $nombre = $_POST['name'];  // Aquí debería ser 'name'
-        $descripcion = $_POST['description'];  // Aquí debería ser 'description'
-        $precio = $_POST['price'];  // Aquí debería ser 'price'
-        $cantidad = $_POST['quantity'];  // Aquí debería ser 'quantity'
+        $nombre = $_POST['name'];
+        $descripcion = $_POST['description'];  
+        $precio = $_POST['price'];  
+        $cantidad = $_POST['quantity'];  
 
-        $categoria = $_POST['categoria']; // ID de categoría seleccionada
-        $nueva_categoria = $_POST['nueva_categoria']; // Si hay una nueva categoría
+        $categoria = $_POST['categoria']; 
+        $nueva_categoria = $_POST['nueva_categoria']; 
 
-        // Verificar si se está añadiendo una nueva categoría
+
         if (!empty($nueva_categoria)) {
-            // Insertar nueva categoría en la base de datos
+       
             $stmtCat = $pdo->prepare("INSERT INTO Categorias (nombre, descripcion, id_usuario) VALUES (?, ?, ?)");
             $stmtCat->execute([$nueva_categoria, 'Categoría creada automáticamente', $_SESSION['id_usuario']]);
             $id_categoria = $pdo->lastInsertId();
         } elseif (is_numeric($categoria)) {
-            $id_categoria = $categoria; // Usar la categoría seleccionada
+            $id_categoria = $categoria; 
         } else {
-            // Si la categoría no es válida, mostrar error
+  
             echo "Error: categoría no válida.";
             exit;
         }
@@ -52,10 +52,10 @@ try {
         $stmt->execute([$nombre, $descripcion, $precio, $cantidad, $tipo, $id_vendedor, $id_categoria]);
 
         $id_producto = $pdo->lastInsertId();
-        // Obtener la ruta absoluta al directorio Hermes/
+
         $raizServidor = $_SERVER['DOCUMENT_ROOT'] . '/Hermes/';
 
-        // Crear carpetas si no existen
+ 
         if (!is_dir($raizServidor . 'uploads/imagenes')) {
             mkdir($raizServidor . 'uploads/imagenes', 0777, true);
         }
@@ -63,7 +63,7 @@ try {
             mkdir($raizServidor . 'uploads/videos', 0777, true);
         }
 
-        // Subir imágenes
+    
         if (isset($_FILES['imagenes'])) {
             foreach ($_FILES['imagenes']['tmp_name'] as $key => $tmp_name) {
                 if ($_FILES['imagenes']['error'][$key] === 0) {
@@ -71,7 +71,7 @@ try {
                     if (str_starts_with($mime, 'image/')) {
                         $nombreOriginal = basename($_FILES['imagenes']['name'][$key]);
 
-                        // Reemplazar caracteres no válidos
+                
                         $nombreLimpio = preg_replace('/[^a-zA-Z0-9.\-_]/', '_', $nombreOriginal);
 
                         $nombreArchivo = uniqid() . '_' . $nombreLimpio;
@@ -79,7 +79,7 @@ try {
 
                         move_uploaded_file($tmp_name, $ruta_destino);
 
-                        // Guardar solo la ruta relativa en la base de datos
+                
                         $stmtImg = $pdo->prepare("INSERT INTO Imagenes_Productos (id_producto, url_imagen) VALUES (?, ?)");
                         $stmtImg->execute([$id_producto, 'uploads/imagenes/' . $nombreArchivo]);
                     }

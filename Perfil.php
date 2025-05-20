@@ -292,45 +292,7 @@
     <!-- Perfil de administrador -->
     <div id="adminProfile" class="profile-content <?php echo $rol_usuario === 'administrador' ? '' : 'hidden'; ?>">
         <h3>Productos Autorizados</h3>
-        <div class="similar-products">
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg"
-                    alt="Producto Similar 1">
-                <p>Producto 1</p>
-                <span>$249.99</span>
-            </div>
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg"
-                    alt="Producto Similar 2">
-                <p>Producto 2</p>
-                <span>$199.99</span>
-            </div>
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg"
-                    alt="Producto Similar 3">
-                <p>Producto 3</p>
-                <span>$279.99</span>
-            </div>
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg"
-                    alt="Producto Similar 1">
-                <p>Producto 4</p>
-                <span>$249.99</span>
-            </div>
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg"
-                    alt="Producto Similar 2">
-                <p>Producto 5</p>
-                <span>$199.99</span>
-            </div>
-            <div class="similar-item" onclick="window.location.href='Producto.php'">
-                <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg"
-                    alt="Producto Similar 3">
-                <p>Producto 6</p>
-                <span>$279.99</span>
-            </div>
-
-        </div>
+        
     </div>
     </div>
 

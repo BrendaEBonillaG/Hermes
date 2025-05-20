@@ -395,3 +395,14 @@ body {
         width: 100%;
     }
 }
+option{
+   
+    width: 20%;
+    padding: 8px;
+    margin-bottom: 20px;
+    background-color: #ffbd59;
+    border: none;
+    color: #333;
+    font-size: 14px;
+
+}

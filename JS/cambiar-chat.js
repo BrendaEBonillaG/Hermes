@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const fotoUsuario = usuario.getAttribute('data-foto');
             const idChat = usuario.getAttribute('data-id-chat');
 
-            // Actualizar nombre y foto del usuario
+    
             userNameSpan.textContent = nombreUsuario;
             userAvatarImg.src = fotoUsuario;
 
             // Activar el chat
             window.idChatActivo = parseInt(idChat);
 
-            // Mostrar main-content
+
             mainContent.style.display = 'flex';
 
             // Mostrar el botón solo si existe (rol vendedor)
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 btnVendedor.classList.remove('d-none');
             }
 
-            // Cargar mensajes si es necesario
+
             obtenerMensajes();
         });
     });

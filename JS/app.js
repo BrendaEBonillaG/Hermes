@@ -41,7 +41,7 @@ function updatePrecioValue() {
 
 window.visualizarProductos = async function(busqueda = "", precio = "")  {
     try {
-        // Agregar los parámetros de búsqueda en la URL
+      
         const url = new URL('http://localhost/Hermes/productos_enventa.php');
         if (busqueda) url.searchParams.append("buscar", busqueda);
  if (busqueda) url.searchParams.append("precio",precio);
@@ -77,7 +77,7 @@ window.visualizarProductos = async function(busqueda = "", precio = "")  {
 
 
     function comprar(indice) {
-        if(!productos[indice]) return; // Evitar error si índice inválido
+        if(!productos[indice]) return;
 
         let productoExistente = lista.find(p => p.nombre === productos[indice].nombre);
 
@@ -86,7 +86,7 @@ window.visualizarProductos = async function(busqueda = "", precio = "")  {
         } else {
             lista.push({ 
                 nombre: productos[indice].nombre, 
-                precio: productos[indice].precio,  // Cambié de valor a precio, para consistencia
+                precio: productos[indice].precio,  
                 cantidad: 1 
             });
         }

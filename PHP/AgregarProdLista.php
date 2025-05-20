@@ -18,7 +18,7 @@ if (!$idLista || !$idProducto) {
     exit;
 }
 
-// Verificar que la lista pertenezca al usuario
+
 $stmt = $conn->prepare("SELECT id FROM Listas WHERE id = :idLista AND id_usuario = :idUsuario");
 $stmt->bindParam(':idLista', $idLista, PDO::PARAM_INT);
 $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
@@ -29,7 +29,16 @@ if ($stmt->rowCount() === 0) {
     exit;
 }
 
-// Insertar en la tabla Listas_Productos
+$stmt = $conn->prepare("SELECT id FROM Productos WHERE id = :idProducto");
+$stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
+$stmt->execute();
+
+if ($stmt->rowCount() === 0) {
+    echo json_encode(['error' => 'El producto no existe']);
+    exit;
+}
+
+
 try {
     $stmt = $conn->prepare("INSERT INTO Listas_Productos (id_lista, id_producto) VALUES (:idLista, :idProducto)");
     $stmt->bindParam(':idLista', $idLista, PDO::PARAM_INT);

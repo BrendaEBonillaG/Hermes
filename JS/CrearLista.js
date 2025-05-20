@@ -5,17 +5,17 @@ const agregarBtn = document.getElementById("agregarAListaBtn");
 const formCrearLista = document.getElementById("formCrearLista");
 const idProductoHidden = document.getElementById("idProductoHidden");
 
-// Abrir modal y asignar id_producto
+
 openBtn.onclick = (event) => {
     const productoId = event.target.dataset.productoId;
     console.log("Asignando id al botón: ", productoId);
 
-    // ✅ Asignamos el id al botón y al campo oculto
+
     agregarBtn.dataset.productoId = productoId;
     idProductoHidden.value = productoId;
     console.log("Asignando id_producto:", idProductoHidden.value);
 
-    // Obtener listas del usuario
+
     fetch("PHP/ObtenerListas.php")
         .then(response => response.json())
         .then(data => {
@@ -40,19 +40,19 @@ openBtn.onclick = (event) => {
     modal.style.display = "block";
 };
 
-// Cerrar modal
+
 closeBtn.onclick = () => {
     modal.style.display = "none";
 };
 
-// Cerrar al hacer clic fuera del modal
+
 window.onclick = (event) => {
     if (event.target === modal) {
         modal.style.display = "none";
     }
 };
 
-// Agregar producto a lista existente
+
 agregarBtn.addEventListener("click", () => {
     const listaId = document.getElementById("listaExistente").value;
     const productoId = agregarBtn.dataset.productoId;
@@ -88,18 +88,12 @@ agregarBtn.addEventListener("click", () => {
     });
 });
 
-// Crear nueva lista + agregar producto
+
 formCrearLista.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // ✅ Reasignar el id del producto al campo oculto antes de crear FormData
-    const productoId = agregarBtn.dataset.productoId;
-    idProductoHidden.value = productoId;
-
-    console.log("Asignando id_producto:", productoId);
-
+ 
     const formData = new FormData(formCrearLista);
-    console.log("id_producto en formData:", formData.get('id_producto'));
 
     fetch("PHP/CrearLista.php", {
         method: "POST",
@@ -108,10 +102,10 @@ formCrearLista.addEventListener("submit", (e) => {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Lista creada y producto agregado.");
+            alert("Lista creada.");
             modal.style.display = "none";
 
-            // Refrescar las listas en el select
+
             fetch("PHP/ObtenerListas.php")
                 .then(response => response.json())
                 .then(listas => {

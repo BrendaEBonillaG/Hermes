@@ -21,7 +21,7 @@ function validarCorreo($correo) {
 
 // Verificar si la solicitud es POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Obtener los datos del formulario
+
     $correo = $_POST['correo'];
     $nombreUsu = $_POST['nombreUsu'];
     $contrasena = $_POST['contrasena'];
@@ -33,20 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sexo = $_POST['sexo'];
     $privacidad = $_POST['privacidad'];
 
-    // Validar el correo electrónico
+
     if (!validarCorreo($correo)) {
         die("Error: El correo electrónico no es válido.");
     }
 
-    // Validar la contraseña
+
     if (!validarContrasena($contrasena)) {
         die("Error: La contraseña no cumple con los requisitos.");
     }
 
-    // Hash de la contraseña
+
     $contrasenaHash = password_hash($contrasena, PASSWORD_BCRYPT);
 
-    // Manejo de la imagen (avatar)
+ 
     $foto = null;
     $fotoNombre = null;
 
@@ -74,14 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Ejecutar el procedimiento
         $stmt->execute();
 
-        // Mostrar mensaje de éxito
+ 
         echo "Administrador registrado correctamente.";
     } catch (PDOException $e) {
-        // Mostrar mensaje de error
+  
         die("Error al registrar el administrador: " . $e->getMessage());
     }
 } else {
-    // Si no es una solicitud POST, devolver un error 405
+ 
     header("HTTP/1.1 405 Method Not Allowed");
     echo "Método no permitido.";
     exit;

@@ -14,37 +14,36 @@
 
 <body>
 
-<?php
-session_start();
-require __DIR__ . '/../config.php';
+    <?php
+    session_start();
+    require __DIR__ . '/../config.php';
 
-// Variables de control
-$user_id = $_SESSION['usuario']['id'];
-$rol_usuario = $_SESSION['usuario']['rol'];
-$nombre_usuario = $_SESSION['usuario']['nombreUsu'];
+    // Variables de control
+    $user_id = $_SESSION['usuario']['id'];
+    $rol_usuario = $_SESSION['usuario']['rol'];
+    $nombre_usuario = $_SESSION['usuario']['nombreUsu'];
 
-$user =[];
+    $user = [];
 
-$sql = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $conn ->prepare($sql);  // Prepara la consulta
-$stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
-$stmt->execute();
+    $sql = "SELECT * FROM usuarios WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(1, $user_id, PDO::PARAM_INT);  // Vincula el parámetro
+    $stmt->execute();
 
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$products = [];
+    $products = [];
 
-    // Consulta para obtener los productos del vendedor
+
     $sql = "SELECT * FROM Productos WHERE estado = 'pendiente'";
-    $stmt = $conn ->prepare($sql);  // Prepara la consulta
+    $stmt = $conn->prepare($sql);
 
-    $stmt->execute();  // Ejecuta la consulta
+    $stmt->execute();
 
-    // Obtener los resultados con PDO
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-?>
+    ?>
 
 
 
@@ -53,7 +52,7 @@ $products = [];
         <ul class="navbar-menu">
             <li><a href="Dashboard.php"><i class="bi bi-house-door"></i> Inicio</a></li>
             <li><a href="#"><i class="bi bi-cart"></i> Carrito de compras</a></li>
-             <li><a href="Pedidos.php"><i class="bi bi-list"></i> Pedidos</a></li>
+            <li><a href="Pedidos.php"><i class="bi bi-list"></i> Pedidos</a></li>
             <li><a href="Chat.php"><i class="bi bi-chat-dots"></i> Chats</a></li>
             <li>
                 <form class="search-form">
@@ -66,70 +65,67 @@ $products = [];
             <li><a href="Perfil.php" class="profile-link">
                     <img src="img/perfil.jpg" alt="Foto de perfil" class="profile-img-navbar">
                 </a></li>
-            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
+            <li><a href="#" onclick="document.getElementById('logoutModal').style.display='block'"><i
+                        class="bi bi-box-arrow-right"></i> Cerrar sesión</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        
+
 
         <?php
-                if (count($products) > 0) {
-                    // Mostrar cada producto
-                    foreach ($products as $product) {
+        if (count($products) > 0) {
+            // Mostrar cada producto
+            foreach ($products as $product) {
 
-                        echo '<div class="card">';
-                             
-                        echo '<div class="image-slider">';
-                        echo '<div class="image-placeholder">'.'</div>';
-                        
-                        echo '<div class="image-placeholder">'.'</div>';
-                        
-                        echo '<div class="image-placeholder">'.'</div>';
-                        echo '</div>';
-                        
-                       
+                echo '<div class="card">';
 
-                        echo '<div class="info">';
-                        echo '<h3>' . htmlspecialchars($product['nombre']) . '</h3>';
-                        echo '<p>' . htmlspecialchars($product['descripcion']) . '</p>';
-                        echo '<p>' . htmlspecialchars($product['categoria']) . '</p>';
-                        echo '<p>' .  number_format($product['precio'], 2) . htmlspecialchars($product['cantidad_Disponible']) .  '</p>';
-                        echo '</div>';
+                echo '<div class="image-slider">';
+                echo '<div class="image-placeholder">' . '</div>';
 
-                     
-                      
+                echo '<div class="image-placeholder">' . '</div>';
 
-                            // Formulario para aceptar el producto
-    echo '<form method="POST" action="procesar_revision.php">';
-    echo '<input type="hidden" name="id_producto" value="' . htmlspecialchars($product['id']) . '">';
-    echo '<input type="hidden" name="accion" value="aceptar">';
-    echo '<button type="submit" class="accept">Aceptar</button>';
-    echo '</form>';
+                echo '<div class="image-placeholder">' . '</div>';
+                echo '</div>';
 
-    // Formulario para rechazar el producto
-    echo '<form method="POST" action="procesar_revision.php">';
-    echo '<input type="hidden" name="id_producto" value="' . htmlspecialchars($product['id']) . '">';
-    echo '<input type="hidden" name="accion" value="rechazar">';
-    echo '<button type="submit" class="reject">Rechazar</button>';
-    echo '</form>';
 
-                        echo '</div>';
-                      
-                      
-                     
-                    }
-                } else {
-                    echo '<p>No hay productos que revisar</p>';
-                }
+
+                echo '<div class="info">';
+                echo '<h3>' . htmlspecialchars($product['nombre']) . '</h3>';
+                echo '<p>' . htmlspecialchars($product['descripcion']) . '</p>';
+                echo '<p>' . htmlspecialchars($product['categoria']) . '</p>';
+                echo '<p>' . number_format($product['precio'], 2) . htmlspecialchars($product['cantidad_Disponible']) . '</p>';
+                echo '</div>';
+
+
+
+
+                // Formulario para aceptar el producto
+                echo '<form method="POST" action="procesar_revision.php">';
+                echo '<input type="hidden" name="id_producto" value="' . htmlspecialchars($product['id']) . '">';
+                echo '<input type="hidden" name="accion" value="aceptar">';
+                echo '<button type="submit" class="accept">Aceptar</button>';
+                echo '</form>';
+
+                // Formulario para rechazar el producto
+                echo '<form method="POST" action="procesar_revision.php">';
+                echo '<input type="hidden" name="id_producto" value="' . htmlspecialchars($product['id']) . '">';
+                echo '<input type="hidden" name="accion" value="rechazar">';
+                echo '<button type="submit" class="reject">Rechazar</button>';
+                echo '</form>';
+
+                echo '</div>';
+
+
+
+            }
+        } else {
+            echo '<p>No hay productos que revisar</p>';
+        }
         ?>
-         
-     
-          
-          
-       
 
-       
+
+
     </div>
 
     <div id="logoutModal" class="modal">
@@ -137,12 +133,13 @@ $products = [];
             <span class="close" onclick="document.getElementById('logoutModal').style.display='none'">&times;</span>
             <h2>¿Deseas cerrar sesión?</h2>
             <div class="modal-actions">
-                <button class="btn-modal confirm" onclick="window.location.href='../PHP/Logout.php'">Sí, cerrar sesión</button>
-                <button class="btn-modal cancel" onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
+                <button class="btn-modal confirm" onclick="window.location.href='../PHP/Logout.php'">Sí, cerrar
+                    sesión</button>
+                <button class="btn-modal cancel"
+                    onclick="document.getElementById('logoutModal').style.display='none'">Cancelar</button>
             </div>
         </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
-

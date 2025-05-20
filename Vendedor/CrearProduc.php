@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function actualizarEstadoCampos() {
         if (checkbox.checked) {
-            // Si acepta cotizaciones, el precio y la cantidad no deben modificarse
+       
             precio.value = 0;
             precio.readOnly = true;
 
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     checkbox.addEventListener('change', actualizarEstadoCampos);
-    actualizarEstadoCampos(); // Ejecutar al cargar la página
+    actualizarEstadoCampos(); 
 });
 </script>
 

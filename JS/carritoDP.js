@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const id_producto = document.getElementById("id_producto")?.textContent.trim();
             const precio = parseFloat(precioTexto);
             const cantidad = parseInt(cantidadInput);
-console.log("ID Producto:", id_producto);  // Verifica que se está leyendo correctamente
+console.log("ID Producto:", id_producto); 
 
             if (!nombre || isNaN(precio) || isNaN(cantidad) || cantidad <= 0) {
                 alert("Información del producto incompleta o incorrecta.");
@@ -138,10 +138,10 @@ console.log("ID Producto:", id_producto);  // Verifica que se está leyendo corr
         }
     });
 
-    // Botón Finalizar Pago
+
     if (finalizarPagoBtn) {
         finalizarPagoBtn.addEventListener("click", () => {
-            // El total ya está guardado en localStorage, simplemente abre la nueva pestaña
+     
             window.open("pago.html", "_blank");
         });
     }

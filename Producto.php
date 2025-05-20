@@ -93,50 +93,14 @@ if (!isset($_SESSION['usuario'])) {
                     <li><strong>Política de devoluciones:</strong> Devoluciones gratuitas en 30 días</li>
                     <li><strong>Envío gratuito:</strong> Disponible en pedidos mayores a $500</li>
 
-                    <li><strong>Calificación:</strong>
-                        <!-- From Uiverse.io by SelfMadeSystem -->
-                        <div class="rating">
-                            <input type="radio" id="star-1" name="star-radio" value="star-1">
-                            <label for="star-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path pathLength="360"
-                                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
-                                    </path>
-                                </svg>
-                            </label>
-                            <input type="radio" id="star-2" name="star-radio" value="star-1">
-                            <label for="star-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path pathLength="360"
-                                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
-                                    </path>
-                                </svg>
-                            </label>
-                            <input type="radio" id="star-3" name="star-radio" value="star-1">
-                            <label for="star-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path pathLength="360"
-                                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
-                                    </path>
-                                </svg>
-                            </label>
-                            <input type="radio" id="star-4" name="star-radio" value="star-1">
-                            <label for="star-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path pathLength="360"
-                                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
-                                    </path>
-                                </svg>
-                            </label>
-                            <input type="radio" id="star-5" name="star-radio" value="star-1">
-                            <label for="star-5">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path pathLength="360"
-                                        d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z">
-                                    </path>
-                                </svg>
-                            </label>
-                        </div>
+                    <li> <label for="calificacion">Calificación:</label>
+                        <select id="calificacion">
+                            <option value="1">1 estrella</option>
+                            <option value="2">2 estrellas</option>
+                            <option value="3">3 estrellas</option>
+                            <option value="4">4 estrellas</option>
+                            <option value="5">5 estrellas</option>
+                        </select>
                     </li>
                 </ul>
             </div>
@@ -201,40 +165,6 @@ if (!isset($_SESSION['usuario'])) {
                 <li> Devoluciones gratuitas en 30 días</li>
                 <li>Enviado por Monarca</li>
             </ul>
-        </div>
-    </div>
-
-
-    <div class="similar-products">
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 1">
-            <p>Producto Similar 1</p>
-            <span>$249.99</span>
-        </div>
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 2">
-            <p>Producto Similar 2</p>
-            <span>$199.99</span>
-        </div>
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 3">
-            <p>Producto Similar 3</p>
-            <span>$279.99</span>
-        </div>
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/45/ee/02/45ee022351d5b3fe23246925a7732aa8.jpg" alt="Producto Similar 4">
-            <p>Producto Similar 4</p>
-            <span>$249.99</span>
-        </div>
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/ab/ee/ab/abeeab1b1d93e5b6a5b862f0b964853f.jpg" alt="Producto Similar 5">
-            <p>Producto Similar 5</p>
-            <span>$199.99</span>
-        </div>
-        <div class="similar-item" onclick="window.location.href='Producto.php'">
-            <img src="https://i.pinimg.com/474x/ec/65/fd/ec65fd4224a69cc1e546910aa00b61d2.jpg" alt="Producto Similar 6">
-            <p>Producto Similar 6</p>
-            <span>$279.99</span>
         </div>
     </div>
 

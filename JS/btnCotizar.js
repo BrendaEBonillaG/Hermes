@@ -132,7 +132,7 @@ fetch('PHP/guardarCotizacion.php', {
   })
 })
 
-.then(response => response.text())  // obtener texto crudo para debug
+.then(response => response.text()) 
 .then(text => {
   console.log("Respuesta del servidor (texto crudo):", text);
   try {

@@ -9,13 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contrasena = $_POST['contrasena'];
     $rememberMe = isset($_POST['rememberMe']);
 
-    // Buscar el usuario en la base de datos
-    $stmt = $conn ->prepare("SELECT id, nombreUsu, contrasena, rol,estado FROM Usuarios WHERE nombreUsu = ?");
+   
+    $stmt = $conn->prepare("SELECT id, nombreUsu, contrasena, rol,estado FROM Usuarios WHERE nombreUsu = ?");
     $stmt->execute([$nombreUsu]);
     $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($usuario && password_verify($contrasena, $usuario['contrasena']) && $usuario['estado']== 1) {
-        // Iniciar sesión
+    if ($usuario && password_verify($contrasena, $usuario['contrasena']) && $usuario['estado'] == 1) {
+      
         $_SESSION['usuario'] = [
             'id' => $usuario['id'],
             'nombreUsu' => $usuario['nombreUsu'],
@@ -28,17 +28,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             setcookie('rememberMe', $cookieValue, time() + (86400 * 30), "/"); // 30 días
         }
 
-        if($usuario['rol']=='administrador'){
+        if ($usuario['rol'] == 'administrador') {
             header("Location: ../Admin/RevisionProd.php");
-        }else{
-// Redirigir al dashboard
-header("Location: ../Dashboard.php");
+        }
+        if ($usuario['rol'] == 'superadmin') {
+            header("Location: ../SuperAdmin/Registro.html");
+        } else {
+            
+            header("Location: ../Dashboard.php");
         }
 
-        
+
         exit();
     } else {
-        // Mostrar mensaje de error
+      
         echo "Nombre de usuario o contraseña incorrectos.";
     }
 } else {

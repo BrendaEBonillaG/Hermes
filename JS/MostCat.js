@@ -6,7 +6,7 @@ function mostrarInputCategoria(select) {
         // Mostrar el campo para agregar nueva categoría
         nuevaCategoriaDiv.style.display = 'block';
     } else {
-        // Ocultar el campo de nueva categoría si no es "nueva"
+       
         nuevaCategoriaDiv.style.display = 'none';
     }
 }
@@ -16,18 +16,17 @@ document.querySelector('form').addEventListener('submit', function(event) {
     const categoriaSelect = document.getElementById('categoriaSelect');
     const nuevaCategoriaInput = document.getElementById('nuevaCategoriaInput');
 
-    // Verificar si se seleccionó "nueva" y si el campo de nueva categoría no está vacío
     if (categoriaSelect.value === 'nueva' && nuevaCategoriaInput.value.trim() === '') {
-        event.preventDefault();  // Detener el envío del formulario
+        event.preventDefault();  
         alert('Por favor, ingresa el nombre de la nueva categoría.');
-        nuevaCategoriaInput.focus();  // Poner el foco en el campo de nueva categoría
+        nuevaCategoriaInput.focus(); 
     }
 });
 
 function normalizarTexto(texto) {
     return texto
-        .normalize("NFD") // descompone acentos
-        .replace(/[\u0300-\u036f]/g, "") // quita los acentos
+        .normalize("NFD") 
+        .replace(/[\u0300-\u036f]/g, "") 
         .toLowerCase()
         .trim();
 }
@@ -43,7 +42,7 @@ function agregarNuevaCategoria() {
 
     const nombreNormalizado = normalizarTexto(nombreNueva);
 
-    // Verifica que no se repita (ignorando acentos, mayúsculas, espacios)
+
     const opciones = Array.from(select.options);
     const existe = opciones.some(opt => normalizarTexto(opt.text) === nombreNormalizado);
 
@@ -52,19 +51,18 @@ function agregarNuevaCategoria() {
         return;
     }
 
-    // Crear y agregar nueva opción justo antes del "+ Agregar nueva"
+
     const nuevaOpcion = document.createElement("option");
-    nuevaOpcion.value = nombreNueva; // Ahora se agrega el nombre real
+    nuevaOpcion.value = nombreNueva; 
     nuevaOpcion.text = nombreNueva;
 
     select.add(nuevaOpcion, select.options.length - 1);
     select.value = nuevaOpcion.value;
 
-    // Enviar el valor de la nueva categoría al backend a través de un campo oculto
-    input.name = "nuevaCategoria";  // Nombre del campo para enviar la nueva categoría
-    select.name = "categoria_omitida";  // Nombre del campo para enviar la categoría seleccionada
+    input.name = "nuevaCategoria";  
+    select.name = "categoria_omitida";  
 
-    // Ocultar campo de texto
+
     input.value = "";
     document.getElementById("nuevaCategoriaDiv").style.display = "none";
 }
@@ -72,7 +70,7 @@ function agregarNuevaCategoria() {
 
 
 
-// Vista previa de imágenes y videos al seleccionarlos
+
 document.addEventListener('DOMContentLoaded', function() {
     // Vista previa de imagen
     const imagenInput = document.getElementById('imagenInput');
@@ -81,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     imagenInput.addEventListener('change', function(event) {
         const files = event.target.files;
         
-        // Limpiar la lista de imágenes antes de agregar las nuevas
+ 
         Array.from(files).forEach(file => {
             const reader = new FileReader();
             
@@ -89,11 +87,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const imgElement = document.createElement('img');
                 imgElement.src = e.target.result;
                 imgElement.alt = "Imagen subida";
-                imgElement.style.maxWidth = '100%'; // Asegura que la imagen no se desborde
+                imgElement.style.maxWidth = '100%'; 
 
                 const divItem = document.createElement('div');
                 divItem.classList.add('image-item');
-                divItem.style.marginBottom = '10px'; // Espacio entre imágenes
+                divItem.style.marginBottom = '10px'; 
                 divItem.appendChild(imgElement);
 
                 const deleteButton = document.createElement('button');
@@ -108,27 +106,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 imageList.appendChild(divItem);
             };
             
-            reader.readAsDataURL(file); // Lee el archivo como una URL de datos
+            reader.readAsDataURL(file); 
         });
     });
 
-    // Vista previa de video
+
     const videoInput = document.getElementById('videoInput');
     const videoList = document.querySelector('.video-list');
 
     videoInput.addEventListener('change', function(event) {
         const files = event.target.files;
         
-        // Limpiar la lista de videos antes de agregar los nuevos
+  
         Array.from(files).forEach(file => {
             const videoElement = document.createElement('video');
             videoElement.src = URL.createObjectURL(file);
             videoElement.controls = true;
-            videoElement.width = 250; // Establecer un tamaño adecuado para el video
+            videoElement.width = 250; 
 
             const divItem = document.createElement('div');
             divItem.classList.add('video-item');
-            divItem.style.marginBottom = '10px'; // Espacio entre videos
+            divItem.style.marginBottom = '10px';
             divItem.appendChild(videoElement);
 
             const deleteButton = document.createElement('button');

@@ -53,7 +53,7 @@ try {
     }
 
 
-    // Crear mensaje con nombre, descripción, cantidad y precio total
+
     $mensaje = "<div class='cotizacion-box'>";
     $mensaje .= "<p><strong>Producto:</strong> " . htmlspecialchars($producto['nombre']) . "</p>";
     $mensaje .= "<p><strong>Descripción:</strong> " . htmlspecialchars($producto['descripcion']) . "</p>";
@@ -63,7 +63,7 @@ try {
     $mensaje .= "</div>";
 
 
-    // Insertar mensaje en chat
+
     $stmt2 = $conn->prepare("INSERT INTO Mensajes_Privado (id_chat, id_usuario, contenido) VALUES (:id_chat, :id_usuario, :contenido)");
     $stmt2->bindParam(':id_chat', $id_chat, PDO::PARAM_INT);
     $stmt2->bindParam(':id_usuario', $id_comprador, PDO::PARAM_INT);

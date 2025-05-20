@@ -11,7 +11,7 @@ try {
         exit;
     }
 
-    $idVendedor = $_SESSION['usuario']['id'];  // <- aquí accedes al id numérico
+    $idVendedor = $_SESSION['usuario']['id'];  
 
    $sql = "SELECT id, nombre, descripcion, precio, cantidad_Disponible AS cantidad, tipo 
         FROM Productos 

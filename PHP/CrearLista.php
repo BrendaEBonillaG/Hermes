@@ -18,15 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nombre = $_POST['nombre'] ?? '';
     $descripcion = $_POST['descripcion'] ?? '';
     $privacidad = $_POST['privacidad'] ?? '';
-    $id_producto = $_POST['id_producto'] ?? '';
     $fotoRuta = null;
 
-    // Validar que id_producto sea un número entero válido
-    if (!is_numeric($id_producto)) {
-        echo json_encode(['success' => false, 'error' => 'ID de producto inválido']);
-        exit;
-    }
-
+  
     // Procesar imagen si existe
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
         $fotoNombre = uniqid() . "_" . basename($_FILES['foto']['name']);
@@ -46,9 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $id_lista = $conn->lastInsertId();
 
-        $stmt2 = $conn->prepare("INSERT INTO listas_productos (id_lista, id_producto) VALUES (?, ?)");
-        $stmt2->execute([$id_lista, $id_producto]);
-
+       
         $response['success'] = true;
     } catch (PDOException $e) {
         $response['success'] = false;

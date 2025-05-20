@@ -83,9 +83,7 @@ if (isset($_COOKIE['rememberMe'])) {
                             <input type="checkbox" id="rememberMe" name="rememberMe"> Recordar contraseña
                         </label>
                     </div>
-                    <div class="forgot-pass">
-                        <a href="#">¿Olvidaste tu contraseña?</a>
-                    </div>
+                   
                     <div class="input-box">
                         <button type="submit" class="input-submit">
                             <span>Iniciar sesión</span>

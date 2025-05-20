@@ -174,8 +174,8 @@ $precioMax = max($precios);
     e.preventDefault(); // Evita que se recargue la página
 
     const busqueda = document.getElementById("search-input").value.trim();
-    const busqueda = document.getElementById("precio").value.trim();
-    console.log("Término de búsqueda enviado:", busqueda); // ✅ Debug
+
+    console.log("Término de búsqueda enviado:", busqueda); 
 
     // Llama a tu función de visualización con el término de búsqueda
     visualizarProductos(busqueda);

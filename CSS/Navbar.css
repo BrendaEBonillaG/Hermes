@@ -72,6 +72,7 @@
     border: none;
     cursor: pointer;
     padding: 8px;
+    color: #333;
 }
 
 .search-button i {

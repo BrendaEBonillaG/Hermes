@@ -7,11 +7,6 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
-// Para debug solo, quita después
-// echo '<pre>';
-// var_dump($_SESSION['usuario']);
-// echo '</pre>';
-// exit();
 
 $id_emisor = $_SESSION['usuario']['id'] ?? null;
 
