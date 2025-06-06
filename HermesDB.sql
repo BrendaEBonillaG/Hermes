@@ -111,7 +111,7 @@ CREATE TABLE Videos_Productos (
 DROP TABLE Listas;
 
 
-SELECT * FROM Listas_Productos;
+SELECT * FROM Listas;
 -- Tabla de Listas de Compras
 CREATE TABLE Listas (
     id INT AUTO_INCREMENT PRIMARY KEY,
